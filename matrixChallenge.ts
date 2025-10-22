@@ -202,38 +202,42 @@ function matrixInverse(A: number[][]) {
   }
   let inverseMatrix: number[][] = [];
   for (let i = 0; i < A.length; i++) {
-    inverseMatrix.push([]);
+    inverseMatrix.push([]); //fill array with empty arrays for each of the rows in the matrix
   }
-  let calcMatrix = A;
+  let calcMatrix = A; //prevent splice etc from messing with the original array/matrix
   if (calcMatrix.length == 2) {
-    let Last: number = calcMatrix[1][1];
-    let First = calcMatrix[0][0];
-    calcMatrix[0].splice(0, 1, Last);
-    calcMatrix[1].splice(1, 1, First);
-    calcMatrix[0][1] = -A[0][1];
-    calcMatrix[1][0] = -A[1][0];
+    let Last: number = calcMatrix[1][1]; //last element in matrix
+    let First = calcMatrix[0][0]; //first element in matrix
+    calcMatrix[0].splice(0, 1, Last); //replace first with last
+    calcMatrix[1].splice(1, 1, First); //replace last with first
+    calcMatrix[0][1] = -A[0][1]; //invert sign of top left
+    calcMatrix[1][0] = -A[1][0]; //invert sign of bottom right
     inverseMatrix = calcMatrix.map((row) =>
       row.map((num) => {
+        //preform multiplication on every element (multiply by 1/detA and round to 6 decimal places)
         let temp = num * (1 / detA);
         temp = Math.round(temp * 1000000) / 1000000;
         return temp;
       })
     );
   } else {
+    //for any case other than 2x2 (different logic)
     let row: number = 0;
     let column: number = 0;
     for (let i = 0; i < calcMatrix.length ** 2; i++) {
       let tempArray: number[][] = [];
       for (let i = 0; i < calcMatrix.length - 1; i++) {
         tempArray.push([]);
-      }
+      } //process above creates an empty 'matrix' with n-1 rows
       let tx = 0;
       let ty = 0;
-
+      //note: different method used here for removing a row and column compared to when i did it for determinant due to me forgetting this was a step for inversion(oops)
       calcMatrix.forEach((rows, i) => {
         rows.forEach((cols, j) => {
           if (i == row || j == column) {
+            //if value is from row or column being removed do nothing
           } else {
+            //else add them to the new array at the correct position
             tempArray[tx][ty] = cols;
             ty++;
             if (ty >= tempArray.length) {
@@ -243,19 +247,23 @@ function matrixInverse(A: number[][]) {
           }
         });
       });
+      //fill temp array with values from undergoing removal of column and row of given row/column
       if (i % 2 != 0 && i != 0) {
+        //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
         inverseMatrix[column][row] =
           Math.round(
             (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
           ) / 1000000;
       } else {
+        //if even position in array, value is +ve
         inverseMatrix[column][row] =
           Math.round(
             (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
           ) / 1000000;
-      }
-      column++;
+      } //values added to final array are also rounded to 6 decimal places
+      column++; //each iteration increment column
       if (column > calcMatrix.length - 1) {
+        //if column is outside of array, increment row and reset back to leftmost column
         row++;
         column = 0;
       }
@@ -271,6 +279,9 @@ function createRotationMatrix(angle: number) {
   return rotateMatrix;
 }
 function rotateMatrix(angle: number, matrixToRotate: number[][]) {
+  if (matrixToRotate.length > 2 || matrixToRotate[0].length > 2) {
+    throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
+  }
   let rotationMatrix = createRotationMatrix(angle);
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate);
   return rotatedMatrix;
@@ -280,6 +291,6 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixDeterminant(inputArray015));
 // console.log(matrixDeterminant(inputArray014));
 // console.log(matrixDeterminant(inputArray016));
-console.log(matrixInverse(inputArray015));
-console.log(matrixInverse(inputArray014));
-console.log(matrixInverse(inputArray016));
+// console.log(matrixInverse(inputArray015));
+// console.log(matrixInverse(inputArray014));
+// console.log(matrixInverse(inputArray016));
