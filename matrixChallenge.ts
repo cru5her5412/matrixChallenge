@@ -271,6 +271,13 @@ function matrixInverse(A: number[][]) {
   }
   return inverseMatrix;
 }
+function matrixTrace(A: number[][]) {
+  let trace: number = 0;
+  for (let i = 0; i < A.length; i++) {
+    trace += A[i][i];
+  }
+  return trace;
+}
 function createRotationMatrix(angle: number) {
   let rotateMatrix: number[][] = [
     [Math.cos(angle), -Math.sin(angle)],
@@ -294,3 +301,4 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixInverse(inputArray015));
 // console.log(matrixInverse(inputArray014));
 // console.log(matrixInverse(inputArray016));
+console.log(matrixTrace(inputArray01));
