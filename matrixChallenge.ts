@@ -80,6 +80,14 @@ let inputArray015: number[][] = [
   [9, 10, 11, 12],
   [13, 14, 15, 1],
 ]; //added clarification here
+let inputArray016: number[][] = [
+  [3, 6, 7, 8, 5, 7],
+  [0, 5, 5, 8, 9, 5],
+  [4, 4, 6, 7, 9, 0],
+  [5, 7, 8, 0, 5, 7],
+  [7, 5, 7, 8, 4, 4],
+  [4, 3, 5, 0, 5, 4],
+];
 function matrixMultiplication(A: number[][], B: number[][]) {
   //added clarification here
   let output: number[][] = []; //added clarification here
@@ -116,7 +124,7 @@ function matrixDeterminant(A: number[][]) {
     return detA; //end result
   } else {
     for (let s = 0; s < A.length; s++) {
-      let tempMatrix: number[][] = []; //temp array to store 4x4 submatrix
+      let tempMatrix: number[][] = []; //temp array to store n-1xn-1 submatrix
       let x = 0;
       let y = s; // position to delete row and column of
       let tempMatrixI: number[][] = []; //second temp variable needed due to array issues (or skill issue)
@@ -125,34 +133,15 @@ function matrixDeterminant(A: number[][]) {
         tempMatrixI[i] = tempMatrix[i].toSpliced(s, 1); //remove value corresponding to that in the column to remove
       }
       if ((s + 1) % 2 == 0) {
-        detA -= matrixDeterminant(tempMatrixI) * A[0][s]; //if even, subtract
+        detA -= matrixDeterminant(tempMatrixI) * A[0][s]; //if even, subtract (reuses current function for smaller matrix, to resolve the determinant)
       } else {
-        detA += matrixDeterminant(tempMatrixI) * A[0][s]; //if odd, add
+        detA += matrixDeterminant(tempMatrixI) * A[0][s]; //if odd, add (reuses current function for smaller matrix, to resolve the determinant)
       }
     }
     return detA;
   }
 }
-function matrix4x4xDeterminant(A: number[][]) {
-  let detA: number = 0;
-  let tempArray: [] = [];
-  for (let s = 0; s < 4; s++) {
-    let tempMatrix: number[][] = []; //temp array to store 3x3 submatrix
-    let x = 0;
-    let y = s; // position to delete row and column of
-    let tempMatrixI: number[][] = []; //second temp variable needed due to array issues (or skill issue)
-    tempMatrix = A.slice(1, A.length); //get all rows starting at index 1(2nd row) aka remove top row
-    for (let i = 0; i < 3; i++) {
-      tempMatrixI[i] = tempMatrix[i].toSpliced(s, 1); //remove value corresponding to that in the column to remove
-    }
-    if ((s + 1) % 2 == 0) {
-      detA -= matrix2x2or3x3xDeterminant(tempMatrixI) * A[0][s]; //if second or 4th value, subtract
-    } else {
-      detA += matrix2x2or3x3xDeterminant(tempMatrixI) * A[0][s]; //if first or third, add
-    }
-  }
-  return detA;
-}
+
 function matrix2x2or3x3xDeterminant(A: number[][]) {
   let detA: number = 0;
   let detAi: number[] = []; //first half of determinant(leading diagonal)
@@ -204,7 +193,7 @@ function matrix2x2or3x3xDeterminant(A: number[][]) {
 function matrixInverse(A: number[][]) {
   let detA: number | undefined = matrixDeterminant(A);
   if (detA == undefined) {
-    throw "error, can't calculate that yet";
+    throw "error, can't calculate that yet or determinant threw error";
   }
   if (A.length != A[0].length) {
     throw "error, matrix must be square to be inverted";
@@ -230,13 +219,14 @@ function matrixInverse(A: number[][]) {
         return temp;
       })
     );
-  }
-
-  if (calcMatrix.length == 3) {
+  } else {
     let row: number = 0;
     let column: number = 0;
-    for (let i = 0; i < 9; i++) {
-      let tempArray: number[][] = [[], []];
+    for (let i = 0; i < calcMatrix.length ** 2; i++) {
+      let tempArray: number[][] = [];
+      for (let i = 0; i < calcMatrix.length - 1; i++) {
+        tempArray.push([]);
+      }
       let tx = 0;
       let ty = 0;
 
@@ -246,7 +236,7 @@ function matrixInverse(A: number[][]) {
           } else {
             tempArray[tx][ty] = cols;
             ty++;
-            if (ty > 1) {
+            if (ty >= tempArray.length) {
               ty = 0;
               tx++;
             }
@@ -254,10 +244,10 @@ function matrixInverse(A: number[][]) {
         });
       });
       if (i % 2 != 0 && i != 0) {
-        inverseMatrix[column][row] = Math.round(
-          ((-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 10000) /
-            10000
-        );
+        inverseMatrix[column][row] =
+          Math.round(
+            (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 10000
+          ) / 10000;
       } else {
         inverseMatrix[column][row] =
           Math.round(
@@ -285,7 +275,11 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate);
   return rotatedMatrix;
 }
-console.log(matrixDeterminant(inputArray07));
-console.log(matrixDeterminant(inputArray02));
-console.log(matrixDeterminant(inputArray015));
-console.log(matrixDeterminant(inputArray014));
+// console.log(matrixDeterminant(inputArray07));
+// console.log(matrixDeterminant(inputArray02));
+// console.log(matrixDeterminant(inputArray015));
+// console.log(matrixDeterminant(inputArray014));
+// console.log(matrixDeterminant(inputArray016));
+console.log(matrixInverse(inputArray015));
+console.log(matrixInverse(inputArray014));
+console.log(matrixInverse(inputArray016));
