@@ -301,4 +301,4 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixInverse(inputArray015));
 // console.log(matrixInverse(inputArray014));
 // console.log(matrixInverse(inputArray016));
-console.log(matrixTrace(inputArray01));
+// console.log(matrixTrace(inputArray01));
