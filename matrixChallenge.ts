@@ -106,7 +106,7 @@ function matrixMultiplication(A: number[][], B: number[][]) {
         //position
         pos += A[i][k] * B[k][j];
       }
-      output[i][j] = Math.round(pos * 10000) / 10000;
+      output[i][j] = Math.round(pos * 1000000) / 1000000;
       pos = 0;
     }
     pos = 0;
@@ -215,7 +215,7 @@ function matrixInverse(A: number[][]) {
     inverseMatrix = calcMatrix.map((row) =>
       row.map((num) => {
         let temp = num * (1 / detA);
-        temp = Math.round(temp * 10000) / 10000;
+        temp = Math.round(temp * 1000000) / 1000000;
         return temp;
       })
     );
@@ -246,13 +246,13 @@ function matrixInverse(A: number[][]) {
       if (i % 2 != 0 && i != 0) {
         inverseMatrix[column][row] =
           Math.round(
-            (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 10000
-          ) / 10000;
+            (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+          ) / 1000000;
       } else {
         inverseMatrix[column][row] =
           Math.round(
-            (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 10000
-          ) / 10000;
+            (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+          ) / 1000000;
       }
       column++;
       if (column > calcMatrix.length - 1) {
