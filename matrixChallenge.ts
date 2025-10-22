@@ -1,4 +1,4 @@
-const PI = Math.PI;
+const PI = Math.PI; //added to simplify manual input of angle
 const inputArray01: number[][] = [
   [1, 2, 3],
   [4, 5, 6],
@@ -106,7 +106,7 @@ function matrixMultiplication(A: number[][], B: number[][]) {
         //position
         pos += A[i][k] * B[k][j];
       }
-      output[i][j] = Math.round(pos * 1000000) / 1000000;
+      output[i][j] = Math.round(pos * 1000000) / 1000000; //set value of output array at position calculated to value calculated(rounded to 6 decimal places)
       pos = 0;
     }
     pos = 0;
@@ -275,15 +275,15 @@ function createRotationMatrix(angle: number) {
   let rotateMatrix: number[][] = [
     [Math.cos(angle), -Math.sin(angle)],
     [Math.sin(angle), Math.cos(angle)],
-  ];
+  ]; //create rotation matrix based on formula from wikipedia
   return rotateMatrix;
 }
 function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   if (matrixToRotate.length > 2 || matrixToRotate[0].length > 2) {
     throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
   }
-  let rotationMatrix = createRotationMatrix(angle);
-  let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate);
+  let rotationMatrix = createRotationMatrix(angle); //use function above to create rotation matrix
+  let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
 // console.log(matrixDeterminant(inputArray07));
