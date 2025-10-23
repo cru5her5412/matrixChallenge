@@ -81,12 +81,22 @@ let inputArray015: number[][] = [
   [13, 14, 15, 1],
 ]; //added clarification here
 let inputArray016: number[][] = [
-  [3, -6, 7, 8, 5, 7],
+  [3, 6, 7, 8, 5, 7],
   [0, 5, 5, 8, 9, 5],
-  [4, 4, 6, -7, 9, 0],
-  [5, 7, -8, 0, 5, 7],
-  [7, 5, 7, -8, 4, 4],
+  [4, 4, 6, 7, 9, 0],
+  [5, 7, 8, 0, 5, 7],
+  [7, 5, 7, 8, 4, 4],
   [4, 3, 5, 0, 5, 4],
+];
+let inputArray017: number[][] = [
+  [6, 7, 8],
+  [10, 11, 12],
+  [14, 15, 1],
+];
+let inputArray018: number[][] = [
+  [5, 7, 8],
+  [9, 11, 12],
+  [13, 15, 1],
 ];
 
 function matrixMultiplication(A: number[][], B: number[][]) {
@@ -225,9 +235,9 @@ function matrixInverse(A: number[][]) {
     //for any case other than 2x2 (different logic)
     let row: number = 0;
     let column: number = 0;
-    for (let i = 0; i < calcMatrix.length ** 2; i++) {
+    for (let s = 0; s < calcMatrix.length ** 2; s++) {
       let tempArray: number[][] = [];
-      for (let i = 0; i < calcMatrix.length - 1; i++) {
+      for (let x = 0; x < calcMatrix.length - 1; x++) {
         tempArray.push([]);
       } //process above creates an empty 'matrix' with n-1 rows
       let tx = 0;
@@ -249,19 +259,52 @@ function matrixInverse(A: number[][]) {
         });
       });
       //fill temp array with values from undergoing removal of column and row of given row/column
-      if (i % 2 != 0 && i != 0) {
-        //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
-        inverseMatrix[column][row] =
-          Math.round(
-            (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-          ) / 1000000;
+      if (calcMatrix.length % 2 !== 0) {
+        if (s % 2 != 0 && s != 0) {
+          //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
+          inverseMatrix[column][row] =
+            Math.round(
+              (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+            ) / 1000000;
+        } else if (s % 2 == 0 || s == 0) {
+          //if even position in array, value is +ve
+          inverseMatrix[column][row] =
+            Math.round(
+              (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+            ) / 1000000;
+        }
       } else {
-        //if even position in array, value is +ve
-        inverseMatrix[column][row] =
-          Math.round(
-            (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-          ) / 1000000;
-      } //values added to final array are also rounded to 6 decimal places
+        if (row % 2 == 0 || row == 0) {
+          if (s % 2 != 0 && s != 0) {
+            //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
+            inverseMatrix[column][row] =
+              Math.round(
+                (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+              ) / 1000000;
+          } else if (s % 2 == 0 || s == 0) {
+            //if even position in array, value is +ve
+            inverseMatrix[column][row] =
+              Math.round(
+                (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+              ) / 1000000;
+          }
+        } else {
+          if (s % 2 != 0 && s != 0) {
+            //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
+            inverseMatrix[column][row] =
+              Math.round(
+                (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+              ) / 1000000;
+          } else if (s % 2 == 0 || s == 0) {
+            //if even position in array, value is +ve
+            inverseMatrix[column][row] =
+              Math.round(
+                (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+              ) / 1000000;
+          }
+        }
+      }
+      //values added to final array are also rounded to 6 decimal places
       column++; //each iteration increment column
       if (column > calcMatrix.length - 1) {
         //if column is outside of array, increment row and reset back to leftmost column
@@ -283,7 +326,7 @@ function createRotationMatrix(angle: number) {
   let rotateMatrix: number[][] = [
     [
       Math.round(Math.cos(angle) * 1000000) / 1000000,
-      -Math.round(Math.sin(angle) * 1000000) / 1000000,
+      Math.round(Math.sin(angle) * 1000000) / 1000000,
     ],
     [
       Math.round(Math.sin(angle) * 1000000) / 1000000,
@@ -300,15 +343,20 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
-console.log(matrixDeterminant(inputArray07));
-console.log(matrixDeterminant(inputArray02));
-console.log(matrixDeterminant(inputArray015));
-console.log(matrixDeterminant(inputArray014));
-console.log(matrixDeterminant(inputArray016));
-console.log(matrixMultiplication(inputArray07, inputArray013));
-console.log(matrixMultiplication(inputArray01, inputArray02));
-console.log(matrixMultiplication(inputArray03, inputArray04));
-console.log(matrixMultiplication(inputArray05, inputArray06));
-console.log(matrixMultiplication(inputArray016, inputArray016));
-console.log(createRotationMatrix(PI));
-console.log(rotateMatrix(PI, [[12], [32]]));
+// console.log(matrixDeterminant(inputArray07));
+// console.log(matrixDeterminant(inputArray02));
+// console.log(matrixDeterminant(inputArray015));
+// console.log(matrixDeterminant(inputArray014));
+// console.log(matrixDeterminant(inputArray016));
+// console.log(matrixMultiplication(inputArray07, inputArray013));
+// console.log(matrixMultiplication(inputArray01, inputArray02));
+// console.log(matrixMultiplication(inputArray03, inputArray04));
+// console.log(matrixMultiplication(inputArray05, inputArray06));
+// console.log(matrixMultiplication(inputArray016, inputArray016));
+console.log(matrixDeterminant(inputArray018));
+console.log(matrixInverse(inputArray015));
+console.log(matrixInverse(inputArray014));
+console.log(matrixInverse(inputArray016));
+// console.log(createRotationMatrix(PI));
+// console.log(rotateMatrix(PI, [[12], [32]]));
+//in 4x4 base ynyn,nyny,ynyn,nyny
