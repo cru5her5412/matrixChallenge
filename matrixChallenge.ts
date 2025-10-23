@@ -275,6 +275,7 @@ function matrixInverse(A: number[][]) {
         }
       } else {
         if (row % 2 == 0 || row == 0) {
+          //extra code added due to alternating rows in even dimensioned matrices requiring different signs(duplicate of prior with swapped signs, and logic to filter out each row based on how they need to be signed)
           if (s % 2 != 0 && s != 0) {
             //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
             inverseMatrix[column][row] =
@@ -290,13 +291,13 @@ function matrixInverse(A: number[][]) {
           }
         } else {
           if (s % 2 != 0 && s != 0) {
-            //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
+            //if odd position in array, value is +ve (when going through row by row, column by column, every other value should be -ve, inverted on every other row when matrix dimensions are even)
             inverseMatrix[column][row] =
               Math.round(
                 (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
               ) / 1000000;
           } else if (s % 2 == 0 || s == 0) {
-            //if even position in array, value is +ve
+            //if even position in array, value is -ve
             inverseMatrix[column][row] =
               Math.round(
                 (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
