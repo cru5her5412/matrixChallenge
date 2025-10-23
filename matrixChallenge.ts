@@ -81,13 +81,14 @@ let inputArray015: number[][] = [
   [13, 14, 15, 1],
 ]; //added clarification here
 let inputArray016: number[][] = [
-  [3, 6, 7, 8, 5, 7],
+  [3, -6, 7, 8, 5, 7],
   [0, 5, 5, 8, 9, 5],
-  [4, 4, 6, 7, 9, 0],
-  [5, 7, 8, 0, 5, 7],
-  [7, 5, 7, 8, 4, 4],
+  [4, 4, 6, -7, 9, 0],
+  [5, 7, -8, 0, 5, 7],
+  [7, 5, 7, -8, 4, 4],
   [4, 3, 5, 0, 5, 4],
 ];
+
 function matrixMultiplication(A: number[][], B: number[][]) {
   //added clarification here
   let output: number[][] = []; //added clarification here
@@ -280,8 +281,14 @@ function matrixTrace(A: number[][]) {
 }
 function createRotationMatrix(angle: number) {
   let rotateMatrix: number[][] = [
-    [Math.cos(angle), -Math.sin(angle)],
-    [Math.sin(angle), Math.cos(angle)],
+    [
+      Math.round(Math.cos(angle) * 1000000) / 1000000,
+      -Math.round(Math.sin(angle) * 1000000) / 1000000,
+    ],
+    [
+      Math.round(Math.sin(angle) * 1000000) / 1000000,
+      Math.round(Math.cos(angle) * 1000000) / 1000000,
+    ],
   ]; //create rotation matrix based on formula from wikipedia
   return rotateMatrix;
 }
@@ -293,12 +300,15 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
-// console.log(matrixDeterminant(inputArray07));
-// console.log(matrixDeterminant(inputArray02));
-// console.log(matrixDeterminant(inputArray015));
-// console.log(matrixDeterminant(inputArray014));
-// console.log(matrixDeterminant(inputArray016));
-// console.log(matrixInverse(inputArray015));
-// console.log(matrixInverse(inputArray014));
-// console.log(matrixInverse(inputArray016));
-// console.log(matrixTrace(inputArray01));
+console.log(matrixDeterminant(inputArray07));
+console.log(matrixDeterminant(inputArray02));
+console.log(matrixDeterminant(inputArray015));
+console.log(matrixDeterminant(inputArray014));
+console.log(matrixDeterminant(inputArray016));
+console.log(matrixMultiplication(inputArray07, inputArray013));
+console.log(matrixMultiplication(inputArray01, inputArray02));
+console.log(matrixMultiplication(inputArray03, inputArray04));
+console.log(matrixMultiplication(inputArray05, inputArray06));
+console.log(matrixMultiplication(inputArray016, inputArray016));
+console.log(createRotationMatrix(PI));
+console.log(rotateMatrix(PI, [[12], [32]]));
