@@ -5,82 +5,82 @@ const inputArray01: number[][] = [
   [7, 8, 9],
   // [10, 11, 12],
 ]; //added clarification here
-let inputArray02: number[][] = [
+const inputArray02: number[][] = [
   [9, 8, 7],
   [6, 5, 4],
   [3, 2, 1],
 ]; //added clarification here
-let inputArray03: number[][] = [
+const inputArray03: number[][] = [
   [1, 2, 3, 4],
   [5, 6, 7, 8],
   [9, 10, 11, 12],
   [13, 14, 15, 16],
 ]; //added clarification here
-let inputArray04: number[][] = [
+const inputArray04: number[][] = [
   [16, 15, 14, 13],
   [12, 11, 10, 9],
   [8, 7, 6, 5],
   [4, 3, 2, 1],
 ]; //added clarification here
-let inputArray05: number[][] = [
+const inputArray05: number[][] = [
   [1, 2, 3, 4, 5],
   [6, 7, 8, 9, 10],
   [11, 12, 13, 14, 15],
   [16, 17, 18, 19, 20],
   [21, 22, 23, 24, 25],
 ]; //added clarification here
-let inputArray06: number[][] = [
+const inputArray06: number[][] = [
   [25, 24, 23, 22, 21],
   [20, 19, 18, 17, 16],
   [15, 14, 13, 12, 11],
   [10, 9, 8, 7, 6],
   [5, 4, 3, 2, 1],
 ]; //added clarification here
-let inputArray07: number[][] = [
+const inputArray07: number[][] = [
   [1, 3 / 2],
   [-1, 1],
 ];
-let inputArray08: number[][] = [
+const inputArray08: number[][] = [
   [21, 21, 21],
   [0, 0, 21],
   [0, 21, 21],
 ];
-let inputArray09: number[][] = [[2], [10]];
-let inputArray010: number[][] = [
+const inputArray09: number[][] = [[2], [10]];
+const inputArray010: number[][] = [
   [2 / 5, -3 / 5],
   [2 / 5, 2 / 5],
 ];
-let identityMatrix: number[][] = [
+const identityMatrix: number[][] = [
   [1, 0],
   [0, 1],
 ];
-let inputArray011: number[][] = [
+const inputArray011: number[][] = [
   [0, 1],
   [1, 0],
 ];
-let inputArray012: number[][] = [
+const inputArray012: number[][] = [
   [4, 1, 3],
   [3, 2, 2],
   [1, 4, 5],
 ];
-let inputArray013: number[][] = [
+const inputArray013: number[][] = [
   [8, 5],
   [8, 1],
 ];
-let inputArray014: number[][] = [
+const inputArray014: number[][] = [
   [31, 31, 32, 21, 2],
   [1, 4, 3, 1, 2],
   [5, 2, 32, 5, 2],
   [25, 52, 2, 1, 2],
   [2, 2, 2, 2, 2],
 ];
-let inputArray015: number[][] = [
+const inputArray015: number[][] = [
   [2, 2, 3, 4],
   [5, 6, 7, 8],
   [9, 10, 11, 12],
   [13, 14, 15, 1],
 ]; //added clarification here
-let inputArray016: number[][] = [
+const inputArray016: number[][] = [
   [3, 6, 7, 8, 5, 7],
   [0, 5, 5, 8, 9, 5],
   [4, 4, 6, 7, 9, 0],
@@ -88,12 +88,12 @@ let inputArray016: number[][] = [
   [7, 5, 7, 8, 4, 4],
   [4, 3, 5, 0, 5, 4],
 ];
-let inputArray017: number[][] = [
+const inputArray017: number[][] = [
   [6, 7, 8],
   [10, 11, 12],
   [14, 15, 1],
 ];
-let inputArray018: number[][] = [
+const inputArray018: number[][] = [
   [5, 7, 8],
   [9, 11, 12],
   [13, 15, 1],
@@ -260,35 +260,11 @@ function matrixInverse(A: number[][]) {
       });
       //fill temp array with values from undergoing removal of column and row of given row/column
       if (calcMatrix.length % 2 !== 0) {
-        if (s % 2 != 0 && s != 0) {
-          //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
-          inverseMatrix[column][row] =
-            Math.round(
-              (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-            ) / 1000000;
-        } else if (s % 2 == 0 || s == 0) {
-          //if even position in array, value is +ve
-          inverseMatrix[column][row] =
-            Math.round(
-              (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-            ) / 1000000;
-        }
+        defaultInversionLogic(s, inverseMatrix, column, row, tempArray, A);
       } else {
         if (row % 2 == 0 || row == 0) {
           //extra code added due to alternating rows in even dimensioned matrices requiring different signs(duplicate of prior with swapped signs, and logic to filter out each row based on how they need to be signed)
-          if (s % 2 != 0 && s != 0) {
-            //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
-            inverseMatrix[column][row] =
-              Math.round(
-                (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-              ) / 1000000;
-          } else if (s % 2 == 0 || s == 0) {
-            //if even position in array, value is +ve
-            inverseMatrix[column][row] =
-              Math.round(
-                (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-              ) / 1000000;
-          }
+          defaultInversionLogic(s, inverseMatrix, column, row, tempArray, A);
         } else {
           if (s % 2 != 0 && s != 0) {
             //if odd position in array, value is +ve (when going through row by row, column by column, every other value should be -ve, inverted on every other row when matrix dimensions are even)
@@ -315,6 +291,28 @@ function matrixInverse(A: number[][]) {
     }
   }
   return inverseMatrix;
+}
+function defaultInversionLogic(
+  s: number,
+  inverseMatrix: number[][],
+  column: number,
+  row: number,
+  tempArray: number[][],
+  A: number[][]
+) {
+  if (s % 2 != 0 && s != 0) {
+    //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
+    inverseMatrix[column][row] =
+      Math.round(
+        (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+      ) / 1000000;
+  } else if (s % 2 == 0 || s == 0) {
+    //if even position in array, value is +ve
+    inverseMatrix[column][row] =
+      Math.round(
+        (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+      ) / 1000000;
+  }
 }
 function matrixTrace(A: number[][]) {
   let trace: number = 0;
@@ -344,20 +342,20 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
-// console.log(matrixDeterminant(inputArray07));
-// console.log(matrixDeterminant(inputArray02));
-// console.log(matrixDeterminant(inputArray015));
-// console.log(matrixDeterminant(inputArray014));
-// console.log(matrixDeterminant(inputArray016));
-// console.log(matrixMultiplication(inputArray07, inputArray013));
-// console.log(matrixMultiplication(inputArray01, inputArray02));
-// console.log(matrixMultiplication(inputArray03, inputArray04));
-// console.log(matrixMultiplication(inputArray05, inputArray06));
-// console.log(matrixMultiplication(inputArray016, inputArray016));
-console.log(matrixDeterminant(inputArray018));
-console.log(matrixInverse(inputArray015));
-console.log(matrixInverse(inputArray014));
-console.log(matrixInverse(inputArray016));
-// console.log(createRotationMatrix(PI));
-// console.log(rotateMatrix(PI, [[12], [32]]));
-//in 4x4 base ynyn,nyny,ynyn,nyny
+// console.log(matrixDeterminant(inputArray07)); //find determinant of 2x2
+// console.log(matrixDeterminant(inputArray02)); //find determinant of 3x3
+// console.log(matrixDeterminant(inputArray015)); //find determinant of 4x4
+// console.log(matrixDeterminant(inputArray014)); //find determinant of 5x5
+// console.log(matrixDeterminant(inputArray016)); //find determinant of 6x6
+// console.log(matrixMultiplication(inputArray07, inputArray013)); //multiply 2x2 and 2x2
+// console.log(matrixMultiplication(inputArray01, inputArray02)); //multiply 3x3 and 3x3
+// console.log(matrixMultiplication(inputArray03, inputArray04)); //multiply 4x4 and 4x4
+// console.log(matrixMultiplication(inputArray05, inputArray06)); //multiply 5x5 and 5x5
+// console.log(matrixMultiplication(inputArray016, inputArray016)); //multiply 6x6 and 6x6
+// console.log(matrixInverse(inputArray07)); //invert 2x2
+// console.log(matrixInverse(inputArray08)); //invert 3x3
+// console.log(matrixInverse(inputArray015)); //invert 4x4
+// console.log(matrixInverse(inputArray014)); //invert 5x5
+// console.log(matrixInverse(inputArray016)); //invert 6x6
+// console.log(createRotationMatrix(PI)); //rotation matrix for PI radians/180 degrees
+// console.log(rotateMatrix(PI / 2, [[12], [32]])); //rotate coords 12,32 PI/2 radians/ 90 degrees around the origin/0,0
