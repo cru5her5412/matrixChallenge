@@ -1,3 +1,6 @@
+//TODO: add comments to anywhere i missed
+//TODO: make -0 show as 0
+let angleMode: "DEGREE" | "RADIAN" = "DEGREE";
 const PI = Math.PI; //added to simplify manual input of angle
 const inputArray01: number[][] = [
   [1, 2, 3],
@@ -322,14 +325,20 @@ function matrixTrace(A: number[][]) {
   return trace;
 }
 function createRotationMatrix(angle: number) {
+  let newAngle: number;
+  if (angleMode == "DEGREE") {
+    newAngle = (angle * PI) / 180;
+  } else {
+    newAngle = angle;
+  }
   let rotateMatrix: number[][] = [
     [
-      Math.round(Math.cos(angle) * 1000000) / 1000000,
-      Math.round(Math.sin(angle) * 1000000) / 1000000,
+      Math.round(Math.cos(newAngle) * 1000000000) / 1000000000,
+      Math.round(Math.sin(newAngle) * 1000000000) / 1000000000,
     ],
     [
-      Math.round(Math.sin(angle) * 1000000) / 1000000,
-      Math.round(Math.cos(angle) * 1000000) / 1000000,
+      Math.round(Math.sin(newAngle) * 1000000000) / 1000000000,
+      Math.round(Math.cos(newAngle) * 1000000000) / 1000000000,
     ],
   ]; //create rotation matrix based on formula from wikipedia
   return rotateMatrix;
@@ -339,6 +348,7 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
     throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
   }
   let rotationMatrix = createRotationMatrix(angle); //use function above to create rotation matrix
+  console.log(angle);
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
@@ -357,5 +367,5 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixInverse(inputArray015)); //invert 4x4
 // console.log(matrixInverse(inputArray014)); //invert 5x5
 // console.log(matrixInverse(inputArray016)); //invert 6x6
-// console.log(createRotationMatrix(PI)); //rotation matrix for PI radians/180 degrees
-// console.log(rotateMatrix(PI / 2, [[12], [32]])); //rotate coords 12,32 PI/2 radians/ 90 degrees around the origin/0,0
+console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees
+console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0
