@@ -263,25 +263,40 @@ function matrixInverse(A: number[][]) {
       });
       //fill temp array with values from undergoing removal of column and row of given row/column
       if (calcMatrix.length % 2 !== 0) {
-        defaultInversionLogic(s, inverseMatrix, column, row, tempArray, A);
+        defaultInversionLogic(
+          s,
+          inverseMatrix,
+          column,
+          row,
+          tempArray,
+          A,
+          -1,
+          1
+        );
       } else {
         if (row % 2 == 0 || row == 0) {
           //extra code added due to alternating rows in even dimensioned matrices requiring different signs(duplicate of prior with swapped signs, and logic to filter out each row based on how they need to be signed)
-          defaultInversionLogic(s, inverseMatrix, column, row, tempArray, A);
+          defaultInversionLogic(
+            s,
+            inverseMatrix,
+            column,
+            row,
+            tempArray,
+            A,
+            -1,
+            1
+          );
         } else {
-          if (s % 2 != 0 && s != 0) {
-            //if odd position in array, value is +ve (when going through row by row, column by column, every other value should be -ve, inverted on every other row when matrix dimensions are even)
-            inverseMatrix[column][row] =
-              Math.round(
-                (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-              ) / 1000000;
-          } else if (s % 2 == 0 || s == 0) {
-            //if even position in array, value is -ve
-            inverseMatrix[column][row] =
-              Math.round(
-                (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
-              ) / 1000000;
-          }
+          defaultInversionLogic(
+            s,
+            inverseMatrix,
+            column,
+            row,
+            tempArray,
+            A,
+            1,
+            -1
+          );
         }
       }
       //values added to final array are also rounded to 6 decimal places
@@ -301,19 +316,21 @@ function defaultInversionLogic(
   column: number,
   row: number,
   tempArray: number[][],
-  A: number[][]
+  A: number[][],
+  a: number,
+  b: number
 ) {
   if (s % 2 != 0 && s != 0) {
     //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
     inverseMatrix[column][row] =
       Math.round(
-        (-matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+        ((a * matrixDeterminant(tempArray)) / matrixDeterminant(A)) * 1000000
       ) / 1000000;
   } else if (s % 2 == 0 || s == 0) {
     //if even position in array, value is +ve
     inverseMatrix[column][row] =
       Math.round(
-        (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+        ((b * matrixDeterminant(tempArray)) / matrixDeterminant(A)) * 1000000
       ) / 1000000;
   }
 }
@@ -362,10 +379,10 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixMultiplication(inputArray03, inputArray04)); //multiply 4x4 and 4x4
 // console.log(matrixMultiplication(inputArray05, inputArray06)); //multiply 5x5 and 5x5
 // console.log(matrixMultiplication(inputArray016, inputArray016)); //multiply 6x6 and 6x6
-// console.log(matrixInverse(inputArray07)); //invert 2x2
-// console.log(matrixInverse(inputArray08)); //invert 3x3
-// console.log(matrixInverse(inputArray015)); //invert 4x4
-// console.log(matrixInverse(inputArray014)); //invert 5x5
-// console.log(matrixInverse(inputArray016)); //invert 6x6
-console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees
-console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0
+console.log(matrixInverse(inputArray07)); //invert 2x2
+console.log(matrixInverse(inputArray08)); //invert 3x3
+console.log(matrixInverse(inputArray015)); //invert 4x4
+console.log(matrixInverse(inputArray014)); //invert 5x5
+console.log(matrixInverse(inputArray016)); //invert 6x6
+// console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees
+// console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0
