@@ -342,11 +342,12 @@ function matrixTrace(A: number[][]) {
   return trace;
 }
 function createRotationMatrix(angle: number) {
-  let newAngle: number;
+  let newAngle: number; //new angle to use
   if (angleMode == "DEGREE") {
-    newAngle = (angle * PI) / 180;
+    //if angleMode is set to degrees, convert angles to radians(Math functions use them by default)
+    newAngle = (angle * PI) / 180; //converting degrees to radians
   } else {
-    newAngle = angle;
+    newAngle = angle; //if not set to degrees, leave as angle given
   }
   let rotateMatrix: number[][] = [
     [
@@ -357,7 +358,7 @@ function createRotationMatrix(angle: number) {
       Math.round(Math.sin(newAngle) * 1000000000) / 1000000000,
       Math.round(Math.cos(newAngle) * 1000000000) / 1000000000,
     ],
-  ]; //create rotation matrix based on formula from wikipedia
+  ]; //create rotation matrix based on formula from wikipedia, rounded to 6 decimal places
   return rotateMatrix;
 }
 function rotateMatrix(angle: number, matrixToRotate: number[][]) {
@@ -379,10 +380,10 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixMultiplication(inputArray03, inputArray04)); //multiply 4x4 and 4x4
 // console.log(matrixMultiplication(inputArray05, inputArray06)); //multiply 5x5 and 5x5
 // console.log(matrixMultiplication(inputArray016, inputArray016)); //multiply 6x6 and 6x6
-console.log(matrixInverse(inputArray07)); //invert 2x2
-console.log(matrixInverse(inputArray08)); //invert 3x3
-console.log(matrixInverse(inputArray015)); //invert 4x4
-console.log(matrixInverse(inputArray014)); //invert 5x5
-console.log(matrixInverse(inputArray016)); //invert 6x6
-// console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees
-// console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0
+// console.log(matrixInverse(inputArray07)); //invert 2x2
+// console.log(matrixInverse(inputArray08)); //invert 3x3
+// console.log(matrixInverse(inputArray015)); //invert 4x4
+// console.log(matrixInverse(inputArray014)); //invert 5x5
+// console.log(matrixInverse(inputArray016)); //invert 6x6
+// console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees. value depends on angleMode
+// console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0 first value depends on angleMode
