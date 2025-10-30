@@ -224,8 +224,8 @@ function matrixInverse(A: number[][]) {
     let First = calcMatrix[0][0]; //first element in matrix
     calcMatrix[0].splice(0, 1, Last); //replace first with last
     calcMatrix[1].splice(1, 1, First); //replace last with first
-    calcMatrix[0][1] = -A[0][1]; //invert sign of top left
-    calcMatrix[1][0] = -A[1][0]; //invert sign of bottom right
+    calcMatrix[0][1] = A[0][1] === 0 ? A[0][1] : -A[0][1]; //invert sign of top left
+    calcMatrix[1][0] = A[1][0] === 0 ? A[1][0] : -A[1][0]; //invert sign of bottom right
     inverseMatrix = calcMatrix.map((row) =>
       row.map((num) => {
         //preform multiplication on every element (multiply by 1/detA and round to 6 decimal places)
@@ -324,14 +324,30 @@ function defaultInversionLogic(
     //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
     inverseMatrix[column][row] =
       Math.round(
-        ((a * matrixDeterminant(tempArray)) / matrixDeterminant(A)) * 1000000
-      ) / 1000000;
+        (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+      ) /
+        1000000 ===
+      0
+        ? 0
+        : (a *
+            Math.round(
+              (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+            )) /
+          1000000;
   } else if (s % 2 == 0 || s == 0) {
     //if even position in array, value is +ve
     inverseMatrix[column][row] =
       Math.round(
-        ((b * matrixDeterminant(tempArray)) / matrixDeterminant(A)) * 1000000
-      ) / 1000000;
+        (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+      ) /
+        1000000 ===
+      0
+        ? 0
+        : (b *
+            Math.round(
+              (matrixDeterminant(tempArray) / matrixDeterminant(A)) * 1000000
+            )) /
+          1000000;
   }
 }
 function matrixTrace(A: number[][]) {
@@ -380,10 +396,10 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixMultiplication(inputArray03, inputArray04)); //multiply 4x4 and 4x4
 // console.log(matrixMultiplication(inputArray05, inputArray06)); //multiply 5x5 and 5x5
 // console.log(matrixMultiplication(inputArray016, inputArray016)); //multiply 6x6 and 6x6
-// console.log(matrixInverse(inputArray07)); //invert 2x2
-// console.log(matrixInverse(inputArray08)); //invert 3x3
-// console.log(matrixInverse(inputArray015)); //invert 4x4
-// console.log(matrixInverse(inputArray014)); //invert 5x5
-// console.log(matrixInverse(inputArray016)); //invert 6x6
+console.log(matrixInverse(inputArray07)); //invert 2x2
+console.log(matrixInverse(inputArray08)); //invert 3x3
+console.log(matrixInverse(inputArray015)); //invert 4x4
+console.log(matrixInverse(inputArray014)); //invert 5x5
+console.log(matrixInverse(inputArray016)); //invert 6x6
 // console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees. value depends on angleMode
 // console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0 first value depends on angleMode
