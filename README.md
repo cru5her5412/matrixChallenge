@@ -16,5 +16,6 @@ My first foray into typescript, this project started out as a simple matrix mult
 ## Functions planned to implement:
 
 - Frontend
+- built in validation of inversion (multiply answer by input, if not identity, throw error)
 - Additional features could be considered on request
 - Any other features I think of will be added if I can make them work
