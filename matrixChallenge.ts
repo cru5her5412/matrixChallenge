@@ -223,14 +223,20 @@ function matrixInverse(A: number[][], decimalPlaces: number) {
   for (let i = 0; i < A.length; i++) {
     inverseMatrix.push([]); //fill array with empty arrays for each of the rows in the matrix
   }
-  let calcMatrix = A; //prevent splice etc from messing with the original array/matrix
+  let calcMatrix = [...A]; //prevent splice etc from messing with the original array/matrix
   if (calcMatrix.length == 2) {
     let Last: number = calcMatrix[1][1]; //last element in matrix
     let First = calcMatrix[0][0]; //first element in matrix
     calcMatrix[0].splice(0, 1, Last); //replace first with last
     calcMatrix[1].splice(1, 1, First); //replace last with first
-    calcMatrix[0][1] = A[0][1] === 0 ? A[0][1] : -A[0][1]; //invert sign of top left
-    calcMatrix[1][0] = A[1][0] === 0 ? A[1][0] : -A[1][0]; //invert sign of bottom right
+    //start of section messing with values
+    A[0][1] === 0
+      ? (calcMatrix[0][1] = 0 + A[0][1])
+      : (calcMatrix[0][1] = 0 + -A[0][1]); //invert sign of top left
+    A[1][0] === 0
+      ? (calcMatrix[1][0] = 0 + A[1][0])
+      : (calcMatrix[1][0] = 0 + -A[1][0]); //invert sign of bottom right
+    //end of section messing with values
     inverseMatrix = calcMatrix.map((row) =>
       row.map((num) => {
         //preform multiplication on every element (multiply by 1/detA and round to 6 decimal places)
@@ -239,6 +245,7 @@ function matrixInverse(A: number[][], decimalPlaces: number) {
         return temp;
       })
     );
+    console.log(inverseMatrix);
   } else {
     //for any case other than 2x2 (different logic)
     let row: number = 0;
@@ -331,14 +338,26 @@ function matrixInverse(A: number[][], decimalPlaces: number) {
       }
     }
   }
+  console.log(A);
   let inversionTest: number[][] = matrixMultiplication(A, inverseMatrix, 0);
-  // console.log(inversionTest);
-  // console.log(I);
-  // if (I != inversionTest) {
-  //   throw "error, inverted matrix was incorrect";
-  // } else {
-  //   return inverseMatrix;
-  // }
+  console.log(inversionTest);
+  console.log(I);
+  let inverseCorrect: boolean = true;
+  for (let i = 0; i < A.length; i++) {
+    for (let j = 0; j < A[0].length; j++) {
+      if (inversionTest[i][j] != I[i][j]) {
+        inverseCorrect = false;
+        console.log(inverseCorrect, inversionTest[i][j], I[i][j]);
+      }
+    }
+  }
+  switch (inverseCorrect) {
+    case true:
+      return inverseMatrix;
+
+    case false:
+      throw "error, inverted matrix was incorrect";
+  }
   return inverseMatrix;
 }
 function defaultInversionLogic(
@@ -422,6 +441,7 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate, 6); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
+
 // console.log(matrixDeterminant(inputArray07)); //find determinant of 2x2
 // console.log(matrixDeterminant(inputArray02)); //find determinant of 3x3
 // console.log(matrixDeterminant(inputArray015)); //find determinant of 4x4
@@ -432,13 +452,11 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixMultiplication(inputArray03, inputArray04)); //multiply 4x4 and 4x4
 // console.log(matrixMultiplication(inputArray05, inputArray06)); //multiply 5x5 and 5x5
 // console.log(matrixMultiplication(inputArray016, inputArray016)); //multiply 6x6 and 6x6
-// console.log(matrixInverse(inputArray07, 6)); //invert 2x2
+console.log(matrixInverse(inputArray07, 6)); //invert 2x2
 // console.log(matrixInverse(inputArray08,6)); //invert 3x3
 // console.log(matrixInverse(inputArray015,6)); //invert 4x4
 // console.log(matrixInverse(inputArray014,6)); //invert 5x5
 // console.log(matrixInverse(inputArray016,6)); //invert 6x6
 // console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees. value depends on angleMode
 // console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0 first value depends on angleMode
-console.log(
-  matrixMultiplication(matrixInverse(inputArray08, 6), inputArray08, 0)
-);
+// console.log(matrixInverse(inputArray07, 6));
