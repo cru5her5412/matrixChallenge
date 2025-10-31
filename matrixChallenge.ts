@@ -332,13 +332,13 @@ function matrixInverse(A: number[][], decimalPlaces: number) {
     }
   }
   let inversionTest: number[][] = matrixMultiplication(A, inverseMatrix, 0);
-  console.log(inversionTest);
-  console.log(I);
-  if (I != inversionTest) {
-    throw "error, inverted matrix was incorrect";
-  } else {
-    return inverseMatrix;
-  }
+  // console.log(inversionTest);
+  // console.log(I);
+  // if (I != inversionTest) {
+  //   throw "error, inverted matrix was incorrect";
+  // } else {
+  //   return inverseMatrix;
+  // }
   return inverseMatrix;
 }
 function defaultInversionLogic(
