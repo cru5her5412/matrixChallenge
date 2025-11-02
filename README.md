@@ -8,7 +8,7 @@ My first foray into typescript, this project started out as a simple matrix mult
 
 - Matrix Multiplication
 - Matrix Determinant calculation
-- Matrix inverse
+- Matrix inverse (with built in validation)
 - Matrix Trace calculation
 - Rotation matrix creation based on angle
 - Rotation of coordinate matrix from an angle(utilising prior function)
@@ -16,6 +16,7 @@ My first foray into typescript, this project started out as a simple matrix mult
 ## Functions planned to implement:
 
 - Frontend
-- built in validation of inversion (multiply answer by input, if not identity, throw error)
+- Addition/subtraction of matrices
+- matrix to calculate a shear
 - Additional features could be considered on request
 - Any other features I think of will be added if I can make them work
