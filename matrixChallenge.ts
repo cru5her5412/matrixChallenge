@@ -103,8 +103,8 @@ const inputArray018: number[][] = [
 ];
 
 function matrixMultiplication(
-  A: number[][],
-  B: number[][],
+  [...A]: number[][],
+  [...B]: number[][],
   decimalPlaces: number
 ) {
   //added clarification here
@@ -132,7 +132,7 @@ function matrixMultiplication(
   }
   return output;
 }
-function matrixDeterminant(A: number[][]) {
+function matrixDeterminant([...A]: number[][]) {
   if (A.length != A[0].length) {
     throw "This array's determinant cannot be calculated or doesn't exist. Remember only square matrices have a determinant!";
   } //error
@@ -161,7 +161,7 @@ function matrixDeterminant(A: number[][]) {
   }
 }
 
-function matrix2x2or3x3xDeterminant(A: number[][]) {
+function matrix2x2or3x3xDeterminant([...A]: number[][]) {
   let detA: number = 0;
   let detAi: number[] = []; //first half of determinant(leading diagonal)
   let detAii: number[] = []; //second half of determinant (non-leading diagonal)
@@ -209,7 +209,7 @@ function matrix2x2or3x3xDeterminant(A: number[][]) {
   detA = temp - temp2; //calculate determinant
   return detA; //return value
 }
-function matrixInverse(A: number[][], decimalPlaces: number) {
+function matrixInverse([...A]: number[][], decimalPlaces: number) {
   let detA: number | undefined = matrixDeterminant(A);
   if (detA == undefined) {
     throw "error, can't calculate that yet or determinant threw error";
@@ -230,12 +230,9 @@ function matrixInverse(A: number[][], decimalPlaces: number) {
     calcMatrix[0].splice(0, 1, Last); //replace first with last
     calcMatrix[1].splice(1, 1, First); //replace last with first
     //start of section messing with values
-    A[0][1] === 0
-      ? (calcMatrix[0][1] = 0 + A[0][1])
-      : (calcMatrix[0][1] = 0 + -A[0][1]); //invert sign of top left
-    A[1][0] === 0
-      ? (calcMatrix[1][0] = 0 + A[1][0])
-      : (calcMatrix[1][0] = 0 + -A[1][0]); //invert sign of bottom right
+    calcMatrix[0][1] = JSON.parse(JSON.stringify(A[0][1])); //prevent editing original matrix
+    calcMatrix[1][0] = JSON.parse(JSON.stringify(A[1][0])); //prevent editing original matrix
+
     //end of section messing with values
     inverseMatrix = calcMatrix.map((row) =>
       row.map((num) => {
@@ -245,7 +242,13 @@ function matrixInverse(A: number[][], decimalPlaces: number) {
         return temp;
       })
     );
-    console.log(inverseMatrix);
+    //moved inversion of signs to after mapping to inverseMatrix
+    if (A[0][1] !== 0) {
+      inverseMatrix[0][1] = -inverseMatrix[0][1]; //invert sign of top left
+    }
+    if (A[1][0] !== 0) {
+      inverseMatrix[1][0] = -inverseMatrix[1][0]; //invert sign of bottom right
+    }
   } else {
     //for any case other than 2x2 (different logic)
     let row: number = 0;
@@ -338,16 +341,12 @@ function matrixInverse(A: number[][], decimalPlaces: number) {
       }
     }
   }
-  console.log(A);
   let inversionTest: number[][] = matrixMultiplication(A, inverseMatrix, 0);
-  console.log(inversionTest);
-  console.log(I);
   let inverseCorrect: boolean = true;
   for (let i = 0; i < A.length; i++) {
     for (let j = 0; j < A[0].length; j++) {
       if (inversionTest[i][j] != I[i][j]) {
         inverseCorrect = false;
-        console.log(inverseCorrect, inversionTest[i][j], I[i][j]);
       }
     }
   }
@@ -437,7 +436,6 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
     throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
   }
   let rotationMatrix = createRotationMatrix(angle); //use function above to create rotation matrix
-  console.log(angle);
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate, 6); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
@@ -452,11 +450,11 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(matrixMultiplication(inputArray03, inputArray04)); //multiply 4x4 and 4x4
 // console.log(matrixMultiplication(inputArray05, inputArray06)); //multiply 5x5 and 5x5
 // console.log(matrixMultiplication(inputArray016, inputArray016)); //multiply 6x6 and 6x6
-console.log(matrixInverse(inputArray07, 6)); //invert 2x2
-// console.log(matrixInverse(inputArray08,6)); //invert 3x3
-// console.log(matrixInverse(inputArray015,6)); //invert 4x4
-// console.log(matrixInverse(inputArray014,6)); //invert 5x5
-// console.log(matrixInverse(inputArray016,6)); //invert 6x6
+// console.log(matrixInverse(inputArray07, 6)); //invert 2x2
+// console.log(matrixInverse(inputArray08, 6)); //invert 3x3
+// console.log(matrixInverse(inputArray015, 6)); //invert 4x4
+// console.log(matrixInverse(inputArray014, 6)); //invert 5x5
+// console.log(matrixInverse(inputArray016, 6)); //invert 6x6
 // console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees. value depends on angleMode
 // console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0 first value depends on angleMode
-// console.log(matrixInverse(inputArray07, 6));
+// console.log(matrixMultiplication(inputArray07, inputArray010, 6));
