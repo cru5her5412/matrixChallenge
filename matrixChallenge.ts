@@ -1,5 +1,6 @@
 //TODO: add comments to anywhere i missed
 //TODO: fix 2x2 matrix inversion(seems to not work idk why yet)
+
 let angleMode: "DEGREE" | "RADIAN" = "DEGREE";
 const PI = Math.PI; //added to simplify manual input of angle
 const inputArray01: number[][] = [
@@ -102,7 +103,7 @@ const inputArray018: number[][] = [
   [13, 15, 1],
 ];
 
-function matrixMultiplication(
+export function matrixMultiplication(
   [...A]: number[][],
   [...B]: number[][],
   decimalPlaces: number
@@ -132,7 +133,7 @@ function matrixMultiplication(
   }
   return output;
 }
-function matrixDeterminant([...A]: number[][]) {
+export function matrixDeterminant([...A]: number[][]) {
   if (A.length != A[0].length) {
     throw "This array's determinant cannot be calculated or doesn't exist. Remember only square matrices have a determinant!";
   } //error
@@ -152,16 +153,16 @@ function matrixDeterminant([...A]: number[][]) {
         tempMatrixI[i] = tempMatrix[i].toSpliced(s, 1); //remove value corresponding to that in the column to remove
       }
       if ((s + 1) % 2 == 0) {
-        detA -= matrixDeterminant(tempMatrixI) * A[0][s]; //if even, subtract (reuses current function for smaller matrix, to resolve the determinant)
+        detA -= matrixDeterminant(tempMatrixI) * A[0][s]; //if even, subtract (reuses current export function for smaller matrix, to resolve the determinant)
       } else {
-        detA += matrixDeterminant(tempMatrixI) * A[0][s]; //if odd, add (reuses current function for smaller matrix, to resolve the determinant)
+        detA += matrixDeterminant(tempMatrixI) * A[0][s]; //if odd, add (reuses current export function for smaller matrix, to resolve the determinant)
       }
     }
     return detA;
   }
 }
 
-function matrix2x2or3x3xDeterminant([...A]: number[][]) {
+export function matrix2x2or3x3xDeterminant([...A]: number[][]) {
   let detA: number = 0;
   let detAi: number[] = []; //first half of determinant(leading diagonal)
   let detAii: number[] = []; //second half of determinant (non-leading diagonal)
@@ -209,7 +210,7 @@ function matrix2x2or3x3xDeterminant([...A]: number[][]) {
   detA = temp - temp2; //calculate determinant
   return detA; //return value
 }
-function matrixInverse([...A]: number[][], decimalPlaces: number) {
+export function matrixInverse([...A]: number[][], decimalPlaces: number) {
   const detA: number | undefined = matrixDeterminant(A);
   if (detA == undefined) {
     throw "error, can't calculate that yet or determinant threw error";
@@ -359,7 +360,7 @@ function matrixInverse([...A]: number[][], decimalPlaces: number) {
   }
   return inverseMatrix;
 }
-function defaultInversionLogic(
+export function defaultInversionLogic(
   s: number,
   inverseMatrix: number[][],
   column: number,
@@ -404,17 +405,17 @@ function defaultInversionLogic(
           10 ** decimalPlaces;
   }
 }
-function matrixTrace(A: number[][]) {
+export function matrixTrace(A: number[][]) {
   let trace: number = 0;
   for (let i = 0; i < A.length; i++) {
     trace += A[i][i];
   }
   return trace;
 }
-function createRotationMatrix(angle: number) {
+export function createRotationMatrix(angle: number) {
   let newAngle: number; //new angle to use
   if (angleMode == "DEGREE") {
-    //if angleMode is set to degrees, convert angles to radians(Math functions use them by default)
+    //if angleMode is set to degrees, convert angles to radians(Math export functions use them by default)
     newAngle = (angle * PI) / 180; //converting degrees to radians
   } else {
     newAngle = angle; //if not set to degrees, leave as angle given
@@ -431,15 +432,15 @@ function createRotationMatrix(angle: number) {
   ]; //create rotation matrix based on formula from wikipedia, rounded to 6 decimal places
   return rotateMatrix;
 }
-function rotateMatrix(angle: number, matrixToRotate: number[][]) {
+export function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   if (matrixToRotate.length > 2 || matrixToRotate[0].length > 2) {
     throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
   }
-  let rotationMatrix = createRotationMatrix(angle); //use function above to create rotation matrix
+  let rotationMatrix = createRotationMatrix(angle); //use export function above to create rotation matrix
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate, 6); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
-function addMatrix([...A]: number[][], [...B]: number[][]) {
+export function addMatrix([...A]: number[][], [...B]: number[][]) {
   if (A.length != B.length || A[0].length != B[0].length) {
     throw "error, input matrices are not the same size";
   } else {
@@ -455,7 +456,7 @@ function addMatrix([...A]: number[][], [...B]: number[][]) {
     return summedMatrix;
   }
 }
-function subtractMatrix([...A]: number[][], [...B]: number[][]) {
+export function subtractMatrix([...A]: number[][], [...B]: number[][]) {
   if (A.length != B.length || A[0].length != B[0].length) {
     throw "error, input matrices are not the same size";
   } else {
@@ -471,6 +472,7 @@ function subtractMatrix([...A]: number[][], [...B]: number[][]) {
     return subtractedMatrix;
   }
 }
+
 // console.log(matrixDeterminant(inputArray07)); //find determinant of 2x2
 // console.log(matrixDeterminant(inputArray02)); //find determinant of 3x3
 // console.log(matrixDeterminant(inputArray015)); //find determinant of 4x4

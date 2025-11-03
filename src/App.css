@@ -1,0 +1,21 @@
+[class^="row"] {
+  display: inline-flex;
+  flex-direction: column;
+}
+p {
+  padding: 5px;
+  margin: 5px;
+}
+.openBr {
+  border: 2px solid black;
+  border-right: none;
+  width: 5px;
+}
+.closeBr {
+  border: 2px solid black;
+  border-left: none;
+  width: 5px;
+}
+main {
+  display: flex;
+}
