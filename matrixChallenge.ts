@@ -144,8 +144,8 @@ function matrixDeterminant([...A]: number[][]) {
   } else {
     for (let s = 0; s < A.length; s++) {
       let tempMatrix: number[][] = []; //temp array to store n-1xn-1 submatrix
-      let x = 0;
-      let y = s; // position to delete row and column of
+      //let x = 0;
+      //let y = s; // position to delete row and column of
       let tempMatrixI: number[][] = []; //second temp variable needed due to array issues (or skill issue)
       tempMatrix = A.slice(1, A.length); //get all rows starting at index 1(2nd row) aka remove top row
       for (let i = 0; i < A.length - 1; i++) {
@@ -210,7 +210,7 @@ function matrix2x2or3x3xDeterminant([...A]: number[][]) {
   return detA; //return value
 }
 function matrixInverse([...A]: number[][], decimalPlaces: number) {
-  let detA: number | undefined = matrixDeterminant(A);
+  const detA: number | undefined = matrixDeterminant(A);
   if (detA == undefined) {
     throw "error, can't calculate that yet or determinant threw error";
   }
@@ -225,8 +225,8 @@ function matrixInverse([...A]: number[][], decimalPlaces: number) {
   }
   let calcMatrix = [...A]; //prevent splice etc from messing with the original array/matrix
   if (calcMatrix.length == 2) {
-    let Last: number = calcMatrix[1][1]; //last element in matrix
-    let First = calcMatrix[0][0]; //first element in matrix
+    const Last: number = calcMatrix[1][1]; //last element in matrix
+    const First = calcMatrix[0][0]; //first element in matrix
     calcMatrix[0].splice(0, 1, Last); //replace first with last
     calcMatrix[1].splice(1, 1, First); //replace last with first
     //start of section messing with values
@@ -341,7 +341,7 @@ function matrixInverse([...A]: number[][], decimalPlaces: number) {
       }
     }
   }
-  let inversionTest: number[][] = matrixMultiplication(A, inverseMatrix, 0);
+  const inversionTest: number[][] = matrixMultiplication(A, inverseMatrix, 0);
   let inverseCorrect: boolean = true;
   for (let i = 0; i < A.length; i++) {
     for (let j = 0; j < A[0].length; j++) {
@@ -419,7 +419,7 @@ function createRotationMatrix(angle: number) {
   } else {
     newAngle = angle; //if not set to degrees, leave as angle given
   }
-  let rotateMatrix: number[][] = [
+  const rotateMatrix: number[][] = [
     [
       Math.round(Math.cos(newAngle) * 1000000000) / 1000000000,
       Math.round(Math.sin(newAngle) * 1000000000) / 1000000000,
