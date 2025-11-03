@@ -491,5 +491,5 @@ export function subtractMatrix([...A]: number[][], [...B]: number[][]) {
 // console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees. value depends on angleMode
 // console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0 first value depends on angleMode
 // console.log(matrixMultiplication(inputArray07, inputArray010, 6));
-console.log(addMatrix(inputArray01, inputArray01));
-console.log(subtractMatrix(inputArray01, inputArray01));
+// console.log(addMatrix(inputArray01, inputArray01));
+// console.log(subtractMatrix(inputArray01, inputArray01));

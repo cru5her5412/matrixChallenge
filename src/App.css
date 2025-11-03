@@ -1,6 +1,7 @@
 [class^="row"] {
-  display: inline-flex;
-  flex-direction: column;
+  /* selects all elements with classname starting with row */
+  display: flex;
+  flex-direction: row;
 }
 p {
   padding: 5px;
@@ -18,4 +19,5 @@ p {
 }
 main {
   display: flex;
+  flex-direction: row;
 }
