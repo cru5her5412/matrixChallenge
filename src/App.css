@@ -20,4 +20,10 @@ p {
 main {
   display: flex;
   flex-direction: row;
+  margin: 10px;
+}
+.inputA {
+  padding: 5px;
+  margin: 5px;
+  display: block;
 }
