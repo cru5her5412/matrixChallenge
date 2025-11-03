@@ -439,17 +439,48 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate, 6); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
-
+function addMatrix([...A]: number[][], [...B]: number[][]) {
+  if (A.length != B.length || A[0].length != B[0].length) {
+    throw "error, input matrices are not the same size";
+  } else {
+    let summedMatrix: number[][] = [];
+    A.forEach(() => {
+      summedMatrix.push([]);
+    });
+    for (let i = 0; i < A.length; i++) {
+      for (let j = 0; j < A[0].length; j++) {
+        summedMatrix[i][j] = A[i][j] + B[i][j];
+      }
+    }
+    return summedMatrix;
+  }
+}
+function subtractMatrix([...A]: number[][], [...B]: number[][]) {
+  if (A.length != B.length || A[0].length != B[0].length) {
+    throw "error, input matrices are not the same size";
+  } else {
+    let subtractedMatrix: number[][] = [];
+    A.forEach(() => {
+      subtractedMatrix.push([]);
+    });
+    for (let i = 0; i < A.length; i++) {
+      for (let j = 0; j < A[0].length; j++) {
+        subtractedMatrix[i][j] = A[i][j] - B[i][j];
+      }
+    }
+    return subtractedMatrix;
+  }
+}
 // console.log(matrixDeterminant(inputArray07)); //find determinant of 2x2
 // console.log(matrixDeterminant(inputArray02)); //find determinant of 3x3
 // console.log(matrixDeterminant(inputArray015)); //find determinant of 4x4
 // console.log(matrixDeterminant(inputArray014)); //find determinant of 5x5
 // console.log(matrixDeterminant(inputArray016)); //find determinant of 6x6
-// console.log(matrixMultiplication(inputArray07, inputArray013)); //multiply 2x2 and 2x2
-// console.log(matrixMultiplication(inputArray01, inputArray02)); //multiply 3x3 and 3x3
-// console.log(matrixMultiplication(inputArray03, inputArray04)); //multiply 4x4 and 4x4
-// console.log(matrixMultiplication(inputArray05, inputArray06)); //multiply 5x5 and 5x5
-// console.log(matrixMultiplication(inputArray016, inputArray016)); //multiply 6x6 and 6x6
+// console.log(matrixMultiplication(inputArray07, inputArray013, 6)); //multiply 2x2 and 2x2
+// console.log(matrixMultiplication(inputArray01, inputArray02, 6)); //multiply 3x3 and 3x3
+// console.log(matrixMultiplication(inputArray03, inputArray04, 6)); //multiply 4x4 and 4x4
+// console.log(matrixMultiplication(inputArray05, inputArray06, 6)); //multiply 5x5 and 5x5
+// console.log(matrixMultiplication(inputArray016, inputArray016, 6)); //multiply 6x6 and 6x6
 // console.log(matrixInverse(inputArray07, 6)); //invert 2x2
 // console.log(matrixInverse(inputArray08, 6)); //invert 3x3
 // console.log(matrixInverse(inputArray015, 6)); //invert 4x4
@@ -458,3 +489,5 @@ function rotateMatrix(angle: number, matrixToRotate: number[][]) {
 // console.log(createRotationMatrix(180)); //rotation matrix for PI radians/180 degrees. value depends on angleMode
 // console.log(rotateMatrix(180, [[12], [32]])); //rotate coords 12,32 PI radians/ 180 degrees around the origin/0,0 first value depends on angleMode
 // console.log(matrixMultiplication(inputArray07, inputArray010, 6));
+console.log(addMatrix(inputArray01, inputArray01));
+console.log(subtractMatrix(inputArray01, inputArray01));
