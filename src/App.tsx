@@ -25,6 +25,11 @@ export default function App() {
   }
 
   const [matrixA, setMatrixA] = useState(I);
+  const [matrixB, setMatrixB] = useState(I);
+  const [matrixC, setMatrixC] = useState(I);
+  const [matrixD, setMatrixD] = useState(I);
+  const [matrixE, setMatrixE] = useState(I);
+  const [matrixF, setMatrixF] = useState(I);
   const inputA: number[][] = [];
   for (let i = 0; i < matrixA.length; i++) {
     inputA.push([]);
@@ -37,17 +42,68 @@ export default function App() {
   console.log(inputA);
 
   function displayMatrix(x: number[][]) {
-    return x.map((row, indexR) => (
-      <section key={indexR} className={`row${indexR}`}>
-        {row.map((col, indexC) => {
-          return (
-            <p key={indexC} className={`row${indexR} col${indexC}`}>
-              {col}
-            </p>
-          );
-        })}
+    return (
+      <div className="matrixDisplay">
+        <div className="openBr"></div>
+        <p>
+          {x.map((row, indexR) => (
+            <section key={indexR} className={`row${indexR}`}>
+              {row.map((col, indexC) => {
+                return (
+                  <p key={indexC} className={`row${indexR} col${indexC}`}>
+                    {col}
+                  </p>
+                );
+              })}
+            </section>
+          ))}
+        </p>
+        <div className="closeBr"></div>
+      </div>
+    );
+  }
+  function inputMatrix() {
+    return (
+      <section>
+        <section style={{ display: "inline-flex" }}>
+          <div className="openBr"></div>
+          <div>
+            {matrixA.map((row, indexR) => (
+              <form key={indexR} className={`row${indexR}`}>
+                {row.map((_, indexC) => {
+                  return (
+                    <input
+                      type="number"
+                      onSelect={() => console.log("hi")}
+                      onChange={(e) => {
+                        handleEditMatrix(indexR, indexC, e.target.value);
+                      }}
+                      key={`col${indexC}row${indexR}`}
+                      className={`row${indexR} col${indexC} inputA`}
+                      value={matrixA[indexR][indexC]}
+                    />
+                  );
+                })}
+              </form>
+            ))}
+          </div>
+
+          <div className="closeBr"></div>
+        </section>
+        <section className="buttonSection">
+          <div className="buttonRows">
+            <h2>Rows</h2>
+            <button onClick={handleShrinkRows}>-</button>
+            <button onClick={handleGrowRows}>+</button>
+          </div>
+          <div className="buttonCols">
+            <h2>Columns</h2>
+            <button onClick={handleShrinkCols}>-</button>
+            <button onClick={handleGrowCols}>+</button>
+          </div>
+        </section>
       </section>
-    ));
+    );
   }
   function handleEditMatrix(row: number, col: number, value: string) {
     const tempMatrix: string[][] = [...matrixA];
@@ -96,47 +152,10 @@ export default function App() {
   return (
     <>
       <h1>Hi</h1>
-      {/* <main>
-        <div className="openBr"></div>
-        <section>{displayMatrix(x)}</section>
-        <div className="closeBr"></div>
-      </main> */}
-      <section>
-        <section style={{ display: "inline-flex" }}>
-          <div className="openBr"></div>
-          <div>
-            {matrixA.map((row, indexR) => (
-              <form key={indexR} className={`row${indexR}`}>
-                {row.map((_, indexC) => {
-                  return (
-                    <input
-                      type="number"
-                      onChange={(e) => {
-                        handleEditMatrix(indexR, indexC, e.target.value);
-                      }}
-                      key={`col${indexC}row${indexR}`}
-                      className={`row${indexR} col${indexC} inputA`}
-                      value={matrixA[indexR][indexC]}
-                    />
-                  );
-                })}
-              </form>
-            ))}
-          </div>
-
-          <div className="closeBr"></div>
-        </section>
-        <div className="buttonRows">
-          <h2>Rows</h2>
-          <button onClick={handleShrinkRows}>-</button>
-          <button onClick={handleGrowRows}>+</button>
-        </div>
-        <div className="buttonCols">
-          <h2>Columns</h2>
-          <button onClick={handleShrinkCols}>-</button>
-          <button onClick={handleGrowCols}>+</button>
-        </div>
-      </section>
+      <main>
+        <section>{displayMatrix(inputA)}</section>
+      </main>
+      <section>{inputMatrix()}</section>
     </>
   );
 }
