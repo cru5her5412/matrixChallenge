@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   addMatrix,
   matrixMultiplication,
@@ -12,42 +12,78 @@ import {
 //TODO: fix issues with matrixes overlapping when edited
 import "./App.css";
 export default function App() {
-  const matARows = 2;
-  const matACols = 2;
-  const I: string[][] = [];
-  for (let i = 0; i < matARows; i++) {
-    I.push([]);
-  }
+  const A: string[][] = [];
+  const B: string[][] = [];
+  const C: string[][] = [];
+  const D: string[][] = [];
+  const E: string[][] = [];
+  const F: string[][] = [];
+  createInitialMatrices(A);
+  createInitialMatrices(B);
+  createInitialMatrices(C);
+  createInitialMatrices(D);
+  createInitialMatrices(E);
+  createInitialMatrices(F);
 
-  for (let i = 0; i < matARows; i++) {
-    for (let j = 0; j < matACols; j++) {
-      I[i][j] = "";
+  function createInitialMatrices(I: string[][]) {
+    for (let i = 0; i < 2; i++) {
+      I.push([]);
+    }
+
+    for (let i = 0; i < 2; i++) {
+      for (let j = 0; j < 2; j++) {
+        I[i][j] = "0";
+      }
     }
   }
 
-  const [matrixA, setMatrixA] = useState([...I]);
-  const [matrixB, setMatrixB] = useState([...I]);
-  const [matrixC, setMatrixC] = useState([...I]);
-  const [matrixD, setMatrixD] = useState([...I]);
-  const [matrixE, setMatrixE] = useState([...I]);
-  const [matrixF, setMatrixF] = useState([...I]);
+  const [matrixA, setMatrixA] = useState([...A]);
+  const [matrixB, setMatrixB] = useState([...B]);
+  const [matrixC, setMatrixC] = useState([...C]);
+  const [matrixD, setMatrixD] = useState([...D]);
+  const [matrixE, setMatrixE] = useState([...E]);
+  const [matrixF, setMatrixF] = useState([...F]);
+  console.log(matrixA);
+  console.log(matrixB);
+  console.log(matrixC);
+  console.log(matrixD);
+  console.log(matrixE);
+  console.log(matrixF);
+
   const inputA: number[][] = [];
-  for (let i = 0; i < matrixA.length; i++) {
-    inputA.push([]);
-  }
-  for (let i = 0; i < matrixA.length; i++) {
-    for (let j = 0; j < matrixA[0].length; j++) {
-      inputA[i][j] = Number(matrixA[i][j]);
+  const inputB: number[][] = [];
+  const inputC: number[][] = [];
+  const inputD: number[][] = [];
+  const inputE: number[][] = [];
+  const inputF: number[][] = [];
+  createInputMatrices(matrixA, inputA);
+  createInputMatrices(matrixB, inputB);
+  createInputMatrices(matrixC, inputC);
+  createInputMatrices(matrixD, inputD);
+  createInputMatrices(matrixE, inputE);
+  createInputMatrices(matrixF, inputF);
+  console.log(inputA);
+  console.log(inputB);
+  console.log(inputC);
+  console.log(inputD);
+  console.log(inputE);
+  console.log(inputF);
+  function createInputMatrices(A: string[][], matrixOut: number[][]) {
+    for (let i = 0; i < A.length; i++) {
+      matrixOut.push([]);
+    }
+    for (let i = 0; i < A.length; i++) {
+      for (let j = 0; j < A[0].length; j++) {
+        matrixOut[i][j] = Number(A[i][j]);
+      }
     }
   }
-  console.log(inputA);
-
-  function displayMatrix(x: number[][]) {
+  function displayMatrix(A: number[][]) {
     return (
       <div className="matrixDisplay">
         <div className="openBr"></div>
         <span>
-          {x.map((row, indexR) => (
+          {A.map((row, indexR) => (
             <section key={indexR} className={`row${indexR}`}>
               {row.map((col, indexC) => {
                 return (
@@ -63,7 +99,7 @@ export default function App() {
       </div>
     );
   }
-  function inputMatrix(A: string[][]) {
+  function inputMatrix(A: string[][], matrixID: number) {
     return (
       <section>
         <section style={{ display: "inline-flex" }}>
@@ -75,9 +111,14 @@ export default function App() {
                   return (
                     <input
                       type="number"
-                      onSelect={() => console.log("hi")}
                       onChange={(e) => {
-                        handleEditMatrix(indexR, indexC, e.target.value, A);
+                        handleEditMatrix(
+                          indexR,
+                          indexC,
+                          e.target.value,
+                          [...A],
+                          matrixID
+                        );
                       }}
                       key={`col${indexC}row${indexR}`}
                       className={`row${indexR} col${indexC} inputA`}
@@ -94,13 +135,13 @@ export default function App() {
         <section className="buttonSection">
           <div className="buttonRows">
             <h2>Rows</h2>
-            <button onClick={() => handleShrinkRows(A)}>-</button>
-            <button onClick={() => handleGrowRows(A)}>+</button>
+            <button onClick={() => handleShrinkRows(A, matrixID)}>-</button>
+            <button onClick={() => handleGrowRows(A, matrixID)}>+</button>
           </div>
           <div className="buttonCols">
             <h2>Columns</h2>
-            <button onClick={() => handleShrinkCols(A)}>-</button>
-            <button onClick={() => handleGrowCols(A)}>+</button>
+            <button onClick={() => handleShrinkCols(A, matrixID)}>-</button>
+            <button onClick={() => handleGrowCols(A, matrixID)}>+</button>
           </div>
         </section>
       </section>
@@ -110,45 +151,52 @@ export default function App() {
     row: number,
     col: number,
     value: string,
-    A: string[][]
+    A: string[][],
+    matrixID: number
   ) {
     const tempMatrix: string[][] = [...A];
     tempMatrix[row][col] = value;
     console.log(tempMatrix);
-    if (A == matrixA) {
+    if (matrixID == 0) {
       setMatrixA(tempMatrix);
-    } else if (A == matrixB) {
+      console.log("A");
+    } else if (matrixID == 1) {
       setMatrixB(tempMatrix);
-    } else if (A == matrixC) {
+      console.log("B");
+    } else if (matrixID == 2) {
       setMatrixC(tempMatrix);
-    } else if (A == matrixD) {
+      console.log("C");
+    } else if (matrixID == 3) {
       setMatrixD(tempMatrix);
-    } else if (A == matrixE) {
+      console.log("D");
+    } else if (matrixID == 4) {
       setMatrixE(tempMatrix);
-    } else if (A == matrixF) {
+      console.log("E");
+    } else if (matrixID == 5) {
       setMatrixF(tempMatrix);
+      console.log("F");
     }
   }
-  function handleShrinkRows(A: string[][]) {
+  function handleShrinkRows(A: string[][], matrixID: number) {
     if (A.length > 2) {
       const tempMatrix = [...A];
       tempMatrix.splice(tempMatrix.length - 1, 1);
-      if (A == matrixA) {
+      if (matrixID == 0) {
         setMatrixA(tempMatrix);
-      } else if (A == matrixB) {
+      } else if (matrixID == 1) {
         setMatrixB(tempMatrix);
-      } else if (A == matrixC) {
+      } else if (matrixID == 2) {
         setMatrixC(tempMatrix);
-      } else if (A == matrixD) {
+      } else if (matrixID == 3) {
         setMatrixD(tempMatrix);
-      } else if (A == matrixE) {
+      } else if (matrixID == 4) {
         setMatrixE(tempMatrix);
-      } else if (A == matrixF) {
+      } else if (matrixID == 5) {
         setMatrixF(tempMatrix);
       }
     }
   }
-  function handleGrowRows(A: string[][]) {
+  function handleGrowRows(A: string[][], matrixID: number) {
     if (A.length < 6) {
       const tempMatrix = [...A];
       tempMatrix.push([]);
@@ -156,43 +204,43 @@ export default function App() {
         tempMatrix[tempMatrix.length - 1].push("");
       }
       console.log(tempMatrix);
-      if (A == matrixA) {
+      if (matrixID == 0) {
         setMatrixA(tempMatrix);
-      } else if (A == matrixB) {
+      } else if (matrixID == 1) {
         setMatrixB(tempMatrix);
-      } else if (A == matrixC) {
+      } else if (matrixID == 2) {
         setMatrixC(tempMatrix);
-      } else if (A == matrixD) {
+      } else if (matrixID == 3) {
         setMatrixD(tempMatrix);
-      } else if (A == matrixE) {
+      } else if (matrixID == 4) {
         setMatrixE(tempMatrix);
-      } else if (A == matrixF) {
+      } else if (matrixID == 5) {
         setMatrixF(tempMatrix);
       }
     }
   }
-  function handleShrinkCols(A: string[][]) {
+  function handleShrinkCols(A: string[][], matrixID: number) {
     if (A[0].length > 2) {
       const tempMatrix = [...A];
       for (let i = 0; i < A.length; i++) {
         tempMatrix[i].splice(tempMatrix[i].length - 1, 1);
       }
-      if (A == matrixA) {
+      if (matrixID == 0) {
         setMatrixA(tempMatrix);
-      } else if (A == matrixB) {
+      } else if (matrixID == 1) {
         setMatrixB(tempMatrix);
-      } else if (A == matrixC) {
+      } else if (matrixID == 2) {
         setMatrixC(tempMatrix);
-      } else if (A == matrixD) {
+      } else if (matrixID == 3) {
         setMatrixD(tempMatrix);
-      } else if (A == matrixE) {
+      } else if (matrixID == 4) {
         setMatrixE(tempMatrix);
-      } else if (A == matrixF) {
+      } else if (matrixID == 5) {
         setMatrixF(tempMatrix);
       }
     }
   }
-  function handleGrowCols(A: string[][]) {
+  function handleGrowCols(A: string[][], matrixID: number) {
     if (A[0].length < 6) {
       const tempMatrix = [...A];
 
@@ -200,17 +248,17 @@ export default function App() {
         tempMatrix[i].push("");
       }
       console.log(tempMatrix);
-      if (A == matrixA) {
+      if (matrixID == 0) {
         setMatrixA(tempMatrix);
-      } else if (A == matrixB) {
+      } else if (matrixID == 1) {
         setMatrixB(tempMatrix);
-      } else if (A == matrixC) {
+      } else if (matrixID == 2) {
         setMatrixC(tempMatrix);
-      } else if (A == matrixD) {
+      } else if (matrixID == 3) {
         setMatrixD(tempMatrix);
-      } else if (A == matrixE) {
+      } else if (matrixID == 4) {
         setMatrixE(tempMatrix);
-      } else if (A == matrixF) {
+      } else if (matrixID == 5) {
         setMatrixF(tempMatrix);
       }
     }
@@ -218,15 +266,18 @@ export default function App() {
   return (
     <>
       <h1>Hi</h1>
-      <main>
-        <section>{displayMatrix(inputA)}</section>
-      </main>
-      <section>{inputMatrix(matrixA)}</section>
-      <section>{inputMatrix(matrixB)}</section>
-      <section>{inputMatrix(matrixC)}</section>
-      <section>{inputMatrix(matrixD)}</section>
-      <section>{inputMatrix(matrixE)}</section>
-      <section>{inputMatrix(matrixF)}</section>
+      <section>{displayMatrix(inputA)}</section>
+      <section>{inputMatrix(matrixA, 0)}</section>
+      <section>{displayMatrix(inputB)}</section>
+      <section>{inputMatrix(matrixB, 1)}</section>
+      <section>{displayMatrix(inputC)}</section>
+      <section>{inputMatrix(matrixC, 2)}</section>
+      <section>{displayMatrix(inputD)}</section>
+      <section>{inputMatrix(matrixD, 3)}</section>
+      <section>{displayMatrix(inputE)}</section>
+      <section>{inputMatrix(matrixE, 4)}</section>
+      <section>{displayMatrix(inputF)}</section>
+      <section>{inputMatrix(matrixF, 5)}</section>
     </>
   );
 }
