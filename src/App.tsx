@@ -9,9 +9,16 @@ import {
   rotateMatrix,
   subtractMatrix,
 } from "../matrixChallenge.ts";
-//TODO: fix issues with matrixes overlapping when edited
+//TODO: maybe add thing to remove e from input boxes(number so it can be input but it does nothing)
+//TODO: make calculator functional (input is solved for the most part just need logic for creating matrices and hide/show based on whether a matrix is being used, and logic for performing calculations)
 import "./App.css";
 export default function App() {
+  const [AHidden, setAHidden] = useState(true);
+  const [BHidden, setBHidden] = useState(true);
+  const [CHidden, setCHidden] = useState(true);
+  const [DHidden, setDHidden] = useState(true);
+  const [EHidden, setEHidden] = useState(true);
+  const [FHidden, setFHidden] = useState(true);
   const A: string[][] = [];
   const B: string[][] = [];
   const C: string[][] = [];
@@ -263,11 +270,10 @@ export default function App() {
       }
     }
   }
+
   return (
     <>
-      <h1>Hi</h1>
-      <section>{displayMatrix(inputA)}</section>
-      <section>{inputMatrix(matrixA, 0)}</section>
+      {/*
       <section>{displayMatrix(inputB)}</section>
       <section>{inputMatrix(matrixB, 1)}</section>
       <section>{displayMatrix(inputC)}</section>
@@ -277,7 +283,26 @@ export default function App() {
       <section>{displayMatrix(inputE)}</section>
       <section>{inputMatrix(matrixE, 4)}</section>
       <section>{displayMatrix(inputF)}</section>
-      <section>{inputMatrix(matrixF, 5)}</section>
+      <section>{inputMatrix(matrixF, 5)}</section> */}
+      <section
+        style={{ border: "1px solid black", height: "90vh", width: "40vw" }}
+      >
+        <h2>calculator</h2>
+        {AHidden ? (
+          <section className="A">{displayMatrix(inputA)}</section>
+        ) : null}
+        <section className="calcButtons">
+          <button onClick={() => setAHidden(!AHidden)}>A</button>
+          <button onClick={() => setBHidden(!BHidden)}>B</button>
+          <button onClick={() => setCHidden(!CHidden)}>C</button>
+          <button onClick={() => setDHidden(!DHidden)}>D</button>
+          <button onClick={() => setEHidden(!EHidden)}>E</button>
+          <button onClick={() => setFHidden(!FHidden)}>F</button>
+        </section>
+        {AHidden ? (
+          <section className="A">{inputMatrix(matrixA, 0)}</section>
+        ) : null}
+      </section>
     </>
   );
 }

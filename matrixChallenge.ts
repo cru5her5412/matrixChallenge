@@ -1,7 +1,7 @@
 //TODO: add comments to anywhere i missed
 //TODO: fix 2x2 matrix inversion(seems to not work idk why yet)
 
-let angleMode: "DEGREE" | "RADIAN" = "DEGREE";
+const angleMode: "DEGREE" | "RADIAN" = "DEGREE";
 const PI = Math.PI; //added to simplify manual input of angle
 const inputArray01: number[][] = [
   [1, 2, 3],
@@ -109,7 +109,7 @@ export function matrixMultiplication(
   decimalPlaces: number
 ) {
   //added clarification here
-  let output: number[][] = []; //added clarification here
+  const output: number[][] = []; //added clarification here
   if (A[0].length != B.length) {
     throw "error, invalid matrices to multiply, remember the width of A must match the height of B";
   }
@@ -147,7 +147,7 @@ export function matrixDeterminant([...A]: number[][]) {
       let tempMatrix: number[][] = []; //temp array to store n-1xn-1 submatrix
       //let x = 0;
       //let y = s; // position to delete row and column of
-      let tempMatrixI: number[][] = []; //second temp variable needed due to array issues (or skill issue)
+      const tempMatrixI: number[][] = []; //second temp variable needed due to array issues (or skill issue)
       tempMatrix = A.slice(1, A.length); //get all rows starting at index 1(2nd row) aka remove top row
       for (let i = 0; i < A.length - 1; i++) {
         tempMatrixI[i] = tempMatrix[i].toSpliced(s, 1); //remove value corresponding to that in the column to remove
@@ -164,8 +164,8 @@ export function matrixDeterminant([...A]: number[][]) {
 
 export function matrix2x2or3x3xDeterminant([...A]: number[][]) {
   let detA: number = 0;
-  let detAi: number[] = []; //first half of determinant(leading diagonal)
-  let detAii: number[] = []; //second half of determinant (non-leading diagonal)
+  const detAi: number[] = []; //first half of determinant(leading diagonal)
+  const detAii: number[] = []; //second half of determinant (non-leading diagonal)
 
   let iterationCount: number; //needed due to 2x2 matrix having a difference in method (n-1 instead of n)
   if (A.length == 2) {
@@ -224,7 +224,7 @@ export function matrixInverse([...A]: number[][], decimalPlaces: number) {
   for (let i = 0; i < A.length; i++) {
     inverseMatrix.push([]); //fill array with empty arrays for each of the rows in the matrix
   }
-  let calcMatrix = [...A]; //prevent splice etc from messing with the original array/matrix
+  const calcMatrix = [...A]; //prevent splice etc from messing with the original array/matrix
   if (calcMatrix.length == 2) {
     const Last: number = calcMatrix[1][1]; //last element in matrix
     const First = calcMatrix[0][0]; //first element in matrix
@@ -255,7 +255,7 @@ export function matrixInverse([...A]: number[][], decimalPlaces: number) {
     let row: number = 0;
     let column: number = 0;
     for (let s = 0; s < calcMatrix.length ** 2; s++) {
-      let tempArray: number[][] = [];
+      const tempArray: number[][] = [];
       for (let x = 0; x < calcMatrix.length - 1; x++) {
         tempArray.push([]);
       } //process above creates an empty 'matrix' with n-1 rows
@@ -328,7 +328,7 @@ export function matrixInverse([...A]: number[][], decimalPlaces: number) {
     }
   }
   //create identity matrix matching input size
-  let I: number[][] = [];
+  const I: number[][] = [];
   for (let i = 0; i < A.length; i++) {
     I.push([]);
   }
@@ -436,15 +436,15 @@ export function rotateMatrix(angle: number, matrixToRotate: number[][]) {
   if (matrixToRotate.length > 2 || matrixToRotate[0].length > 2) {
     throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
   }
-  let rotationMatrix = createRotationMatrix(angle); //use export function above to create rotation matrix
-  let rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate, 6); //multiply rotation matrix with matrixToRotate
+  const rotationMatrix = createRotationMatrix(angle); //use export function above to create rotation matrix
+  const rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate, 6); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }
 export function addMatrix([...A]: number[][], [...B]: number[][]) {
   if (A.length != B.length || A[0].length != B[0].length) {
     throw "error, input matrices are not the same size";
   } else {
-    let summedMatrix: number[][] = [];
+    const summedMatrix: number[][] = [];
     A.forEach(() => {
       summedMatrix.push([]);
     });
@@ -460,7 +460,7 @@ export function subtractMatrix([...A]: number[][], [...B]: number[][]) {
   if (A.length != B.length || A[0].length != B[0].length) {
     throw "error, input matrices are not the same size";
   } else {
-    let subtractedMatrix: number[][] = [];
+    const subtractedMatrix: number[][] = [];
     A.forEach(() => {
       subtractedMatrix.push([]);
     });
