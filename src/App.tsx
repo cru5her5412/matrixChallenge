@@ -15,6 +15,7 @@ import {
 import "./App.css";
 import Keypad from "./components/Keypad.tsx";
 import CalculatorDisplay from "./components/CalculatorDisplay.tsx";
+import InputMatrix from "./components/InputMatrix.tsx";
 export default function App() {
   const [AHidden, setAHidden] = useState(true);
   const [BHidden, setBHidden] = useState(true);
@@ -131,7 +132,7 @@ export default function App() {
                         );
                       }}
                       key={`col${indexC}row${indexR}`}
-                      className={`row${indexR} col${indexC} input${matrixID}`}
+                      className={`row${indexR} col${indexC} input${matrixID} inputMatrixInput`}
                       value={A[indexR][indexC]}
                     />
                   );
@@ -285,8 +286,9 @@ export default function App() {
       <section>{inputMatrix(matrixD, 3)}</section>
       <section>{displayMatrix(inputE)}</section>
       <section>{inputMatrix(matrixE, 4)}</section>*/}
-      <section>{displayMatrix(inputF)}</section>
-      <section>{inputMatrix(matrixF, 5)}</section>
+      {/* <section>{displayMatrix(inputF)}</section>
+      <section>{inputMatrix(matrixF, 5)}</section> */}
+      <InputMatrix matrix={matrixA} setMatrix={setMatrixA} />
       {/* <main>
         <CalculatorDisplay />
         <Keypad />
