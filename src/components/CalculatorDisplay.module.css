@@ -1,0 +1,11 @@
+.display {
+  width: 90vw;
+  height: 60vh;
+  border: 1px solid black;
+  margin: auto;
+}
+.calculatorDisplaySection {
+  width: 100%;
+  height: 20%;
+  border: 1px solid black;
+}

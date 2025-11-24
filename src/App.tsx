@@ -10,8 +10,11 @@ import {
   subtractMatrix,
 } from "../matrixChallenge.ts";
 //TODO: maybe add thing to remove e from input boxes(number so it can be input but it does nothing)
-//TODO: make calculator functional (input is solved for the most part just need logic for creating matrices and hide/show based on whether a matrix is being used, and logic for performing calculations)
+//TODO: make calculator functional (need to figure out exact functionality required and how to best implement it)
+//TODO: create wireframes for basic UI/UX
 import "./App.css";
+import Keypad from "./components/Keypad.tsx";
+import CalculatorDisplay from "./components/CalculatorDisplay.tsx";
 export default function App() {
   const [AHidden, setAHidden] = useState(true);
   const [BHidden, setBHidden] = useState(true);
@@ -270,7 +273,7 @@ export default function App() {
       }
     }
   }
-
+  //Visible app here
   return (
     <>
       {/*
@@ -284,10 +287,10 @@ export default function App() {
       <section>{inputMatrix(matrixE, 4)}</section>
       <section>{displayMatrix(inputF)}</section>
       <section>{inputMatrix(matrixF, 5)}</section> */}
-      <section
-        style={{ border: "1px solid black", height: "90vh", width: "40vw" }}
-      >
-        <h2>calculator</h2>
+      <main>
+        <CalculatorDisplay />
+        <Keypad />
+        {/* <h2>calculator</h2>
         {AHidden ? (
           <section className="A">{displayMatrix(inputA)}</section>
         ) : null}
@@ -301,8 +304,8 @@ export default function App() {
         </section>
         {AHidden ? (
           <section className="A">{inputMatrix(matrixA, 0)}</section>
-        ) : null}
-      </section>
+        ) : null} */}
+      </main>
     </>
   );
 }
