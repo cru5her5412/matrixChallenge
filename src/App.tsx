@@ -131,7 +131,7 @@ export default function App() {
                         );
                       }}
                       key={`col${indexC}row${indexR}`}
-                      className={`row${indexR} col${indexC} inputA`}
+                      className={`row${indexR} col${indexC} input${matrixID}`}
                       value={A[indexR][indexC]}
                     />
                   );
@@ -211,7 +211,7 @@ export default function App() {
       const tempMatrix = [...A];
       tempMatrix.push([]);
       for (let i = 0; i < A[0].length; i++) {
-        tempMatrix[tempMatrix.length - 1].push("");
+        tempMatrix[tempMatrix.length - 1].push("0");
       }
       console.log(tempMatrix);
       if (matrixID == 0) {
@@ -255,7 +255,7 @@ export default function App() {
       const tempMatrix = [...A];
 
       for (let i = 0; i < A.length; i++) {
-        tempMatrix[i].push("");
+        tempMatrix[i].push("0");
       }
       console.log(tempMatrix);
       if (matrixID == 0) {
@@ -284,13 +284,13 @@ export default function App() {
       <section>{displayMatrix(inputD)}</section>
       <section>{inputMatrix(matrixD, 3)}</section>
       <section>{displayMatrix(inputE)}</section>
-      <section>{inputMatrix(matrixE, 4)}</section>
+      <section>{inputMatrix(matrixE, 4)}</section>*/}
       <section>{displayMatrix(inputF)}</section>
-      <section>{inputMatrix(matrixF, 5)}</section> */}
-      <main>
+      <section>{inputMatrix(matrixF, 5)}</section>
+      {/* <main>
         <CalculatorDisplay />
         <Keypad />
-        {/* <h2>calculator</h2>
+        <h2>calculator</h2>
         {AHidden ? (
           <section className="A">{displayMatrix(inputA)}</section>
         ) : null}
@@ -304,8 +304,8 @@ export default function App() {
         </section>
         {AHidden ? (
           <section className="A">{inputMatrix(matrixA, 0)}</section>
-        ) : null} */}
-      </main>
+        ) : null} 
+      </main>*/}
     </>
   );
 }
