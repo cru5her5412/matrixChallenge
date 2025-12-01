@@ -2,9 +2,11 @@ import type { Dispatch, SetStateAction } from "react";
 export default function InputMatrix({
   matrix,
   setMatrix,
+  matrixID,
 }: {
   matrix: string[][];
   setMatrix: Dispatch<SetStateAction<string[][]>>;
+  matrixID: string;
 }) {
   function displayMatrix(matrix: string[][]) {
     return (
@@ -65,14 +67,14 @@ export default function InputMatrix({
         </section>
         <section className="buttonSection">
           <div className="buttonRows">
-            <h2>Rows</h2>
+            <p>Rows</p>
             <button onClick={() => handleShrinkRows(matrix, setMatrix)}>
               -
             </button>
             <button onClick={() => handleGrowRows(matrix, setMatrix)}>+</button>
           </div>
           <div className="buttonCols">
-            <h2>Columns</h2>
+            <p>Columns</p>
             <button onClick={() => handleShrinkCols(matrix, setMatrix)}>
               -
             </button>
@@ -147,9 +149,21 @@ export default function InputMatrix({
     }
   }
   return (
-    <>
-      <section>{inputMatrix(matrix, setMatrix)}</section>
-      <section>{displayMatrix(matrix)}</section>
-    </>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{ display: "inline-flex", alignItems: "center", margin: "10px" }}
+      >
+        <h1>{matrixID}</h1>
+        <p>=</p>
+        <section>{inputMatrix(matrix, setMatrix)}</section>
+      </div>
+      <div
+        style={{ display: "inline-flex", alignItems: "center", margin: "10px" }}
+      >
+        <h1>{matrixID}</h1>
+        <p>=</p>
+        <section>{displayMatrix(matrix)}</section>
+      </div>
+    </div>
   );
 }
