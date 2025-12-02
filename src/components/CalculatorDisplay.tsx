@@ -40,11 +40,18 @@ export default function CalculatorDisplay({
   setMatrixF: Dispatch<SetStateAction<string[][]>>;
   FHidden: boolean;
 }) {
+  const matrixAHeight = (matrixA.length - 2) * 30 + 120;
+  const matrixBHeight = (matrixB.length - 2) * 30 + 120;
+  const matrixCHeight = (matrixC.length - 2) * 30 + 120;
+  const matrixDHeight = (matrixD.length - 2) * 30 + 120;
+  const matrixEHeight = (matrixE.length - 2) * 30 + 120;
+  const matrixFHeight = (matrixF.length - 2) * 30 + 120;
   return (
     <>
       <section className={displayStyles.display}>
         {!AHidden ? (
           <section
+            style={{ height: `${matrixAHeight}px` }}
             className={displayStyles.calculatorDisplayMatrixInputSection}
           >
             <InputMatrix
@@ -56,6 +63,7 @@ export default function CalculatorDisplay({
         ) : null}
         {!BHidden ? (
           <section
+            style={{ height: `${matrixBHeight}px` }}
             className={displayStyles.calculatorDisplayMatrixInputSection}
           >
             <InputMatrix
@@ -67,6 +75,7 @@ export default function CalculatorDisplay({
         ) : null}
         {!CHidden ? (
           <section
+            style={{ height: `${matrixCHeight}px` }}
             className={displayStyles.calculatorDisplayMatrixInputSection}
           >
             <InputMatrix
@@ -78,6 +87,7 @@ export default function CalculatorDisplay({
         ) : null}
         {!DHidden ? (
           <section
+            style={{ height: `${matrixDHeight}px` }}
             className={displayStyles.calculatorDisplayMatrixInputSection}
           >
             <InputMatrix
@@ -89,6 +99,7 @@ export default function CalculatorDisplay({
         ) : null}
         {!EHidden ? (
           <section
+            style={{ height: `${matrixEHeight}px` }}
             className={displayStyles.calculatorDisplayMatrixInputSection}
           >
             <InputMatrix
@@ -100,6 +111,7 @@ export default function CalculatorDisplay({
         ) : null}
         {!FHidden ? (
           <section
+            style={{ height: `${matrixFHeight}px` }}
             className={displayStyles.calculatorDisplayMatrixInputSection}
           >
             <InputMatrix

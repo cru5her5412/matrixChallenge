@@ -1,0 +1,20 @@
+.display {
+  width: 20vw;
+  height: calc(90vh + 2px);
+  border: 1px solid black;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.matrix {
+  display: flex;
+  align-items: center;
+  margin-left: 5%;
+  height: calc(100% / 6);
+}
+.matrixPart {
+  font-size: smaller;
+}
+[class^="row"] {
+  padding: 1px;
+  margin: 1px;
+}

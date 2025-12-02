@@ -43,6 +43,7 @@ export default function InputMatrix({
                 {row.map((_, indexC) => {
                   return (
                     <input
+                      style={{ width: "50px" }}
                       type="number"
                       onChange={(e) => {
                         handleEditMatrix(

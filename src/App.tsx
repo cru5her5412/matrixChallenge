@@ -15,6 +15,7 @@ import {
 import "./App.css";
 import Keypad from "./components/Keypad.tsx";
 import CalculatorDisplay from "./components/CalculatorDisplay.tsx";
+import MatrixDisplay from "./components/MatrixDisplay.tsx";
 // import InputMatrix from "./components/InputMatrix.tsx";
 export default function App() {
   const [AHidden, setAHidden] = useState(true);
@@ -80,40 +81,50 @@ export default function App() {
   //Visible app here
   return (
     <>
-      <main>
-        <CalculatorDisplay
+      <main className="mainContainer">
+        <section>
+          <CalculatorDisplay
+            matrixA={matrixA}
+            setMatrixA={setMatrixA}
+            AHidden={AHidden}
+            matrixB={matrixB}
+            setMatrixB={setMatrixB}
+            BHidden={BHidden}
+            matrixC={matrixC}
+            setMatrixC={setMatrixC}
+            CHidden={CHidden}
+            matrixD={matrixD}
+            setMatrixD={setMatrixD}
+            DHidden={DHidden}
+            matrixE={matrixE}
+            setMatrixE={setMatrixE}
+            EHidden={EHidden}
+            matrixF={matrixF}
+            setMatrixF={setMatrixF}
+            FHidden={FHidden}
+          />
+          <Keypad
+            setAHidden={setAHidden}
+            AHidden={AHidden}
+            setBHidden={setBHidden}
+            BHidden={BHidden}
+            setCHidden={setCHidden}
+            CHidden={CHidden}
+            setDHidden={setDHidden}
+            DHidden={DHidden}
+            setEHidden={setEHidden}
+            EHidden={EHidden}
+            setFHidden={setFHidden}
+            FHidden={FHidden}
+          />
+        </section>
+        <MatrixDisplay
           matrixA={matrixA}
-          setMatrixA={setMatrixA}
-          AHidden={AHidden}
           matrixB={matrixB}
-          setMatrixB={setMatrixB}
-          BHidden={BHidden}
           matrixC={matrixC}
-          setMatrixC={setMatrixC}
-          CHidden={CHidden}
           matrixD={matrixD}
-          setMatrixD={setMatrixD}
-          DHidden={DHidden}
           matrixE={matrixE}
-          setMatrixE={setMatrixE}
-          EHidden={EHidden}
           matrixF={matrixF}
-          setMatrixF={setMatrixF}
-          FHidden={FHidden}
-        />
-        <Keypad
-          setAHidden={setAHidden}
-          AHidden={AHidden}
-          setBHidden={setBHidden}
-          BHidden={BHidden}
-          setCHidden={setCHidden}
-          CHidden={CHidden}
-          setDHidden={setDHidden}
-          DHidden={DHidden}
-          setEHidden={setEHidden}
-          EHidden={EHidden}
-          setFHidden={setFHidden}
-          FHidden={FHidden}
         />
       </main>
     </>

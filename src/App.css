@@ -45,3 +45,9 @@ p {
 .inputMatrixInput {
   margin: 2px;
 }
+.mainContainer {
+  display: flex;
+  margin: auto;
+  width: 90vw;
+  height: calc(90vh+2px);
+}
