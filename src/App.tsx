@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   addMatrix,
   matrixMultiplication,
@@ -69,15 +69,38 @@ export default function App() {
   createInputMatrices(matrixE, inputE);
   createInputMatrices(matrixF, inputF);
   function createInputMatrices(A: string[][], matrixOut: number[][]) {
-    for (let i = 0; i < A.length; i++) {
-      matrixOut.push([]);
+    if (matrixOut.length < A.length) {
+      for (let i = 0; i < A.length; i++) {
+        matrixOut.push([]);
+      }
     }
     for (let i = 0; i < A.length; i++) {
       for (let j = 0; j < A[0].length; j++) {
         matrixOut[i][j] = Number(A[i][j]);
       }
     }
+    return matrixOut;
   }
+
+  const [calcMatrixA, setCalcMatrixA] = useState(
+    createInputMatrices(matrixA, inputA)
+  );
+  const [calcMatrixB, setCalcMatrixB] = useState(
+    createInputMatrices(matrixB, inputB)
+  );
+  const [calcMatrixC, setCalcMatrixC] = useState(
+    createInputMatrices(matrixC, inputC)
+  );
+  const [calcMatrixD, setCalcMatrixD] = useState(
+    createInputMatrices(matrixD, inputD)
+  );
+  const [calcMatrixE, setCalcMatrixE] = useState(
+    createInputMatrices(matrixE, inputE)
+  );
+  const [calcMatrixF, setCalcMatrixF] = useState(
+    createInputMatrices(matrixF, inputF)
+  );
+
   //Visible app here
   return (
     <>

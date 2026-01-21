@@ -94,9 +94,7 @@ export default function InputMatrix({
   ) {
     const tempMatrix: string[][] = [...matrix];
     tempMatrix[row][col] = value;
-    console.log(tempMatrix);
     setMatrix(tempMatrix);
-    console.log("matrix");
   }
   function handleShrinkRows(
     matrix: string[][],
@@ -118,7 +116,6 @@ export default function InputMatrix({
       for (let i = 0; i < matrix[0].length; i++) {
         tempMatrix[tempMatrix.length - 1].push("0");
       }
-      console.log(tempMatrix);
 
       setMatrix(tempMatrix);
     }
@@ -145,7 +142,6 @@ export default function InputMatrix({
       for (let i = 0; i < matrix.length; i++) {
         tempMatrix[i].push("0");
       }
-      console.log(tempMatrix);
       setMatrix(tempMatrix);
     }
   }
