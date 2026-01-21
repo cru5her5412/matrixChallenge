@@ -10,9 +10,17 @@
   width: 99.9%;
   height: 20%;
   border: 1px solid black;
+  display: flex;
+  align-items: center;
 }
 .calculatorDisplayMatrixInputSection {
   width: 99.9%;
   height: 40%;
   border: 1px solid black;
+}
+.calculatorDisplayCalculatorInput {
+  width: 60%;
+  height: 80%;
+  margin-left: 2%;
+  resize: none;
 }

@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import displayStyles from "./CalculatorDisplay.module.css";
 import InputMatrix from "./InputMatrix";
 export default function CalculatorDisplay({
@@ -20,6 +20,8 @@ export default function CalculatorDisplay({
   matrixF,
   setMatrixF,
   FHidden,
+  DisplayInput,
+  setDisplayInput,
 }: {
   matrixA: string[][];
   setMatrixA: Dispatch<SetStateAction<string[][]>>;
@@ -39,6 +41,7 @@ export default function CalculatorDisplay({
   matrixF: string[][];
   setMatrixF: Dispatch<SetStateAction<string[][]>>;
   FHidden: boolean;
+  DisplayInput: string;
 }) {
   const matrixAHeight = (matrixA.length - 2) * 30 + 120;
   const matrixBHeight = (matrixB.length - 2) * 30 + 120;
@@ -122,7 +125,11 @@ export default function CalculatorDisplay({
           </section>
         ) : null}
         <section className={displayStyles.calculatorDisplaySection}>
-          Calculator here
+          <textarea
+            className={displayStyles.calculatorDisplayCalculatorInput}
+            disabled
+            value={DisplayInput}
+          ></textarea>
         </section>
       </section>
     </>

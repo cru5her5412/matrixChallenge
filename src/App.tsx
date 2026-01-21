@@ -83,24 +83,24 @@ export default function App() {
   }
 
   const [calcMatrixA, setCalcMatrixA] = useState(
-    createInputMatrices(matrixA, inputA)
+    createInputMatrices(matrixA, inputA),
   );
   const [calcMatrixB, setCalcMatrixB] = useState(
-    createInputMatrices(matrixB, inputB)
+    createInputMatrices(matrixB, inputB),
   );
   const [calcMatrixC, setCalcMatrixC] = useState(
-    createInputMatrices(matrixC, inputC)
+    createInputMatrices(matrixC, inputC),
   );
   const [calcMatrixD, setCalcMatrixD] = useState(
-    createInputMatrices(matrixD, inputD)
+    createInputMatrices(matrixD, inputD),
   );
   const [calcMatrixE, setCalcMatrixE] = useState(
-    createInputMatrices(matrixE, inputE)
+    createInputMatrices(matrixE, inputE),
   );
   const [calcMatrixF, setCalcMatrixF] = useState(
-    createInputMatrices(matrixF, inputF)
+    createInputMatrices(matrixF, inputF),
   );
-
+  const [DisplayInput, setDisplayInput] = useState("Hi");
   //Visible app here
   return (
     <>
@@ -125,6 +125,7 @@ export default function App() {
             matrixF={matrixF}
             setMatrixF={setMatrixF}
             FHidden={FHidden}
+            DisplayInput={DisplayInput}
           />
           <Keypad
             setAHidden={setAHidden}
@@ -139,6 +140,8 @@ export default function App() {
             EHidden={EHidden}
             setFHidden={setFHidden}
             FHidden={FHidden}
+            DisplayInput={DisplayInput}
+            setDisplayInput={setDisplayInput}
           />
         </section>
         <MatrixDisplay
