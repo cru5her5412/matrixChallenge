@@ -21,7 +21,6 @@ export default function CalculatorDisplay({
   setMatrixF,
   FHidden,
   DisplayInput,
-  setDisplayInput,
 }: {
   matrixA: string[][];
   setMatrixA: Dispatch<SetStateAction<string[][]>>;
@@ -41,7 +40,7 @@ export default function CalculatorDisplay({
   matrixF: string[][];
   setMatrixF: Dispatch<SetStateAction<string[][]>>;
   FHidden: boolean;
-  DisplayInput: string;
+  DisplayInput: Array<string>;
 }) {
   const matrixAHeight = (matrixA.length - 2) * 30 + 120;
   const matrixBHeight = (matrixB.length - 2) * 30 + 120;
@@ -124,11 +123,12 @@ export default function CalculatorDisplay({
             />
           </section>
         ) : null}
+
         <section className={displayStyles.calculatorDisplaySection}>
           <textarea
             className={displayStyles.calculatorDisplayCalculatorInput}
             disabled
-            value={DisplayInput}
+            value={DisplayInput[0]}
           ></textarea>
         </section>
       </section>

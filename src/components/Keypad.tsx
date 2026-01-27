@@ -28,8 +28,8 @@ export default function Keypad({
   EHidden: boolean;
   setFHidden: Dispatch<SetStateAction<boolean>>;
   FHidden: boolean;
-  DisplayInput: string;
-  setDisplayInput: Dispatch<SetStateAction<string>>;
+  DisplayInput: Array<string>;
+  setDisplayInput: Dispatch<SetStateAction<Array<string>>>;
 }) {
   return (
     <>
@@ -38,7 +38,7 @@ export default function Keypad({
           <button
             className={keypadStyles.keypadButton}
             onClick={() => {
-              setDisplayInput(DisplayInput + "1");
+              setDisplayInput([DisplayInput[0] + "1"]);
               console.log(DisplayInput);
             }}
           >
@@ -46,13 +46,13 @@ export default function Keypad({
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "2")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "2"])}
           >
             2
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "2")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "3"])}
           >
             3
           </button>
@@ -72,19 +72,19 @@ export default function Keypad({
         <div className={keypadStyles.keypadRow}>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "4")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "4"])}
           >
             4
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "5")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "5"])}
           >
             5
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "6")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "6"])}
           >
             6
           </button>
@@ -104,19 +104,19 @@ export default function Keypad({
         <div className={keypadStyles.keypadRow}>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "7")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "7"])}
           >
             7
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "8")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "8"])}
           >
             8
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "9")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "9"])}
           >
             9
           </button>
@@ -136,19 +136,19 @@ export default function Keypad({
         <div className={keypadStyles.keypadRow}>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "+")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "+"])}
           >
             +
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "-")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "-"])}
           >
             -
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput(DisplayInput + "x")}
+            onClick={() => setDisplayInput([DisplayInput[0] + "x"])}
           >
             x
           </button>
@@ -167,9 +167,9 @@ export default function Keypad({
           <button
             className={keypadStyles.keypadButton}
             onClick={() =>
-              setDisplayInput(
-                DisplayInput.substring(0, DisplayInput.length - 1),
-              )
+              setDisplayInput([
+                DisplayInput[0].substring(0, DisplayInput[0].length - 1),
+              ])
             }
           >
             {"<-"}

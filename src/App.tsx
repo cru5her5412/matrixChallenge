@@ -100,7 +100,7 @@ export default function App() {
   const [calcMatrixF, setCalcMatrixF] = useState(
     createInputMatrices(matrixF, inputF),
   );
-  const [DisplayInput, setDisplayInput] = useState("Hi");
+  const [DisplayInput, setDisplayInput] = useState(["Hi"]);
   //Visible app here
   return (
     <>
