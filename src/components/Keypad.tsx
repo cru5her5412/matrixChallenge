@@ -164,7 +164,16 @@ export default function Keypad({
           <button className={keypadStyles.keypadButton}>Change theme</button>
           <button className={keypadStyles.keypadButton}>Settings</button>
           <button className={keypadStyles.keypadButton}>Return</button>
-          <button className={keypadStyles.keypadButton}>{"<-"}</button>
+          <button
+            className={keypadStyles.keypadButton}
+            onClick={() =>
+              setDisplayInput(
+                DisplayInput.substring(0, DisplayInput.length - 1),
+              )
+            }
+          >
+            {"<-"}
+          </button>
         </div>
       </section>
     </>
