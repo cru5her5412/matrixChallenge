@@ -164,6 +164,7 @@ export default function Keypad({
           <button className={keypadStyles.keypadButton}>Change theme</button>
           <button className={keypadStyles.keypadButton}>Settings</button>
           <button className={keypadStyles.keypadButton}>Return</button>
+          <button className={keypadStyles.keypadButton}>{"<-"}</button>
         </div>
       </section>
     </>
