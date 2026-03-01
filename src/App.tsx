@@ -8,7 +8,7 @@ import {
   createRotationMatrix,
   rotateMatrix,
   subtractMatrix,
-} from "../matrixChallenge.ts";
+} from "./components/matrixChallenge.ts";
 //TODO: maybe add thing to remove e from input boxes(number so it can be input but it does nothing)
 //TODO: make calculator functional (need to figure out exact functionality required and how to best implement it)
 //TODO: implement functionality to prevent matrix input exceeding size of display section
@@ -82,25 +82,7 @@ export default function App() {
     return matrixOut;
   }
 
-  const [calcMatrixA, setCalcMatrixA] = useState(
-    createInputMatrices(matrixA, inputA),
-  );
-  const [calcMatrixB, setCalcMatrixB] = useState(
-    createInputMatrices(matrixB, inputB),
-  );
-  const [calcMatrixC, setCalcMatrixC] = useState(
-    createInputMatrices(matrixC, inputC),
-  );
-  const [calcMatrixD, setCalcMatrixD] = useState(
-    createInputMatrices(matrixD, inputD),
-  );
-  const [calcMatrixE, setCalcMatrixE] = useState(
-    createInputMatrices(matrixE, inputE),
-  );
-  const [calcMatrixF, setCalcMatrixF] = useState(
-    createInputMatrices(matrixF, inputF),
-  );
-  const [DisplayInput, setDisplayInput] = useState(["Hi"]);
+  const [DisplayInput, setDisplayInput] = useState([""]);
   //Visible app here
   return (
     <>

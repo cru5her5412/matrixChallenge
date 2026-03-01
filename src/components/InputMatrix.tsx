@@ -31,11 +31,11 @@ export default function InputMatrix({
   }
   function inputMatrix(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     return (
       <section>
-        <section style={{ display: "inline-flex" }}>
+        <section style={{ display: "inline-flex", paddingTop: "5px" }}>
           <div className="openBr"></div>
           <div>
             {matrix.map((row, indexR) => (
@@ -51,7 +51,7 @@ export default function InputMatrix({
                           indexC,
                           e.target.value,
                           [...matrix],
-                          setMatrix
+                          setMatrix,
                         );
                       }}
                       key={`col${indexC}row${indexR}`}
@@ -90,15 +90,23 @@ export default function InputMatrix({
     col: number,
     value: string,
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
+    //An attempt to limit length of each part of the matrix to prevent ovewflowing on the page, later abandoned to allow the matrix display to be scrolled if it overflows
+    // if (value.length > 3) {
+    //   let tempValue: string = "";
+    //   for (let i = 0; i < 3; i++) {
+    //     tempValue += value[i];
+    //   }
+    //   value = String(tempValue);
+    // }
     const tempMatrix: string[][] = [...matrix];
     tempMatrix[row][col] = value;
     setMatrix(tempMatrix);
   }
   function handleShrinkRows(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix.length > 2) {
       const tempMatrix = [...matrix];
@@ -108,7 +116,7 @@ export default function InputMatrix({
   }
   function handleGrowRows(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix.length < 6) {
       const tempMatrix = [...matrix];
@@ -122,7 +130,7 @@ export default function InputMatrix({
   }
   function handleShrinkCols(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix[0].length > 2) {
       const tempMatrix = [...matrix];
@@ -134,7 +142,7 @@ export default function InputMatrix({
   }
   function handleGrowCols(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix[0].length < 6) {
       const tempMatrix = [...matrix];
@@ -146,7 +154,15 @@ export default function InputMatrix({
     }
   }
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <section
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        width: "50vw",
+        border: "black solid 1px ",
+        height: "100%",
+      }}
+    >
       <div
         style={{ display: "inline-flex", alignItems: "center", margin: "10px" }}
       >
@@ -154,13 +170,13 @@ export default function InputMatrix({
         <p>=</p>
         <section>{inputMatrix(matrix, setMatrix)}</section>
       </div>
-      <div
+      {/*  <div
         style={{ display: "inline-flex", alignItems: "center", margin: "10px" }}
       >
         <h1>{matrixID}</h1>
         <p>=</p>
-        <section>{displayMatrix(matrix)}</section>
-      </div>
-    </div>
+        <section>{displayMatrix(matrix)}</section> 
+      </div>*/}
+    </section>
   );
 }

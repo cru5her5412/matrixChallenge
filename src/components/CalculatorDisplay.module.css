@@ -5,6 +5,7 @@
   /* margin: auto; */
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-right: 1px;
 }
 .calculatorDisplaySection {
   width: 99.9%;
@@ -15,7 +16,6 @@
 }
 .calculatorDisplayMatrixInputSection {
   width: 99.9%;
-  height: 40%;
   border: 1px solid black;
 }
 .calculatorDisplayCalculatorInput {

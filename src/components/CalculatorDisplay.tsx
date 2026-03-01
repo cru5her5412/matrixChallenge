@@ -1,5 +1,7 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
 import displayStyles from "./CalculatorDisplay.module.css";
+import matrixDisplayStyles from "./MatrixDisplay.module.css";
+
 import InputMatrix from "./InputMatrix";
 export default function CalculatorDisplay({
   matrixA,
@@ -42,6 +44,27 @@ export default function CalculatorDisplay({
   FHidden: boolean;
   DisplayInput: Array<string>;
 }) {
+  function displayMatrix(matrix: string[][]) {
+    return (
+      <div className="matrixDisplay">
+        <div className="openBr"></div>
+        <span className={matrixDisplayStyles.matrixPart}>
+          {matrix.map((row, indexR) => (
+            <section key={indexR} className={`row${indexR}`}>
+              {row.map((col, indexC) => {
+                return (
+                  <p key={indexC} className={`row${indexR} col${indexC}`}>
+                    {col}
+                  </p>
+                );
+              })}
+            </section>
+          ))}
+        </span>
+        <div className="closeBr"></div>
+      </div>
+    );
+  }
   const matrixAHeight = (matrixA.length - 2) * 30 + 120;
   const matrixBHeight = (matrixB.length - 2) * 30 + 120;
   const matrixCHeight = (matrixC.length - 2) * 30 + 120;
@@ -52,75 +75,138 @@ export default function CalculatorDisplay({
     <>
       <section className={displayStyles.display}>
         {!AHidden ? (
-          <section
-            style={{ height: `${matrixAHeight}px` }}
-            className={displayStyles.calculatorDisplayMatrixInputSection}
-          >
-            <InputMatrix
-              matrix={matrixA}
-              setMatrix={setMatrixA}
-              matrixID={"A"}
-            />
+          <section>
+            <section
+              style={{ height: `${matrixAHeight}px` }}
+              className={displayStyles.calculatorDisplayMatrixInputSection}
+            >
+              <InputMatrix
+                matrix={matrixA}
+                setMatrix={setMatrixA}
+                matrixID={"A"}
+              />
+            </section>
+            <section
+              style={{ height: `${matrixAHeight}px` }}
+              className={matrixDisplayStyles.matrix}
+            >
+              <h1>A</h1>
+              <p>=</p>
+              <div>{displayMatrix(matrixA)}</div>
+            </section>
           </section>
         ) : null}
         {!BHidden ? (
-          <section
-            style={{ height: `${matrixBHeight}px` }}
-            className={displayStyles.calculatorDisplayMatrixInputSection}
-          >
-            <InputMatrix
-              matrix={matrixB}
-              setMatrix={setMatrixB}
-              matrixID={"B"}
-            />
+          <section>
+            <section
+              style={{ height: `${matrixBHeight}px` }}
+              className={displayStyles.calculatorDisplayMatrixInputSection}
+            >
+              <InputMatrix
+                matrix={matrixB}
+                setMatrix={setMatrixB}
+                matrixID={"B"}
+              />
+            </section>
+            <section
+              style={{ height: `${matrixBHeight}px` }}
+              className={matrixDisplayStyles.matrix}
+            >
+              <h1>B</h1>
+              <p>=</p>
+              <div>{displayMatrix(matrixB)}</div>
+            </section>
           </section>
         ) : null}
         {!CHidden ? (
-          <section
-            style={{ height: `${matrixCHeight}px` }}
-            className={displayStyles.calculatorDisplayMatrixInputSection}
-          >
-            <InputMatrix
-              matrix={matrixC}
-              setMatrix={setMatrixC}
-              matrixID={"C"}
-            />
+          <section>
+            <section
+              style={{ height: `${matrixCHeight}px` }}
+              className={displayStyles.calculatorDisplayMatrixInputSection}
+            >
+              <InputMatrix
+                matrix={matrixC}
+                setMatrix={setMatrixC}
+                matrixID={"C"}
+              />
+            </section>
+            <section
+              style={{ height: `${matrixCHeight}px` }}
+              className={matrixDisplayStyles.matrix}
+            >
+              <h1>C</h1>
+              <p>=</p>
+              <div>{displayMatrix(matrixC)}</div>
+            </section>
           </section>
         ) : null}
         {!DHidden ? (
-          <section
-            style={{ height: `${matrixDHeight}px` }}
-            className={displayStyles.calculatorDisplayMatrixInputSection}
-          >
-            <InputMatrix
-              matrix={matrixD}
-              setMatrix={setMatrixD}
-              matrixID={"D"}
-            />
+          <section>
+            <section
+              style={{ height: `${matrixDHeight}px` }}
+              className={displayStyles.calculatorDisplayMatrixInputSection}
+            >
+              <InputMatrix
+                matrix={matrixD}
+                setMatrix={setMatrixD}
+                matrixID={"D"}
+              />
+            </section>
+            <section
+              style={{ height: `${matrixDHeight}px` }}
+              className={matrixDisplayStyles.matrix}
+            >
+              <h1>D</h1>
+              <p>=</p>
+              <div>{displayMatrix(matrixD)}</div>
+            </section>
           </section>
         ) : null}
         {!EHidden ? (
-          <section
-            style={{ height: `${matrixEHeight}px` }}
-            className={displayStyles.calculatorDisplayMatrixInputSection}
-          >
-            <InputMatrix
-              matrix={matrixE}
-              setMatrix={setMatrixE}
-              matrixID={"E"}
-            />
+          <section>
+            <section
+              style={{ height: `${matrixEHeight}px` }}
+              className={displayStyles.calculatorDisplayMatrixInputSection}
+            >
+              <InputMatrix
+                matrix={matrixE}
+                setMatrix={setMatrixE}
+                matrixID={"E"}
+              />
+            </section>
+            <section
+              style={{ height: `${matrixEHeight}px` }}
+              className={matrixDisplayStyles.matrix}
+            >
+              <h1>E</h1>
+              <p>=</p>
+              <div>{displayMatrix(matrixE)}</div>
+            </section>
           </section>
         ) : null}
         {!FHidden ? (
           <section
-            style={{ height: `${matrixFHeight}px` }}
+            style={{
+              display: "flex",
+              height: `${matrixFHeight}px`,
+            }}
             className={displayStyles.calculatorDisplayMatrixInputSection}
           >
-            <InputMatrix
-              matrix={matrixF}
-              setMatrix={setMatrixF}
-              matrixID={"F"}
-            />
+            <section>
+              <InputMatrix
+                matrix={matrixF}
+                setMatrix={setMatrixF}
+                matrixID={"F"}
+              />
+            </section>
+            <section
+              style={{ height: `${matrixFHeight}px` }}
+              className={matrixDisplayStyles.matrix}
+            >
+              <h1>F</h1>
+              <p>=</p>
+              <div>{displayMatrix(matrixF)}</div>
+            </section>
           </section>
         ) : null}
 

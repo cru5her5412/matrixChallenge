@@ -39,7 +39,6 @@ export default function Keypad({
             className={keypadStyles.keypadButton}
             onClick={() => {
               setDisplayInput([DisplayInput[0] + "1"]);
-              console.log(DisplayInput);
             }}
           >
             1
