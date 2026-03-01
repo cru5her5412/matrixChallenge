@@ -1,7 +1,7 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
 import displayStyles from "./CalculatorDisplay.module.css";
 import matrixDisplayStyles from "./MatrixDisplay.module.css";
-
+import CalculationSection from "./CalculationSection";
 import InputMatrix from "./InputMatrix";
 export default function CalculatorDisplay({
   matrixA,
@@ -48,7 +48,7 @@ export default function CalculatorDisplay({
     return (
       <div className="matrixDisplay">
         <div className="openBr"></div>
-        <span className={matrixDisplayStyles.matrixPart}>
+        <span className={displayStyles.DisplayMatrixPart}>
           {matrix.map((row, indexR) => (
             <section key={indexR} className={`row${indexR}`}>
               {row.map((col, indexC) => {
@@ -74,10 +74,22 @@ export default function CalculatorDisplay({
   return (
     <>
       <section className={displayStyles.display}>
+        <section>
+          {DisplayInput.map((input, index) => (
+            <CalculationSection
+              DisplayInput={input}
+              key={index}
+            ></CalculationSection>
+          ))}
+        </section>
         {!AHidden ? (
-          <section>
+          <section
+            style={{
+              display: "flex",
+              height: `${matrixAHeight}px`,
+            }}
+          >
             <section
-              style={{ height: `${matrixAHeight}px` }}
               className={displayStyles.calculatorDisplayMatrixInputSection}
             >
               <InputMatrix
@@ -88,7 +100,7 @@ export default function CalculatorDisplay({
             </section>
             <section
               style={{ height: `${matrixAHeight}px` }}
-              className={matrixDisplayStyles.matrix}
+              className={displayStyles.DisplayMatrix}
             >
               <h1>A</h1>
               <p>=</p>
@@ -97,9 +109,13 @@ export default function CalculatorDisplay({
           </section>
         ) : null}
         {!BHidden ? (
-          <section>
+          <section
+            style={{
+              display: "flex",
+              height: `${matrixBHeight}px`,
+            }}
+          >
             <section
-              style={{ height: `${matrixBHeight}px` }}
               className={displayStyles.calculatorDisplayMatrixInputSection}
             >
               <InputMatrix
@@ -110,7 +126,7 @@ export default function CalculatorDisplay({
             </section>
             <section
               style={{ height: `${matrixBHeight}px` }}
-              className={matrixDisplayStyles.matrix}
+              className={displayStyles.DisplayMatrix}
             >
               <h1>B</h1>
               <p>=</p>
@@ -119,9 +135,13 @@ export default function CalculatorDisplay({
           </section>
         ) : null}
         {!CHidden ? (
-          <section>
+          <section
+            style={{
+              display: "flex",
+              height: `${matrixCHeight}px`,
+            }}
+          >
             <section
-              style={{ height: `${matrixCHeight}px` }}
               className={displayStyles.calculatorDisplayMatrixInputSection}
             >
               <InputMatrix
@@ -132,7 +152,7 @@ export default function CalculatorDisplay({
             </section>
             <section
               style={{ height: `${matrixCHeight}px` }}
-              className={matrixDisplayStyles.matrix}
+              className={displayStyles.DisplayMatrix}
             >
               <h1>C</h1>
               <p>=</p>
@@ -141,9 +161,13 @@ export default function CalculatorDisplay({
           </section>
         ) : null}
         {!DHidden ? (
-          <section>
+          <section
+            style={{
+              display: "flex",
+              height: `${matrixDHeight}px`,
+            }}
+          >
             <section
-              style={{ height: `${matrixDHeight}px` }}
               className={displayStyles.calculatorDisplayMatrixInputSection}
             >
               <InputMatrix
@@ -154,7 +178,7 @@ export default function CalculatorDisplay({
             </section>
             <section
               style={{ height: `${matrixDHeight}px` }}
-              className={matrixDisplayStyles.matrix}
+              className={displayStyles.DisplayMatrix}
             >
               <h1>D</h1>
               <p>=</p>
@@ -163,9 +187,13 @@ export default function CalculatorDisplay({
           </section>
         ) : null}
         {!EHidden ? (
-          <section>
+          <section
+            style={{
+              display: "flex",
+              height: `${matrixEHeight}px`,
+            }}
+          >
             <section
-              style={{ height: `${matrixEHeight}px` }}
               className={displayStyles.calculatorDisplayMatrixInputSection}
             >
               <InputMatrix
@@ -175,8 +203,8 @@ export default function CalculatorDisplay({
               />
             </section>
             <section
-              style={{ height: `${matrixEHeight}px` }}
-              className={matrixDisplayStyles.matrix}
+              style={{ height: `${matrixEHeight}px`, maxWidth: "30vw" }}
+              className={displayStyles.DisplayMatrix}
             >
               <h1>E</h1>
               <p>=</p>
@@ -190,9 +218,10 @@ export default function CalculatorDisplay({
               display: "flex",
               height: `${matrixFHeight}px`,
             }}
-            className={displayStyles.calculatorDisplayMatrixInputSection}
           >
-            <section>
+            <section
+              className={displayStyles.calculatorDisplayMatrixInputSection}
+            >
               <InputMatrix
                 matrix={matrixF}
                 setMatrix={setMatrixF}
@@ -201,7 +230,7 @@ export default function CalculatorDisplay({
             </section>
             <section
               style={{ height: `${matrixFHeight}px` }}
-              className={matrixDisplayStyles.matrix}
+              className={displayStyles.DisplayMatrix}
             >
               <h1>F</h1>
               <p>=</p>
@@ -209,14 +238,6 @@ export default function CalculatorDisplay({
             </section>
           </section>
         ) : null}
-
-        <section className={displayStyles.calculatorDisplaySection}>
-          <textarea
-            className={displayStyles.calculatorDisplayCalculatorInput}
-            disabled
-            value={DisplayInput[0]}
-          ></textarea>
-        </section>
       </section>
     </>
   );

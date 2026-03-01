@@ -158,7 +158,7 @@ export default function InputMatrix({
       style={{
         display: "flex",
         justifyContent: "space-between",
-        width: "50vw",
+        width: "70vw",
         border: "black solid 1px ",
         height: "100%",
       }}

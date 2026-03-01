@@ -15,7 +15,6 @@ import {
 import "./App.css";
 import Keypad from "./components/Keypad.tsx";
 import CalculatorDisplay from "./components/CalculatorDisplay.tsx";
-import MatrixDisplay from "./components/MatrixDisplay.tsx";
 // import InputMatrix from "./components/InputMatrix.tsx";
 export default function App() {
   const [AHidden, setAHidden] = useState(true);
@@ -83,6 +82,7 @@ export default function App() {
   }
 
   const [DisplayInput, setDisplayInput] = useState([""]);
+  console.log(DisplayInput);
   //Visible app here
   return (
     <>
@@ -126,14 +126,6 @@ export default function App() {
             setDisplayInput={setDisplayInput}
           />
         </section>
-        <MatrixDisplay
-          matrixA={matrixA}
-          matrixB={matrixB}
-          matrixC={matrixC}
-          matrixD={matrixD}
-          matrixE={matrixE}
-          matrixF={matrixF}
-        />
       </main>
     </>
   );
