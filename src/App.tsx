@@ -35,7 +35,7 @@ export default function App() {
   createInitialMatrices(D);
   createInitialMatrices(E);
   createInitialMatrices(F);
-
+  const [matricesToCalc, setMatricesToCalc] = useState(["A", "A"]);
   function createInitialMatrices(I: string[][]) {
     for (let i = 0; i < 2; i++) {
       I.push([]);
@@ -55,18 +55,18 @@ export default function App() {
   const [matrixE, setMatrixE] = useState([...E]);
   const [matrixF, setMatrixF] = useState([...F]);
 
-  const inputA: number[][] = [];
-  const inputB: number[][] = [];
-  const inputC: number[][] = [];
-  const inputD: number[][] = [];
-  const inputE: number[][] = [];
-  const inputF: number[][] = [];
-  createInputMatrices(matrixA, inputA);
-  createInputMatrices(matrixB, inputB);
-  createInputMatrices(matrixC, inputC);
-  createInputMatrices(matrixD, inputD);
-  createInputMatrices(matrixE, inputE);
-  createInputMatrices(matrixF, inputF);
+  const calcA: number[][] = [];
+  const calcB: number[][] = [];
+  const calcC: number[][] = [];
+  const calcD: number[][] = [];
+  const calcE: number[][] = [];
+  const calcF: number[][] = [];
+  createInputMatrices(matrixA, calcA);
+  createInputMatrices(matrixB, calcB);
+  createInputMatrices(matrixC, calcC);
+  createInputMatrices(matrixD, calcD);
+  createInputMatrices(matrixE, calcE);
+  createInputMatrices(matrixF, calcF);
   function createInputMatrices(A: string[][], matrixOut: number[][]) {
     if (matrixOut.length < A.length) {
       for (let i = 0; i < A.length; i++) {
@@ -81,7 +81,7 @@ export default function App() {
     return matrixOut;
   }
 
-  const [DisplayInput, setDisplayInput] = useState([""]);
+  const [DisplayInput, setDisplayInput] = useState([[""]]);
   console.log(DisplayInput);
   //Visible app here
   return (
@@ -89,6 +89,12 @@ export default function App() {
       <main className="mainContainer">
         <section>
           <CalculatorDisplay
+            calcA={calcA}
+            calcB={calcB}
+            calcC={calcC}
+            calcD={calcD}
+            calcE={calcE}
+            calcF={calcF}
             matrixA={matrixA}
             setMatrixA={setMatrixA}
             AHidden={AHidden}
@@ -108,6 +114,8 @@ export default function App() {
             setMatrixF={setMatrixF}
             FHidden={FHidden}
             DisplayInput={DisplayInput}
+            matricesToCalc={matricesToCalc}
+            setMatricesToCalc={setMatricesToCalc}
           />
           <Keypad
             setAHidden={setAHidden}
@@ -124,6 +132,7 @@ export default function App() {
             FHidden={FHidden}
             DisplayInput={DisplayInput}
             setDisplayInput={setDisplayInput}
+            matricesToCalc={matricesToCalc}
           />
         </section>
       </main>

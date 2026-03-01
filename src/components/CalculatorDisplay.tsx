@@ -4,6 +4,12 @@ import matrixDisplayStyles from "./MatrixDisplay.module.css";
 import CalculationSection from "./CalculationSection";
 import InputMatrix from "./InputMatrix";
 export default function CalculatorDisplay({
+  calcA,
+  calcB,
+  calcC,
+  calcD,
+  calcE,
+  calcF,
   matrixA,
   setMatrixA,
   AHidden,
@@ -23,7 +29,15 @@ export default function CalculatorDisplay({
   setMatrixF,
   FHidden,
   DisplayInput,
+  matricesToCalc,
+  setMatricesToCalc,
 }: {
+  calcA: number[][];
+  calcB: number[][];
+  calcC: number[][];
+  calcD: number[][];
+  calcE: number[][];
+  calcF: number[][];
   matrixA: string[][];
   setMatrixA: Dispatch<SetStateAction<string[][]>>;
   AHidden: boolean;
@@ -42,7 +56,9 @@ export default function CalculatorDisplay({
   matrixF: string[][];
   setMatrixF: Dispatch<SetStateAction<string[][]>>;
   FHidden: boolean;
-  DisplayInput: Array<string>;
+  DisplayInput: Array<string[]>;
+  matricesToCalc: string[];
+  setMatricesToCalc: Dispatch<SetStateAction<string[]>>;
 }) {
   function displayMatrix(matrix: string[][]) {
     return (
@@ -71,14 +87,29 @@ export default function CalculatorDisplay({
   const matrixDHeight = (matrixD.length - 2) * 30 + 120;
   const matrixEHeight = (matrixE.length - 2) * 30 + 120;
   const matrixFHeight = (matrixF.length - 2) * 30 + 120;
+  function handleAddMatrixToCalc(matrixToAdd: string) {
+    if (matricesToCalc.length >= 1) {
+      setMatricesToCalc([matricesToCalc[1], matrixToAdd]);
+    } else {
+      setMatricesToCalc([matrixToAdd]);
+    }
+  }
   return (
     <>
       <section className={displayStyles.display}>
         <section>
           {DisplayInput.map((input, index) => (
             <CalculationSection
-              DisplayInput={input}
               key={index}
+              DisplayInput={input}
+              calcA={calcA}
+              calcB={calcB}
+              calcC={calcC}
+              calcD={calcD}
+              calcE={calcE}
+              calcF={calcF}
+              displayMatrix={displayMatrix}
+              index={index}
             ></CalculationSection>
           ))}
         </section>
@@ -106,6 +137,9 @@ export default function CalculatorDisplay({
               <p>=</p>
               <div>{displayMatrix(matrixA)}</div>
             </section>
+            <button onClick={() => handleAddMatrixToCalc("A")}>
+              Add A to Calculation
+            </button>
           </section>
         ) : null}
         {!BHidden ? (
@@ -132,6 +166,9 @@ export default function CalculatorDisplay({
               <p>=</p>
               <div>{displayMatrix(matrixB)}</div>
             </section>
+            <button onClick={() => handleAddMatrixToCalc("B")}>
+              Add B to Calculation
+            </button>
           </section>
         ) : null}
         {!CHidden ? (
@@ -158,6 +195,9 @@ export default function CalculatorDisplay({
               <p>=</p>
               <div>{displayMatrix(matrixC)}</div>
             </section>
+            <button onClick={() => handleAddMatrixToCalc("C")}>
+              Add C to Calculation
+            </button>
           </section>
         ) : null}
         {!DHidden ? (
@@ -184,6 +224,9 @@ export default function CalculatorDisplay({
               <p>=</p>
               <div>{displayMatrix(matrixD)}</div>
             </section>
+            <button onClick={() => handleAddMatrixToCalc("D")}>
+              Add D to Calculation
+            </button>
           </section>
         ) : null}
         {!EHidden ? (
@@ -210,6 +253,9 @@ export default function CalculatorDisplay({
               <p>=</p>
               <div>{displayMatrix(matrixE)}</div>
             </section>
+            <button onClick={() => handleAddMatrixToCalc("E")}>
+              Add E to Calculation
+            </button>
           </section>
         ) : null}
         {!FHidden ? (
@@ -236,6 +282,9 @@ export default function CalculatorDisplay({
               <p>=</p>
               <div>{displayMatrix(matrixF)}</div>
             </section>
+            <button onClick={() => handleAddMatrixToCalc("F")}>
+              Add F to Calculation
+            </button>
           </section>
         ) : null}
       </section>

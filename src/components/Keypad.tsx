@@ -15,6 +15,7 @@ export default function Keypad({
   FHidden,
   DisplayInput,
   setDisplayInput,
+  matricesToCalc,
 }: {
   setAHidden: Dispatch<SetStateAction<boolean>>;
   AHidden: boolean;
@@ -28,8 +29,9 @@ export default function Keypad({
   EHidden: boolean;
   setFHidden: Dispatch<SetStateAction<boolean>>;
   FHidden: boolean;
-  DisplayInput: Array<string>;
-  setDisplayInput: Dispatch<SetStateAction<Array<string>>>;
+  DisplayInput: Array<string[]>;
+  setDisplayInput: Dispatch<SetStateAction<Array<string[]>>>;
+  matricesToCalc: string[];
 }) {
   return (
     <>
@@ -38,7 +40,7 @@ export default function Keypad({
           <button
             className={keypadStyles.keypadButton}
             onClick={() => {
-              setDisplayInput([DisplayInput[0] + "1"]);
+              setDisplayInput([[DisplayInput[0] + "1"]]);
             }}
           >
             1
@@ -135,19 +137,19 @@ export default function Keypad({
         <div className={keypadStyles.keypadRow}>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput([DisplayInput[0] + "+"])}
+            onClick={() => setDisplayInput([[...matricesToCalc, "+"]])}
           >
             +
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput([DisplayInput[0] + "-"])}
+            onClick={() => setDisplayInput([[...matricesToCalc, "-"]])}
           >
             -
           </button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() => setDisplayInput([DisplayInput[0] + "x"])}
+            onClick={() => setDisplayInput([[...matricesToCalc, "x"]])}
           >
             x
           </button>
@@ -165,11 +167,11 @@ export default function Keypad({
           <button className={keypadStyles.keypadButton}>Return</button>
           <button
             className={keypadStyles.keypadButton}
-            onClick={() =>
-              setDisplayInput([
-                DisplayInput[0].substring(0, DisplayInput[0].length - 1),
-              ])
-            }
+            // onClick={() =>
+            //   setDisplayInput([
+            //     DisplayInput[0].substring(0, DisplayInput[0].length - 1),
+            //   ])
+            // }
           >
             {"<-"}
           </button>
