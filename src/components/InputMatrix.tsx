@@ -1,34 +1,20 @@
 import type { Dispatch, SetStateAction } from "react";
+import displayMatrix from "./displayMatrix";
 export default function InputMatrix({
   matrix,
   setMatrix,
   matrixID,
+  matrixHidden,
+  setMatrixHidden
 }: {
   matrix: string[][];
   setMatrix: Dispatch<SetStateAction<string[][]>>;
   matrixID: string;
+  matrixHidden: boolean;
+  setMatrixHidden: Dispatch<SetStateAction<boolean>>;
+
 }) {
-  function displayMatrix(matrix: string[][]) {
-    return (
-      <div className="matrixDisplay">
-        <div className="openBr"></div>
-        <span>
-          {matrix.map((row, indexR) => (
-            <section key={indexR} className={`row${indexR}`}>
-              {row.map((col, indexC) => {
-                return (
-                  <p key={indexC} className={`row${indexR} col${indexC}`}>
-                    {col}
-                  </p>
-                );
-              })}
-            </section>
-          ))}
-        </span>
-        <div className="closeBr"></div>
-      </div>
-    );
-  }
+ 
   function inputMatrix(
     matrix: string[][],
     setMatrix: Dispatch<SetStateAction<string[][]>>
@@ -149,6 +135,11 @@ export default function InputMatrix({
       setMatrix(tempMatrix);
     }
   }
+  function handleDeleteMatrix(setMatrix: Dispatch<SetStateAction<string[][]>>, setMatrixHidden: Dispatch<SetStateAction<boolean>>) {
+    setMatrix([["0","0"],["0","0"]])
+    setMatrixHidden(true);
+  }
+  
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div
@@ -161,6 +152,7 @@ export default function InputMatrix({
       <div
         style={{ display: "inline-flex", alignItems: "center", margin: "10px" }}
       >
+        <div><button onClick={() => handleDeleteMatrix(setMatrix, setMatrixHidden)}>Clear</button></div>
         <h1>{matrixID}</h1>
         <p>=</p>
         <section>{displayMatrix(matrix)}</section>

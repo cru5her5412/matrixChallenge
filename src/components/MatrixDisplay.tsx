@@ -1,4 +1,5 @@
 import matrixDisplayStyles from "./MatrixDisplay.module.css";
+import displayMatrix from "./displayMatrix";
 export default function MatrixDisplay({
   matrixA,
   matrixB,
@@ -20,27 +21,7 @@ export default function MatrixDisplay({
   const matrixDHeight = matrixD.length * 25;
   const matrixEHeight = matrixE.length * 25;
   const matrixFHeight = matrixF.length * 25;
-  function displayMatrix(matrix: string[][]) {
-    return (
-      <div className="matrixDisplay">
-        <div className="openBr"></div>
-        <span className={matrixDisplayStyles.matrixPart}>
-          {matrix.map((row, indexR) => (
-            <section key={indexR} className={`row${indexR}`}>
-              {row.map((col, indexC) => {
-                return (
-                  <p key={indexC} className={`row${indexR} col${indexC}`}>
-                    {col}
-                  </p>
-                );
-              })}
-            </section>
-          ))}
-        </span>
-        <div className="closeBr"></div>
-      </div>
-    );
-  }
+
   return (
     <>
       <section className={matrixDisplayStyles.display}>

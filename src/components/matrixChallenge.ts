@@ -412,7 +412,7 @@ export function matrixTrace(A: number[][]) {
   }
   return trace;
 }
-export function createRotationMatrix(angle: number) {
+export function createRotationMatrix(angle: number, angleMode: "DEGREE" | "RADIAN") {
   let newAngle: number; //new angle to use
   if (angleMode == "DEGREE") {
     //if angleMode is set to degrees, convert angles to radians(Math export functions use them by default)
@@ -432,11 +432,11 @@ export function createRotationMatrix(angle: number) {
   ]; //create rotation matrix based on formula from wikipedia, rounded to 6 decimal places
   return rotateMatrix;
 }
-export function rotateMatrix(angle: number, matrixToRotate: number[][]) {
+export function rotateMatrix(angle: number, matrixToRotate: number[][], angleMode: "DEGREE" | "RADIAN") {
   if (matrixToRotate.length > 2 || matrixToRotate[0].length > 2) {
     throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
   }
-  const rotationMatrix = createRotationMatrix(angle); //use export function above to create rotation matrix
+  const rotationMatrix = createRotationMatrix(angle, angleMode); //use export function above to create rotation matrix
   const rotatedMatrix = matrixMultiplication(rotationMatrix, matrixToRotate, 6); //multiply rotation matrix with matrixToRotate
   return rotatedMatrix;
 }

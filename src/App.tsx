@@ -1,14 +1,5 @@
 import { useState } from "react";
-import {
-  addMatrix,
-  matrixMultiplication,
-  matrixDeterminant,
-  matrixInverse,
-  matrixTrace,
-  createRotationMatrix,
-  rotateMatrix,
-  subtractMatrix,
-} from "../matrixChallenge.ts";
+
 //TODO: maybe add thing to remove e from input boxes(number so it can be input but it does nothing)
 //TODO: make calculator functional (need to figure out exact functionality required and how to best implement it)
 //TODO: implement functionality to prevent matrix input exceeding size of display section
@@ -55,7 +46,7 @@ export default function App() {
   const [matrixD, setMatrixD] = useState([...D]);
   const [matrixE, setMatrixE] = useState([...E]);
   const [matrixF, setMatrixF] = useState([...F]);
-
+  const [textAreaContent,setTextAreaContent] = useState("");
   const inputA: number[][] = [];
   const inputB: number[][] = [];
   const inputC: number[][] = [];
@@ -87,21 +78,29 @@ export default function App() {
             matrixA={matrixA}
             setMatrixA={setMatrixA}
             AHidden={AHidden}
+            setAHidden={setAHidden}
             matrixB={matrixB}
             setMatrixB={setMatrixB}
             BHidden={BHidden}
+            setBHidden={setBHidden}
             matrixC={matrixC}
             setMatrixC={setMatrixC}
             CHidden={CHidden}
+            setCHidden={setCHidden}
             matrixD={matrixD}
             setMatrixD={setMatrixD}
             DHidden={DHidden}
+            setDHidden={setDHidden}
             matrixE={matrixE}
             setMatrixE={setMatrixE}
             EHidden={EHidden}
+            setEHidden={setEHidden}
             matrixF={matrixF}
             setMatrixF={setMatrixF}
             FHidden={FHidden}
+            setFHidden={setFHidden}
+            textAreaContent={textAreaContent}
+            setTextAreaContent={setTextAreaContent}
           />
           <Keypad
             setAHidden={setAHidden}
@@ -116,6 +115,8 @@ export default function App() {
             EHidden={EHidden}
             setFHidden={setFHidden}
             FHidden={FHidden}
+            textAreaContent={textAreaContent}
+            setTextAreaContent={setTextAreaContent}
           />
         </section>
         <MatrixDisplay
