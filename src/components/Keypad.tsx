@@ -1,38 +1,52 @@
 import keypadStyles from "./Keypad.module.css";
 import type { Dispatch, SetStateAction } from "react";
 export default function Keypad({
-  setAHidden,
+  // setAHidden,
   AHidden,
-  setBHidden,
+  // setBHidden,
   BHidden,
-  setCHidden,
+  // setCHidden,
   CHidden,
-  setDHidden,
+  // setDHidden,
   DHidden,
-  setEHidden,
+  // setEHidden,
   EHidden,
-  setFHidden,
+  // setFHidden,
   FHidden,
   DisplayInput,
   setDisplayInput,
   matricesToCalc,
+  matrixCount,
+  setMatrixCount,
 }: {
-  setAHidden: Dispatch<SetStateAction<boolean>>;
+  //setAHidden: Dispatch<SetStateAction<boolean>>;
   AHidden: boolean;
-  setBHidden: Dispatch<SetStateAction<boolean>>;
+  // setBHidden: Dispatch<SetStateAction<boolean>>;
   BHidden: boolean;
-  setCHidden: Dispatch<SetStateAction<boolean>>;
+  // setCHidden: Dispatch<SetStateAction<boolean>>;
   CHidden: boolean;
-  setDHidden: Dispatch<SetStateAction<boolean>>;
+  // setDHidden: Dispatch<SetStateAction<boolean>>;
   DHidden: boolean;
-  setEHidden: Dispatch<SetStateAction<boolean>>;
+  // setEHidden: Dispatch<SetStateAction<boolean>>;
   EHidden: boolean;
-  setFHidden: Dispatch<SetStateAction<boolean>>;
+  // setFHidden: Dispatch<SetStateAction<boolean>>;
   FHidden: boolean;
   DisplayInput: Array<string[]>;
   setDisplayInput: Dispatch<SetStateAction<Array<string[]>>>;
   matricesToCalc: string[];
+  matrixCount: number;
+  setMatrixCount: Dispatch<SetStateAction<number>>;
 }) {
+  function handleNewMatrix(
+    matrixCount: number,
+    setMatrixCount: Dispatch<SetStateAction<number>>,
+  ) {
+    if (matrixCount < 6) {
+      const newMatrixCount: number = matrixCount + 1;
+      setMatrixCount(newMatrixCount);
+    }
+  }
+
   return (
     <>
       <section className={keypadStyles.keypad}>
@@ -162,7 +176,12 @@ export default function Keypad({
           <button className={keypadStyles.keypadButton}>DET</button>
         </div>
         <div className={keypadStyles.keypadRow}>
-          <button className={keypadStyles.keypadButton}>Change theme</button>
+          <button
+            className={keypadStyles.keypadButton}
+            onClick={() => handleNewMatrix(matrixCount, setMatrixCount)}
+          >
+            New Matrix
+          </button>
           <button className={keypadStyles.keypadButton}>Settings</button>
           <button className={keypadStyles.keypadButton}>Return</button>
           <button

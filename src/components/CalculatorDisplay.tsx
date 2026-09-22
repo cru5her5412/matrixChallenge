@@ -31,6 +31,8 @@ export default function CalculatorDisplay({
   DisplayInput,
   matricesToCalc,
   setMatricesToCalc,
+  matrixCount,
+  setMatrixCount,
 }: {
   calcA: number[][];
   calcB: number[][];
@@ -59,6 +61,8 @@ export default function CalculatorDisplay({
   DisplayInput: Array<string[]>;
   matricesToCalc: string[];
   setMatricesToCalc: Dispatch<SetStateAction<string[]>>;
+  matrixCount: number;
+  setMatrixCount: Dispatch<SetStateAction<number>>;
 }) {
   function displayMatrix(matrix: string[][]) {
     return (
@@ -94,6 +98,7 @@ export default function CalculatorDisplay({
       setMatricesToCalc([matrixToAdd]);
     }
   }
+
   return (
     <>
       <section className={displayStyles.display}>

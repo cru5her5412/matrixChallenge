@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  addMatrix,
-  matrixMultiplication,
-  matrixDeterminant,
-  matrixInverse,
-  matrixTrace,
-  createRotationMatrix,
-  rotateMatrix,
-  subtractMatrix,
-} from "./components/matrixChallenge.ts";
+
 //TODO: maybe add thing to remove e from input boxes(number so it can be input but it does nothing)
 //TODO: make calculator functional (need to figure out exact functionality required and how to best implement it)
 //TODO: implement functionality to prevent matrix input exceeding size of display section
@@ -17,12 +8,64 @@ import Keypad from "./components/Keypad.tsx";
 import CalculatorDisplay from "./components/CalculatorDisplay.tsx";
 // import InputMatrix from "./components/InputMatrix.tsx";
 export default function App() {
-  const [AHidden, setAHidden] = useState(true);
-  const [BHidden, setBHidden] = useState(true);
-  const [CHidden, setCHidden] = useState(true);
-  const [DHidden, setDHidden] = useState(true);
-  const [EHidden, setEHidden] = useState(true);
-  const [FHidden, setFHidden] = useState(true);
+  const [matrixCount, setMatrixCount] = useState(0);
+  let AHidden = true;
+  let BHidden = true;
+  let CHidden = true;
+  let DHidden = true;
+  let EHidden = true;
+  let FHidden = true;
+  //todo: replace this with an array containing all the active matrices so any matrix can be deleted not just the last one
+  switch (matrixCount) {
+    case 0:
+      break;
+    case 1:
+      AHidden = false;
+      break;
+    case 2:
+      AHidden = false;
+      BHidden = false;
+      break;
+    case 3:
+      AHidden = false;
+      BHidden = false;
+      CHidden = false;
+
+      break;
+    case 4:
+      AHidden = false;
+      BHidden = false;
+      CHidden = false;
+      DHidden = false;
+
+      break;
+    case 5:
+      AHidden = false;
+      BHidden = false;
+      CHidden = false;
+      DHidden = false;
+      EHidden = false;
+
+      break;
+    case 6:
+      AHidden = false;
+      BHidden = false;
+      CHidden = false;
+      DHidden = false;
+      EHidden = false;
+      FHidden = false;
+
+      break;
+    default:
+      AHidden = true;
+      BHidden = true;
+      CHidden = true;
+      DHidden = true;
+      EHidden = true;
+      FHidden = true;
+
+      break;
+  }
   const A: string[][] = [];
   const B: string[][] = [];
   const C: string[][] = [];
@@ -82,7 +125,6 @@ export default function App() {
   }
 
   const [DisplayInput, setDisplayInput] = useState([[""]]);
-  console.log(DisplayInput);
   //Visible app here
   return (
     <>
@@ -116,23 +158,21 @@ export default function App() {
             DisplayInput={DisplayInput}
             matricesToCalc={matricesToCalc}
             setMatricesToCalc={setMatricesToCalc}
+            matrixCount={matrixCount}
+            setMatrixCount={setMatrixCount}
           />
           <Keypad
-            setAHidden={setAHidden}
             AHidden={AHidden}
-            setBHidden={setBHidden}
             BHidden={BHidden}
-            setCHidden={setCHidden}
             CHidden={CHidden}
-            setDHidden={setDHidden}
             DHidden={DHidden}
-            setEHidden={setEHidden}
             EHidden={EHidden}
-            setFHidden={setFHidden}
             FHidden={FHidden}
             DisplayInput={DisplayInput}
             setDisplayInput={setDisplayInput}
             matricesToCalc={matricesToCalc}
+            matrixCount={matrixCount}
+            setMatrixCount={setMatrixCount}
           />
         </section>
       </main>
