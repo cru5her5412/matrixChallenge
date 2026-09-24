@@ -3,6 +3,7 @@ import { useState } from "react";
 //TODO: maybe add thing to remove e from input boxes(number so it can be input but it does nothing)
 //TODO: make calculator functional (need to figure out exact functionality required and how to best implement it)
 //TODO: implement functionality to prevent matrix input exceeding size of display section
+//TODO: implement ID for calculation inputs, and figure out how to find out which is being input into
 import "./App.css";
 import Keypad from "./components/Keypad.tsx";
 import CalculatorDisplay from "./components/CalculatorDisplay.tsx";
@@ -27,7 +28,6 @@ export default function App() {
   createInitialMatrices(D);
   createInitialMatrices(E);
   createInitialMatrices(F);
-
   function createInitialMatrices(I: string[][]) {
     for (let i = 0; i < 2; i++) {
       I.push([]);
@@ -46,7 +46,9 @@ export default function App() {
   const [matrixD, setMatrixD] = useState([...D]);
   const [matrixE, setMatrixE] = useState([...E]);
   const [matrixF, setMatrixF] = useState([...F]);
-  const [textAreaContent,setTextAreaContent] = useState("");
+  const [textAreaContent, setTextAreaContent] = useState([""]);
+  const [activeCalculationCount, setActiveCalculationCount] = useState(2);
+  const [activeCalculationID, setActiveCalculationID] = useState(0);
   const inputA: number[][] = [];
   const inputB: number[][] = [];
   const inputC: number[][] = [];
@@ -69,6 +71,7 @@ export default function App() {
       }
     }
   }
+
   //Visible app here
   return (
     <>
@@ -101,6 +104,8 @@ export default function App() {
             setFHidden={setFHidden}
             textAreaContent={textAreaContent}
             setTextAreaContent={setTextAreaContent}
+            activeCalculationCount={activeCalculationCount}
+            setActiveCalculationCount={setActiveCalculationCount}
           />
           <Keypad
             setAHidden={setAHidden}
@@ -117,16 +122,20 @@ export default function App() {
             FHidden={FHidden}
             textAreaContent={textAreaContent}
             setTextAreaContent={setTextAreaContent}
+            activeCalculationCount={activeCalculationCount}
+            setActiveCalculationCount={setActiveCalculationCount}
+            activeCalculationID={activeCalculationID}
+            setActiveCalculationID={setActiveCalculationID}
           />
         </section>
-        <MatrixDisplay
+        {/* <MatrixDisplay
           matrixA={matrixA}
           matrixB={matrixB}
           matrixC={matrixC}
           matrixD={matrixD}
           matrixE={matrixE}
           matrixF={matrixF}
-        />
+        /> */}
       </main>
     </>
   );

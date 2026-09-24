@@ -5,19 +5,17 @@ export default function InputMatrix({
   setMatrix,
   matrixID,
   matrixHidden,
-  setMatrixHidden
+  setMatrixHidden,
 }: {
   matrix: string[][];
   setMatrix: Dispatch<SetStateAction<string[][]>>;
   matrixID: string;
   matrixHidden: boolean;
   setMatrixHidden: Dispatch<SetStateAction<boolean>>;
-
 }) {
- 
   function inputMatrix(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     return (
       <section>
@@ -37,7 +35,7 @@ export default function InputMatrix({
                           indexC,
                           e.target.value,
                           [...matrix],
-                          setMatrix
+                          setMatrix,
                         );
                       }}
                       key={`col${indexC}row${indexR}`}
@@ -76,7 +74,7 @@ export default function InputMatrix({
     col: number,
     value: string,
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     const tempMatrix: string[][] = [...matrix];
     tempMatrix[row][col] = value;
@@ -86,7 +84,7 @@ export default function InputMatrix({
   }
   function handleShrinkRows(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix.length > 2) {
       const tempMatrix = [...matrix];
@@ -96,7 +94,7 @@ export default function InputMatrix({
   }
   function handleGrowRows(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix.length < 6) {
       const tempMatrix = [...matrix];
@@ -111,7 +109,7 @@ export default function InputMatrix({
   }
   function handleShrinkCols(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix[0].length > 2) {
       const tempMatrix = [...matrix];
@@ -123,7 +121,7 @@ export default function InputMatrix({
   }
   function handleGrowCols(
     matrix: string[][],
-    setMatrix: Dispatch<SetStateAction<string[][]>>
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
   ) {
     if (matrix[0].length < 6) {
       const tempMatrix = [...matrix];
@@ -135,11 +133,17 @@ export default function InputMatrix({
       setMatrix(tempMatrix);
     }
   }
-  function handleDeleteMatrix(setMatrix: Dispatch<SetStateAction<string[][]>>, setMatrixHidden: Dispatch<SetStateAction<boolean>>) {
-    setMatrix([["0","0"],["0","0"]])
+  function handleDeleteMatrix(
+    setMatrix: Dispatch<SetStateAction<string[][]>>,
+    setMatrixHidden: Dispatch<SetStateAction<boolean>>,
+  ) {
+    setMatrix([
+      ["0", "0"],
+      ["0", "0"],
+    ]);
     setMatrixHidden(true);
   }
-  
+
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div
@@ -152,7 +156,13 @@ export default function InputMatrix({
       <div
         style={{ display: "inline-flex", alignItems: "center", margin: "10px" }}
       >
-        <div><button onClick={() => handleDeleteMatrix(setMatrix, setMatrixHidden)}>Clear</button></div>
+        <div>
+          <button
+            onClick={() => handleDeleteMatrix(setMatrix, setMatrixHidden)}
+          >
+            Delete
+          </button>
+        </div>
         <h1>{matrixID}</h1>
         <p>=</p>
         <section>{displayMatrix(matrix)}</section>

@@ -14,7 +14,9 @@ export default function Keypad({
   setFHidden,
   FHidden,
   textAreaContent,
-  setTextAreaContent
+  setTextAreaContent,
+  activeCalculationCount,
+  setActiveCalculationCount,
 }: {
   setAHidden: Dispatch<SetStateAction<boolean>>;
   AHidden: boolean;
@@ -28,26 +30,44 @@ export default function Keypad({
   EHidden: boolean;
   setFHidden: Dispatch<SetStateAction<boolean>>;
   FHidden: boolean;
-  textAreaContent: string;
-  setTextAreaContent: Dispatch<SetStateAction<string>>;
+  textAreaContent: string[];
+  setTextAreaContent: Dispatch<SetStateAction<string[]>>;
+  activeCalculationCount: number;
+  setActiveCalculationCount: Dispatch<SetStateAction<number>>;
 }) {
-  const textArea: HTMLElement | null = document.querySelector("#calculatorDisplayTextArea")
-  console.log(textArea)
-  function handleEditText(charToAdd:string,isRemovingChar:boolean){
-    if(isRemovingChar===false){
-    setTextAreaContent(textAreaContent + charToAdd);}
-    else{
-      setTextAreaContent(textAreaContent.slice(0,textAreaContent.length-1))
+  const textArea: HTMLElement | null = document.querySelector(
+    "#calculatorDisplayTextArea",
+  );
+  console.log(textArea);
+  function handleEditText(charToAdd: string, isRemovingChar: boolean) {
+    if (isRemovingChar === false) {
+      setTextAreaContent(textAreaContent + charToAdd);
+    } else {
+      setTextAreaContent(textAreaContent.slice(0, textAreaContent.length - 1));
     }
-    
-}
+  }
   return (
     <>
       <section className={keypadStyles.keypad}>
         <div className={keypadStyles.keypadRow}>
-          <button onClick={()=>handleEditText("1",false)} className={keypadStyles.keypadButton}>1</button>
-          <button onClick={()=>handleEditText("2",false)} className={keypadStyles.keypadButton}>2</button>
-          <button onClick={()=>handleEditText("3",false)} className={keypadStyles.keypadButton}>3</button>
+          <button
+            onClick={() => handleEditText("1", false)}
+            className={keypadStyles.keypadButton}
+          >
+            1
+          </button>
+          <button
+            onClick={() => handleEditText("2", false)}
+            className={keypadStyles.keypadButton}
+          >
+            2
+          </button>
+          <button
+            onClick={() => handleEditText("3", false)}
+            className={keypadStyles.keypadButton}
+          >
+            3
+          </button>
           <button
             onClick={() => setAHidden(false)}
             className={keypadStyles.keypadButton}
@@ -62,9 +82,24 @@ export default function Keypad({
           </button>
         </div>
         <div className={keypadStyles.keypadRow}>
-          <button onClick={()=>handleEditText("4",false)} className={keypadStyles.keypadButton}>4</button>
-          <button onClick={()=>handleEditText("5",false)} className={keypadStyles.keypadButton}>5</button>
-          <button onClick={()=>handleEditText("6",false)} className={keypadStyles.keypadButton}>6</button>
+          <button
+            onClick={() => handleEditText("4", false)}
+            className={keypadStyles.keypadButton}
+          >
+            4
+          </button>
+          <button
+            onClick={() => handleEditText("5", false)}
+            className={keypadStyles.keypadButton}
+          >
+            5
+          </button>
+          <button
+            onClick={() => handleEditText("6", false)}
+            className={keypadStyles.keypadButton}
+          >
+            6
+          </button>
           <button
             onClick={() => setCHidden(false)}
             className={keypadStyles.keypadButton}
@@ -79,9 +114,24 @@ export default function Keypad({
           </button>
         </div>
         <div className={keypadStyles.keypadRow}>
-          <button onClick={()=>handleEditText("7",false)} className={keypadStyles.keypadButton}>7</button>
-          <button onClick={()=>handleEditText("8",false)} className={keypadStyles.keypadButton}>8</button>
-          <button onClick={()=>handleEditText("9",false)} className={keypadStyles.keypadButton}>9</button>
+          <button
+            onClick={() => handleEditText("7", false)}
+            className={keypadStyles.keypadButton}
+          >
+            7
+          </button>
+          <button
+            onClick={() => handleEditText("8", false)}
+            className={keypadStyles.keypadButton}
+          >
+            8
+          </button>
+          <button
+            onClick={() => handleEditText("9", false)}
+            className={keypadStyles.keypadButton}
+          >
+            9
+          </button>
           <button
             onClick={() => setEHidden(false)}
             className={keypadStyles.keypadButton}
@@ -96,11 +146,38 @@ export default function Keypad({
           </button>
         </div>
         <div className={keypadStyles.keypadRow}>
-          <button onClick={()=>handleEditText("+",false)} className={keypadStyles.keypadButton}>+</button>
-          <button onClick={()=>handleEditText("-",false)} className={keypadStyles.keypadButton}>-</button>
-          <button onClick={()=>handleEditText("x",false)} className={keypadStyles.keypadButton}>x</button>
-          <button onClick={()=>handleEditText("",true)} className={keypadStyles.keypadButtonArrow}>←</button>
-          <button  className={keypadStyles.keypadButton}>Return</button>
+          <button
+            onClick={() => handleEditText("+", false)}
+            className={keypadStyles.keypadButton}
+          >
+            +
+          </button>
+          <button
+            onClick={() => handleEditText("-", false)}
+            className={keypadStyles.keypadButton}
+          >
+            -
+          </button>
+          <button
+            onClick={() => handleEditText("x", false)}
+            className={keypadStyles.keypadButton}
+          >
+            x
+          </button>
+          <button
+            onClick={() => handleEditText("", true)}
+            className={keypadStyles.keypadButtonArrow}
+          >
+            ←
+          </button>
+          <button
+            className={keypadStyles.keypadButton}
+            onClick={() =>
+              setActiveCalculationCount(activeCalculationCount + 1)
+            }
+          >
+            Return
+          </button>
         </div>
         <div className={keypadStyles.keypadRow}>
           <button className={keypadStyles.keypadButton}>Rotation matrix</button>
@@ -112,7 +189,6 @@ export default function Keypad({
         <div className={keypadStyles.keypadRow}>
           <button className={keypadStyles.keypadButton}>Change theme</button>
           <button className={keypadStyles.keypadButton}>Settings</button>
-          
         </div>
       </section>
     </>

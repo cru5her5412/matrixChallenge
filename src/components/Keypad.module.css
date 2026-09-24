@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 70vw;
+  width: 90vw;
   height: 30vh;
   border: 1px solid black;
   top: 60vh;
@@ -14,7 +14,8 @@
   flex-direction: column;
   justify-content: space-around;
 }
-.keypadButton, .keypadButtonArrow {
+.keypadButton,
+.keypadButtonArrow {
   margin: 2px;
   width: 60px;
   height: 50px;

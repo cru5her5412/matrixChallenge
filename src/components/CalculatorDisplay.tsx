@@ -3,6 +3,8 @@ import displayStyles from "./CalculatorDisplay.module.css";
 import InputMatrix from "./InputMatrix";
 import displayMatrix from "./displayMatrix";
 import Calculator from "./Calculator";
+import CalculationInput from "./CalculationInput";
+import CalculationOutput from "./CalculationOutput";
 //todo:
 export default function CalculatorDisplay({
   matrixA,
@@ -30,7 +32,9 @@ export default function CalculatorDisplay({
   FHidden,
   setFHidden,
   textAreaContent,
-  setTextAreaContent
+  setTextAreaContent,
+  activeCalculationCount,
+  setActiveCalculationCount,
 }: {
   matrixA: string[][];
   setMatrixA: Dispatch<SetStateAction<string[][]>>;
@@ -56,11 +60,16 @@ export default function CalculatorDisplay({
   setMatrixF: Dispatch<SetStateAction<string[][]>>;
   FHidden: boolean;
   setFHidden: Dispatch<SetStateAction<boolean>>;
-  textAreaContent:string
-  setTextAreaContent:Dispatch<SetStateAction<string>>
-
+  textAreaContent: string[];
+  setTextAreaContent: Dispatch<SetStateAction<string[]>>;
+  activeCalculationCount: number;
+  setActiveCalculationCount: Dispatch<SetStateAction<number>>;
 }) {
-  let matrixHeights:number[] = [];
+  let activeCalculationCountArr: number[] = [];
+  for (let i = 0; i < activeCalculationCount; i++) {
+    activeCalculationCountArr.splice(i, 0, i);
+  }
+  let matrixHeights: number[] = [];
   matrixHeights[0] = (matrixA.length - 2) * 30 + 120;
   matrixHeights[1] = (matrixB.length - 2) * 30 + 120;
   matrixHeights[2] = (matrixC.length - 2) * 30 + 120;
@@ -154,10 +163,17 @@ export default function CalculatorDisplay({
             />
           </section>
         ) : null}
-        <section style={{height:`${Math.max(...matrixHeights)}px`}} className={displayStyles.calculatorDisplaySection}>
-          {/*todo: add logic for calculator display here, allowing input from a keyboard or keypad, recognising when/if certain calculations can be done*/}
-          <textarea value={textAreaContent} style={{height:`${Math.max(...matrixHeights)-24}px`, width:"calc(70vw - 44px)", margin:"10px"}} onChange={(e) => setTextAreaContent(e.target.value)}></textarea>
-        </section>
+        {activeCalculationCountArr.map((_, index) => (
+          <section style={{ display: "inline-flex" }}>
+            <CalculationInput
+              className={"calculationNum" + index}
+              matrixHeights={matrixHeights}
+              textAreaContent={textAreaContent}
+              setTextAreaContent={setTextAreaContent}
+            />
+            <CalculationOutput className={"answerNum" + index} />
+          </section>
+        ))}
       </section>
     </>
   );
