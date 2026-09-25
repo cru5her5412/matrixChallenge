@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import displayStyles from "./CalculatorDisplay.module.css";
 import InputMatrix from "./InputMatrix";
 import displayMatrix from "./displayMatrix";
@@ -35,6 +35,8 @@ export default function CalculatorDisplay({
   setTextAreaContent,
   activeCalculationCount,
   setActiveCalculationCount,
+  activeCalculationID,
+  setActiveCalculationID,
 }: {
   matrixA: string[][];
   setMatrixA: Dispatch<SetStateAction<string[][]>>;
@@ -64,10 +66,12 @@ export default function CalculatorDisplay({
   setTextAreaContent: Dispatch<SetStateAction<string[]>>;
   activeCalculationCount: number;
   setActiveCalculationCount: Dispatch<SetStateAction<number>>;
+  activeCalculationID: number;
+  setActiveCalculationID: Dispatch<SetStateAction<number>>;
 }) {
   let activeCalculationCountArr: number[] = [];
   for (let i = 0; i < activeCalculationCount; i++) {
-    activeCalculationCountArr.splice(i, 0, i);
+    activeCalculationCountArr.push(i);
   }
   let matrixHeights: number[] = [];
   matrixHeights[0] = (matrixA.length - 2) * 30 + 120;
@@ -76,6 +80,9 @@ export default function CalculatorDisplay({
   matrixHeights[3] = (matrixD.length - 2) * 30 + 120;
   matrixHeights[4] = (matrixE.length - 2) * 30 + 120;
   matrixHeights[5] = (matrixF.length - 2) * 30 + 120;
+
+  const [Refresh, setRefresh] = useState(0);
+
   return (
     <>
       <section className={displayStyles.display}>
@@ -164,14 +171,26 @@ export default function CalculatorDisplay({
           </section>
         ) : null}
         {activeCalculationCountArr.map((_, index) => (
-          <section style={{ display: "inline-flex" }}>
+          <section key={"calcNum" + index} style={{ display: "inline-flex" }}>
             <CalculationInput
+              Refresh={Refresh}
+              setRefresh={setRefresh}
               className={"calculationNum" + index}
               matrixHeights={matrixHeights}
               textAreaContent={textAreaContent}
               setTextAreaContent={setTextAreaContent}
+              activeCalculationID={activeCalculationID}
+              setActiveCalculationID={setActiveCalculationID}
+              calculationID={index}
             />
-            <CalculationOutput className={"answerNum" + index} />
+            <CalculationOutput
+              textAreaContent={textAreaContent}
+              setTextAreaContent={setTextAreaContent}
+              activeCalculationCount={activeCalculationCount}
+              setActiveCalculationCount={setActiveCalculationCount}
+              className={"answerNum" + index}
+              calculationID={index}
+            />
           </section>
         ))}
       </section>

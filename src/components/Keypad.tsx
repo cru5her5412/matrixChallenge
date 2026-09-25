@@ -17,6 +17,8 @@ export default function Keypad({
   setTextAreaContent,
   activeCalculationCount,
   setActiveCalculationCount,
+  activeCalculationID,
+  setActiveCalculationID,
 }: {
   setAHidden: Dispatch<SetStateAction<boolean>>;
   AHidden: boolean;
@@ -34,6 +36,8 @@ export default function Keypad({
   setTextAreaContent: Dispatch<SetStateAction<string[]>>;
   activeCalculationCount: number;
   setActiveCalculationCount: Dispatch<SetStateAction<number>>;
+  activeCalculationID: number;
+  setActiveCalculationID: Dispatch<SetStateAction<number>>;
 }) {
   const textArea: HTMLElement | null = document.querySelector(
     "#calculatorDisplayTextArea",
@@ -41,7 +45,13 @@ export default function Keypad({
   console.log(textArea);
   function handleEditText(charToAdd: string, isRemovingChar: boolean) {
     if (isRemovingChar === false) {
-      setTextAreaContent(textAreaContent + charToAdd);
+      setTextAreaContent(
+        textAreaContent.splice(
+          activeCalculationID,
+          1,
+          textAreaContent[activeCalculationID] + charToAdd,
+        ),
+      );
     } else {
       setTextAreaContent(textAreaContent.slice(0, textAreaContent.length - 1));
     }

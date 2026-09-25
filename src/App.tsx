@@ -46,7 +46,7 @@ export default function App() {
   const [matrixD, setMatrixD] = useState([...D]);
   const [matrixE, setMatrixE] = useState([...E]);
   const [matrixF, setMatrixF] = useState([...F]);
-  const [textAreaContent, setTextAreaContent] = useState([""]);
+  const [textAreaContent, setTextAreaContent] = useState(["", ""]);
   const [activeCalculationCount, setActiveCalculationCount] = useState(2);
   const [activeCalculationID, setActiveCalculationID] = useState(0);
   const inputA: number[][] = [];
@@ -71,7 +71,13 @@ export default function App() {
       }
     }
   }
-
+  if (textAreaContent.length === 1) {
+    let tempArr = [];
+    for (let i = 0; i < activeCalculationCount; i++) {
+      tempArr.push("");
+    }
+    setTextAreaContent(tempArr);
+  }
   //Visible app here
   return (
     <>
@@ -106,6 +112,8 @@ export default function App() {
             setTextAreaContent={setTextAreaContent}
             activeCalculationCount={activeCalculationCount}
             setActiveCalculationCount={setActiveCalculationCount}
+            activeCalculationID={activeCalculationID}
+            setActiveCalculationID={setActiveCalculationID}
           />
           <Keypad
             setAHidden={setAHidden}
