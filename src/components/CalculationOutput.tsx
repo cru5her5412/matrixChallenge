@@ -37,8 +37,58 @@ export default function CalculationOutput({
       operatorCount++;
       divisionCount++;
     }
+    if (operatorCount > 0) {
+      if (multiplyCount > 0) {
+        if (multiplyCount % 2 != 0) {
+        } else {
+          handleMultiplication(textAreaContent[calculationID], multiplyCount);
+        }
+      }
+      if (addCount > 0) {
+      }
+      if (subtractCount > 0) {
+      }
+      if (divisionCount > 0) {
+      }
+    }
   }
+  function handleMultiplication(inputStr: string) {
+    const inputStrArr = [];
+    let multiplyCount = 0;
+    for (let i = 0; i < inputStr.length; i++) {
+      inputStrArr.push(inputStr[i]);
+      if (inputStr[i] === "x") {
+        multiplyCount++;
+      }
+    }
+    let leftSide = "";
+    let rightSide = "";
+    if (multiplyCount > 1) {
+      const halfMultCount = Math.ceil(multiplyCount / 2);
+      let leftEndIndex = 0;
+      let j = 0;
+      for (let i = 0; i < inputStr.length; i++) {
+        if (inputStr[i] != "x") {
+          leftSide += inputStr[i];
+        } else {
+          if (j < halfMultCount) {
+            j++;
+            leftSide += "x";
+          } else if (j === halfMultCount) {
+            leftEndIndex = i;
+            i = inputStr.length;
+          }
+        }
+      }
+      rightSide = inputStr.slice(leftEndIndex + 1);
 
+      let leftCalc = handleMultiplication(leftSide);
+      let rightCalc = handleMultiplication(rightSide);
+    }
+  }
+  function handleAddition() {}
+  function handleSubtraction() {}
+  function handleDivision() {}
   return (
     <>
       <section
@@ -46,13 +96,10 @@ export default function CalculationOutput({
         className={displayStyles.calculatorOutputSection}
       >
         {"\n"}
-        {textAreaContent[calculationID] || "Answer Goes Here"}
-        {"\n"}
-        {textAreaContent[calculationID].indexOf("x")}
-        {"\n"}
 
         {answer}
-        {stringAsArray.toString()}
+        {/* 
+        {stringAsArray.toString()} */}
       </section>
     </>
   );
