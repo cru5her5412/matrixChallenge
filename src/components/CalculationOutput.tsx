@@ -41,7 +41,7 @@ export default function CalculationOutput({
       if (multiplyCount > 0) {
         if (multiplyCount % 2 != 0) {
         } else {
-          handleMultiplication(textAreaContent[calculationID], multiplyCount);
+          answer = handleMultiplication(textAreaContent[calculationID]) || "";
         }
       }
       if (addCount > 0) {
@@ -63,7 +63,13 @@ export default function CalculationOutput({
     }
     let leftSide = "";
     let rightSide = "";
-    if (multiplyCount > 1) {
+    if (multiplyCount === 0) {
+      return inputStr;
+    } else if (multiplyCount === 1) {
+      leftSide = inputStr.slice(0, inputStr.indexOf("x"));
+      rightSide = inputStr.slice(inputStr.indexOf("x") + 1);
+      return (parseInt(leftSide) * parseInt(rightSide)).toString();
+    } else if (multiplyCount > 1) {
       const halfMultCount = Math.ceil(multiplyCount / 2);
       let leftEndIndex = 0;
       let j = 0;
@@ -82,8 +88,9 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      let leftCalc = handleMultiplication(leftSide);
-      let rightCalc = handleMultiplication(rightSide);
+      let leftCalc: string = handleMultiplication(leftSide) || "1";
+      let rightCalc: string = handleMultiplication(rightSide) || "1";
+      return (parseInt(leftCalc) * parseInt(rightCalc) || 1).toString();
     }
   }
   function handleAddition() {}
