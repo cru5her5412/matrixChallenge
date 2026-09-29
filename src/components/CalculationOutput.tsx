@@ -22,6 +22,7 @@ export default function CalculationOutput({
   let subtractCount = 0;
   let multiplyCount = 0;
   let divisionCount = 0;
+  const matrixNames = ["A", "B", "C", "D", "E", "F"];
   for (let i = 0; i < textAreaContent[calculationID].length; i++) {
     stringAsArray.push(textAreaContent[calculationID][i]);
     if (textAreaContent[calculationID][i] === "x") {
@@ -39,10 +40,7 @@ export default function CalculationOutput({
     }
     if (operatorCount > 0) {
       if (multiplyCount > 0) {
-        if (multiplyCount % 2 != 0) {
-        } else {
-          answer = handleMultiplication(textAreaContent[calculationID]) || "";
-        }
+        answer = handleMultiplication(textAreaContent[calculationID]) || "";
       }
       if (addCount > 0) {
       }
@@ -66,7 +64,8 @@ export default function CalculationOutput({
     if (multiplyCount === 0) {
       return inputStr;
     } else if (multiplyCount === 1) {
-      leftSide = inputStr.slice(0, inputStr.indexOf("x"));
+      for (let i = 0; i < matrixNames.length; i++)
+        leftSide = inputStr.slice(0, inputStr.indexOf("x"));
       rightSide = inputStr.slice(inputStr.indexOf("x") + 1);
       return (parseInt(leftSide) * parseInt(rightSide)).toString();
     } else if (multiplyCount > 1) {
@@ -88,8 +87,8 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      let leftCalc: string = handleMultiplication(leftSide) || "1";
-      let rightCalc: string = handleMultiplication(rightSide) || "1";
+      const leftCalc: string = handleMultiplication(leftSide) || "1";
+      const rightCalc: string = handleMultiplication(rightSide) || "1";
       return (parseInt(leftCalc) * parseInt(rightCalc) || 1).toString();
     }
   }
@@ -104,7 +103,7 @@ export default function CalculationOutput({
       >
         {"\n"}
 
-        {answer}
+        {answer || "Answer goes here"}
         {/* 
         {stringAsArray.toString()} */}
       </section>
