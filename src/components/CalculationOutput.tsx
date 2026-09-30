@@ -64,10 +64,17 @@ export default function CalculationOutput({
     if (multiplyCount === 0) {
       return inputStr;
     } else if (multiplyCount === 1) {
-      for (let i = 0; i < matrixNames.length; i++)
-        leftSide = inputStr.slice(0, inputStr.indexOf("x"));
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      leftSide = inputStr.slice(0, inputStr.indexOf("x"));
       rightSide = inputStr.slice(inputStr.indexOf("x") + 1);
-      return (parseInt(leftSide) * parseInt(rightSide)).toString();
+      const leftCalc = parseInt(leftSide);
+      const rightCalc = parseInt(rightSide);
+      const outputString: string = (leftCalc * rightCalc).toString();
+      if (outputString === "NaN") {
+        return leftCalc.toString();
+      } else {
+        return outputString;
+      }
     } else if (multiplyCount > 1) {
       const halfMultCount = Math.ceil(multiplyCount / 2);
       let leftEndIndex = 0;
@@ -87,8 +94,10 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string = handleMultiplication(leftSide) || "1";
-      const rightCalc: string = handleMultiplication(rightSide) || "1";
+      const leftCalc: string =
+        handleMultiplication(leftSide) || parseInt(rightSide).toString();
+      const rightCalc: string =
+        handleMultiplication(rightSide) || parseInt(rightSide).toString();
       return (parseInt(leftCalc) * parseInt(rightCalc) || 1).toString();
     }
   }
