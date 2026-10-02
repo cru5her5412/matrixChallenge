@@ -54,6 +54,69 @@ export default function CalculationOutput({
       }
     }
   }
+  function handleDivision(
+    inputStr: string,
+    // divisionCount: number,
+    // multiplyCount: number,
+    // additionCount: number,
+    // subtractionCount: number,
+  ) {
+    let currDivisionCount = 0;
+    const inputStrArr: string[] = [];
+    for (let i = 0; i < inputStr.length; i++) {
+      inputStrArr.push(inputStr[i]);
+      if (inputStr[i] === "/") {
+        currDivisionCount++;
+      }
+    }
+    let leftSide = "";
+    let rightSide = "";
+    if (currDivisionCount === 0) {
+      return inputStr;
+    } else if (currDivisionCount === 1) {
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      leftSide = inputStr.slice(0, inputStr.indexOf("/"));
+      rightSide = inputStr.slice(inputStr.indexOf("/") + 1);
+      const leftCalc = parseFloat(leftSide);
+      let rightCalc = parseFloat(rightSide);
+      if (rightCalc === 0) {
+        rightCalc = 1;
+      }
+      const outputString: string = (leftCalc / rightCalc).toString();
+      if (outputString === "NaN") {
+        return leftCalc.toString();
+      } else {
+        return outputString;
+      }
+    } else if (currDivisionCount > 1) {
+      const halfDivisionCount = Math.ceil(currDivisionCount / 2);
+      let leftEndIndex = 0;
+      let j = 0;
+      for (let i = 0; i < inputStr.length; i++) {
+        if (inputStr[i] != "/") {
+          leftSide += inputStr[i];
+        } else {
+          if (j < halfDivisionCount) {
+            j++;
+            leftSide += "/";
+          } else if (j === halfDivisionCount) {
+            leftEndIndex = i;
+            i = inputStr.length;
+          }
+        }
+      }
+      rightSide = inputStr.slice(leftEndIndex + 1);
+
+      const leftCalc: string =
+        handleDivision(leftSide) || parseFloat(rightSide).toString();
+      let rightCalc: string =
+        handleDivision(rightSide) || parseFloat(rightSide).toString();
+      if (rightCalc === "0") {
+        rightCalc = "1";
+      }
+      return (parseFloat(leftCalc) / parseFloat(rightCalc)).toString();
+    }
+  }
   function handleMultiplication(
     inputStr: string,
     // divisionCount: number,
@@ -118,16 +181,54 @@ export default function CalculationOutput({
     // additionCount: number,
     // subtractionCount: number,
   ) {
-    const inputStrArr: string[] = [];
+    const inputStrArr = [];
+    let currAdditionCount = 0;
     for (let i = 0; i < inputStr.length; i++) {
       inputStrArr.push(inputStr[i]);
+      if (inputStr[i] === "+") {
+        currAdditionCount++;
+      }
     }
     let leftSide = "";
     let rightSide = "";
-    if (additionCount === 0) {
+    if (currAdditionCount === 0) {
       return inputStr;
-    } else if (additionCount === 1) {
-    } else if (additionCount > 1) {
+    } else if (currAdditionCount === 1) {
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      leftSide = inputStr.slice(0, inputStr.indexOf("+"));
+      rightSide = inputStr.slice(inputStr.indexOf("+") + 1);
+      const leftCalc = parseFloat(leftSide);
+      const rightCalc = parseFloat(rightSide);
+      const outputString: string = (leftCalc + rightCalc).toString();
+      if (outputString === "NaN") {
+        return leftCalc.toString();
+      } else {
+        return outputString;
+      }
+    } else if (currAdditionCount > 1) {
+      const halfAddCount = Math.ceil(currAdditionCount / 2);
+      let leftEndIndex = 0;
+      let j = 0;
+      for (let i = 0; i < inputStr.length; i++) {
+        if (inputStr[i] != "+") {
+          leftSide += inputStr[i];
+        } else {
+          if (j < halfAddCount) {
+            j++;
+            leftSide += "+";
+          } else if (j === halfAddCount) {
+            leftEndIndex = i;
+            i = inputStr.length;
+          }
+        }
+      }
+      rightSide = inputStr.slice(leftEndIndex + 1);
+
+      const leftCalc: string =
+        handleMultiplication(leftSide) || parseFloat(rightSide).toString();
+      const rightCalc: string =
+        handleMultiplication(rightSide) || parseFloat(rightSide).toString();
+      return (parseFloat(leftCalc) + parseFloat(rightCalc) || 1).toString();
     }
   }
   function handleSubtraction(
@@ -137,61 +238,42 @@ export default function CalculationOutput({
     // additionCount: number,
     // subtractionCount: number,
   ) {
-    const inputStrArr: string[] = [];
-
+    const inputStrArr = [];
+    let currSubtractionCount = 0;
     for (let i = 0; i < inputStr.length; i++) {
       inputStrArr.push(inputStr[i]);
-    }
-    let leftSide = "";
-    let rightSide = "";
-    if (subtractionCount === 0) {
-      return inputStr;
-    } else if (subtractionCount === 1) {
-    } else if (subtractionCount > 1) {
-    }
-  }
-  function handleDivision(
-    inputStr: string,
-    // divisionCount: number,
-    // multiplyCount: number,
-    // additionCount: number,
-    // subtractionCount: number,
-  ) {
-    const inputStrArr: string[] = [];
-    for (let i = 0; i < inputStr.length; i++) {
-      inputStrArr.push(inputStr[i]);
-    }
-    let leftSide = "";
-    let rightSide = "";
-    if (divisionCount === 0) {
-      return inputStr;
-    } else if (divisionCount === 1) {
-      // for (let i = 0; i < matrixNames.length; i++) {}
-      leftSide = inputStr.slice(0, inputStr.indexOf("/"));
-      rightSide = inputStr.slice(inputStr.indexOf("/") + 1);
-      const leftCalc = parseFloat(leftSide);
-      let rightCalc = parseFloat(rightSide);
-      if (rightCalc === 0) {
-        rightCalc = 1;
+      if (inputStr[i] === "-") {
+        currSubtractionCount++;
       }
-      const outputString: string = (leftCalc / rightCalc).toString();
+    }
+    let leftSide = "";
+    let rightSide = "";
+    if (currSubtractionCount === 0) {
+      return inputStr;
+    } else if (currSubtractionCount === 1) {
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      leftSide = inputStr.slice(0, inputStr.indexOf("-"));
+      rightSide = inputStr.slice(inputStr.indexOf("-") + 1);
+      const leftCalc = parseFloat(leftSide);
+      const rightCalc = parseFloat(rightSide);
+      const outputString: string = (leftCalc - rightCalc).toString();
       if (outputString === "NaN") {
         return leftCalc.toString();
       } else {
         return outputString;
       }
-    } else if (divisionCount > 1) {
-      const halfDivisionCount = Math.ceil(divisionCount / 2);
+    } else if (currSubtractionCount > 1) {
+      const halfSubtractCount = Math.ceil(currSubtractionCount / 2);
       let leftEndIndex = 0;
       let j = 0;
       for (let i = 0; i < inputStr.length; i++) {
-        if (inputStr[i] != "/") {
+        if (inputStr[i] != "-") {
           leftSide += inputStr[i];
         } else {
-          if (j < halfDivisionCount) {
+          if (j < halfSubtractCount) {
             j++;
-            leftSide += "/";
-          } else if (j === halfDivisionCount) {
+            leftSide += "-";
+          } else if (j === halfSubtractCount) {
             leftEndIndex = i;
             i = inputStr.length;
           }
@@ -200,15 +282,13 @@ export default function CalculationOutput({
       rightSide = inputStr.slice(leftEndIndex + 1);
 
       const leftCalc: string =
-        handleDivision(leftSide) || parseFloat(rightSide).toString();
-      let rightCalc: string =
-        handleDivision(rightSide) || parseFloat(rightSide).toString();
-      if (rightCalc === "0") {
-        rightCalc = "1";
-      }
-      return (parseFloat(leftCalc) / parseFloat(rightCalc)).toString();
+        handleMultiplication(leftSide) || parseFloat(rightSide).toString();
+      const rightCalc: string =
+        handleMultiplication(rightSide) || parseFloat(rightSide).toString();
+      return (parseFloat(leftCalc) - parseFloat(rightCalc) || 1).toString();
     }
   }
+
   return (
     <>
       <section
