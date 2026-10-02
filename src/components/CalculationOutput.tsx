@@ -23,6 +23,7 @@ export default function CalculationOutput({
   let multiplyCount = 0;
   let divisionCount = 0;
   const matrixNames = ["A", "B", "C", "D", "E", "F"];
+  const validNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
   for (let i = 0; i < textAreaContent[calculationID].length; i++) {
     stringAsArray.push(textAreaContent[calculationID][i]);
     if (textAreaContent[calculationID][i] === "x") {
@@ -107,10 +108,8 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string =
-        handleDivision(leftSide) || parseFloat(rightSide).toString();
-      let rightCalc: string =
-        handleDivision(rightSide) || parseFloat(rightSide).toString();
+      const leftCalc: string = handleDivision(leftSide) || "1";
+      let rightCalc: string = handleDivision(rightSide) || "1";
       if (rightCalc === "0") {
         rightCalc = "1";
       }
@@ -137,8 +136,16 @@ export default function CalculationOutput({
     if (currMultiplyCount === 0) {
       return inputStr;
     } else if (currMultiplyCount === 1) {
+      let startOfNum = inputStr.indexOf("x") - 1;
+      for (let i = inputStr.indexOf("x"); i > 0; i--) {
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[i]) {
+            startOfNum--;
+          }
+        }
+      }
       // for (let i = 0; i < matrixNames.length; i++) {}
-      leftSide = inputStr.slice(0, inputStr.indexOf("x"));
+      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("x"));
       rightSide = inputStr.slice(inputStr.indexOf("x") + 1);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
@@ -167,10 +174,8 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string =
-        handleMultiplication(leftSide) || parseFloat(rightSide).toString();
-      const rightCalc: string =
-        handleMultiplication(rightSide) || parseFloat(rightSide).toString();
+      const leftCalc: string = handleMultiplication(leftSide) || "1";
+      const rightCalc: string = handleMultiplication(rightSide) || "1";
       return (parseFloat(leftCalc) * parseFloat(rightCalc) || 1).toString();
     }
   }
@@ -224,10 +229,8 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string =
-        handleMultiplication(leftSide) || parseFloat(rightSide).toString();
-      const rightCalc: string =
-        handleMultiplication(rightSide) || parseFloat(rightSide).toString();
+      const leftCalc: string = handleMultiplication(leftSide) || "0";
+      const rightCalc: string = handleMultiplication(rightSide) || "0";
       return (parseFloat(leftCalc) + parseFloat(rightCalc) || 1).toString();
     }
   }
@@ -281,10 +284,8 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string =
-        handleMultiplication(leftSide) || parseFloat(rightSide).toString();
-      const rightCalc: string =
-        handleMultiplication(rightSide) || parseFloat(rightSide).toString();
+      const leftCalc: string = handleMultiplication(leftSide) || "0";
+      const rightCalc: string = handleMultiplication(rightSide) || "0";
       return (parseFloat(leftCalc) - parseFloat(rightCalc) || 1).toString();
     }
   }
