@@ -137,16 +137,36 @@ export default function CalculationOutput({
       return inputStr;
     } else if (currMultiplyCount === 1) {
       let startOfNum = inputStr.indexOf("x") - 1;
-      for (let i = inputStr.indexOf("x"); i > 0; i--) {
+      for (let x = inputStr.indexOf("x"); x >= 0; x--) {
+        let positionChanged = false;
         for (let j = 0; j < validNumbers.length; j++) {
-          if (validNumbers[j] === inputStrArr[i]) {
+          if (validNumbers[j] === inputStrArr[x]) {
             startOfNum--;
+            positionChanged = true;
+            j++;
           }
+        }
+        if (positionChanged === false) {
+          x = -1;
+        }
+      }
+
+      let endOfNum = inputStr.indexOf("x") + 1;
+      for (let x = inputStr.indexOf("x") + 1; x < inputStr.length; x++) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[x]) {
+            endOfNum++;
+            positionChanged = true;
+          }
+        }
+        if (positionChanged === false) {
+          x = inputStr.length;
         }
       }
       // for (let i = 0; i < matrixNames.length; i++) {}
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("x"));
-      rightSide = inputStr.slice(inputStr.indexOf("x") + 1);
+      rightSide = inputStr.slice(inputStr.indexOf("x") + 1, endOfNum + 1);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       const outputString: string = (leftCalc * rightCalc).toString();
