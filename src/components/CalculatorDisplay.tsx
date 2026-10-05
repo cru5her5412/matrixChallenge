@@ -2,7 +2,6 @@ import { useState, type Dispatch, type SetStateAction } from "react";
 import displayStyles from "./CalculatorDisplay.module.css";
 import InputMatrix from "./InputMatrix";
 import displayMatrix from "./displayMatrix";
-import Calculator from "./Calculator";
 import CalculationInput from "./CalculationInput";
 import CalculationOutput from "./CalculationOutput";
 //todo:
@@ -190,6 +189,12 @@ export default function CalculatorDisplay({
               setActiveCalculationCount={setActiveCalculationCount}
               className={"answerNum" + index}
               calculationID={index}
+              matrixA={matrixA}
+              matrixB={matrixB}
+              matrixC={matrixC}
+              matrixD={matrixD}
+              matrixE={matrixE}
+              matrixF={matrixF}
             />
           </section>
         ))}

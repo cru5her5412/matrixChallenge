@@ -1,5 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
 import displayStyles from "./CalculatorDisplay.module.css";
+import { matrixCalculator } from "./matrixCalculator";
+import displayMatrix from "./displayMatrix";
+import { matrixMultiplication } from "./matrixChallenge";
 export default function CalculationOutput({
   className,
   textAreaContent,
@@ -7,6 +10,12 @@ export default function CalculationOutput({
   activeCalculationCount,
   setActiveCalculationCount,
   calculationID,
+  matrixA,
+  matrixB,
+  matrixC,
+  matrixD,
+  matrixE,
+  matrixF,
 }: {
   className: string;
   textAreaContent: string[];
@@ -14,8 +23,14 @@ export default function CalculationOutput({
   activeCalculationCount: number;
   setActiveCalculationCount: Dispatch<SetStateAction<number>>;
   calculationID: number;
+  matrixA: string[][];
+  matrixB: string[][];
+  matrixC: string[][];
+  matrixD: string[][];
+  matrixE: string[][];
+  matrixF: string[][];
 }) {
-  let answer: string = "";
+  let answer: string | string[][] = "";
   let stringAsArray = [];
   let operatorCount = 0;
   let additionCount = 0;
@@ -23,7 +38,24 @@ export default function CalculationOutput({
   let multiplyCount = 0;
   let divisionCount = 0;
   const matrixNames = ["A", "B", "C", "D", "E", "F"];
-  const validNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+  const validNumbers = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "0",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+  ];
   for (let i = 0; i < textAreaContent[calculationID].length; i++) {
     stringAsArray.push(textAreaContent[calculationID][i]);
     if (textAreaContent[calculationID][i] === "x") {
@@ -149,6 +181,17 @@ export default function CalculationOutput({
     // subtractionCount: number,
   ) {
     const inputStrArr = [];
+    const presentMatrix = [];
+    let matrixPresent = false;
+    for (let j = 0; j < inputStr.length; j++) {
+      for (let i = 0; i < matrixNames.length; i++) {
+        if (inputStr[j] === matrixNames[i]) {
+          matrixPresent = true;
+          presentMatrix.push(inputStr[j]);
+          j++;
+        }
+      }
+    }
     let currMultiplyCount = 0;
     for (let i = 0; i < inputStr.length; i++) {
       inputStrArr.push(inputStr[i]);
@@ -160,7 +203,7 @@ export default function CalculationOutput({
     let rightSide = "";
     if (currMultiplyCount === 0) {
       return inputStr;
-    } else if (currMultiplyCount === 1) {
+    } else if (currMultiplyCount === 1 && !matrixPresent) {
       let startOfNum = inputStr.indexOf("x") - 1;
       for (let x = inputStr.indexOf("x") - 1; x > 0; x--) {
         let positionChanged = false;
@@ -200,7 +243,7 @@ export default function CalculationOutput({
       } else {
         return outputString;
       }
-    } else if (currMultiplyCount > 1) {
+    } else if (currMultiplyCount > 1 && !matrixPresent) {
       const halfMultCount = Math.ceil(currMultiplyCount / 2);
       let leftEndIndex = 0;
       let j = 0;
@@ -222,6 +265,189 @@ export default function CalculationOutput({
       const leftCalc: string = handleMultiplication(leftSide) || "1";
       const rightCalc: string = handleMultiplication(rightSide) || "1";
       return (parseFloat(leftCalc) * parseFloat(rightCalc) || 1).toString();
+    } else if (currMultiplyCount === 1 && matrixPresent) {
+      let startOfNum = inputStr.indexOf("x") - 1;
+      for (let x = inputStr.indexOf("x") - 1; x > 0; x--) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStr[x]) {
+            startOfNum--;
+            positionChanged = true;
+          }
+        }
+        if (positionChanged === false) {
+          x = -1;
+        }
+      }
+
+      let endOfNum = inputStr.indexOf("x") + 1;
+      for (let x = inputStr.indexOf("x") + 1; x < inputStr.length; x++) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[x]) {
+            endOfNum++;
+            positionChanged = true;
+            x++;
+          }
+        }
+        if (positionChanged === false) {
+          x = inputStr.length;
+        }
+      }
+      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("x"));
+      rightSide = inputStr.slice(inputStr.indexOf("x") + 1, endOfNum + 1);
+      let currentMatrixL: string = "";
+      let leftMatrix = false;
+      for (let i = 0; i < leftSide.length; i++) {
+        for (let j = 0; j < matrixNames.length; j++) {
+          if (leftSide.includes(matrixNames[j])) {
+            currentMatrixL = matrixNames[j];
+            leftMatrix = true;
+
+            i = leftSide.length;
+          }
+        }
+      }
+      let currentMatrixR: string = "";
+      let rightMatrix = false;
+      for (let i = 0; i < leftSide.length; i++) {
+        for (let j = 0; j < matrixNames.length; j++) {
+          if (leftSide.includes(matrixNames[j])) {
+            currentMatrixR = matrixNames[j];
+            rightMatrix = true;
+
+            i = leftSide.length;
+          }
+        }
+      }
+      /*if (leftMatrix === false && rightMatrix === false) {
+        const leftCalc = parseFloat(leftSide);
+        const leftCalc = parseFloat(leftSide);
+
+      } else*/ if (leftMatrix === false && rightMatrix === true) {
+        const matrixNo = matrixNames.indexOf(currentMatrixR) + 1;
+        let rightCalc: string[][] = [];
+        switch (matrixNo) {
+          case 1:
+            rightCalc = matrixA;
+            break;
+          case 2:
+            rightCalc = matrixB;
+            break;
+          case 3:
+            rightCalc = matrixC;
+            break;
+          case 4:
+            rightCalc = matrixD;
+            break;
+          case 5:
+            rightCalc = matrixE;
+            break;
+          case 6:
+            rightCalc = matrixF;
+            break;
+          default:
+            rightCalc = matrixA;
+            break;
+        }
+        return matrixCalculator(
+          rightCalc,
+          [[""], [""]],
+          parseFloat(leftSide),
+          "DEGREE",
+          "matrixNumberMultiplication",
+        );
+      } else if (leftMatrix === true && rightMatrix === false) {
+        const matrixNo = matrixNames.indexOf(currentMatrixL) + 1;
+        let leftCalc: string[][];
+        switch (matrixNo) {
+          case 1:
+            leftCalc = matrixA;
+            break;
+          case 2:
+            leftCalc = matrixB;
+            break;
+          case 3:
+            leftCalc = matrixC;
+            break;
+          case 4:
+            leftCalc = matrixD;
+            break;
+          case 5:
+            leftCalc = matrixE;
+            break;
+          case 6:
+            leftCalc = matrixF;
+            break;
+          default:
+            leftCalc = matrixA;
+            break;
+        }
+        return matrixCalculator(
+          leftCalc,
+          [[""], [""]],
+          parseFloat(rightSide),
+          "DEGREE",
+          "matrixNumberMultiplication",
+        );
+      } else if (leftMatrix === true && rightMatrix === true) {
+        const matrixNo = matrixNames.indexOf(currentMatrixR) + 1;
+        let leftCalc: string[][];
+        let rightCalc: string[][];
+        switch (matrixNo) {
+          case 1:
+            leftCalc = matrixA;
+            break;
+          case 2:
+            leftCalc = matrixB;
+            break;
+          case 3:
+            leftCalc = matrixC;
+            break;
+          case 4:
+            leftCalc = matrixD;
+            break;
+          case 5:
+            leftCalc = matrixE;
+            break;
+          case 6:
+            leftCalc = matrixF;
+            break;
+          default:
+            leftCalc = matrixA;
+            break;
+        }
+        switch (matrixNo) {
+          case 1:
+            rightCalc = matrixA;
+            break;
+          case 2:
+            rightCalc = matrixB;
+            break;
+          case 3:
+            rightCalc = matrixC;
+            break;
+          case 4:
+            rightCalc = matrixD;
+            break;
+          case 5:
+            rightCalc = matrixE;
+            break;
+          case 6:
+            rightCalc = matrixF;
+            break;
+          default:
+            rightCalc = matrixA;
+            break;
+        }
+        return matrixCalculator(
+          leftCalc,
+          rightCalc,
+          0,
+          "DEGREE",
+          "matrixMultiplication",
+        );
+      }
     }
   }
   function handleAddition(
@@ -314,8 +540,8 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string = handleMultiplication(leftSide) || "0";
-      const rightCalc: string = handleMultiplication(rightSide) || "0";
+      const leftCalc: string = handleAddition(leftSide) || "0";
+      const rightCalc: string = handleAddition(rightSide) || "0";
       return (parseFloat(leftCalc) + parseFloat(rightCalc) || 1).toString();
     }
   }
@@ -397,8 +623,8 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string = handleMultiplication(leftSide) || "0";
-      const rightCalc: string = handleMultiplication(rightSide) || "0";
+      const leftCalc: string = handleSubtraction(leftSide) || "0";
+      const rightCalc: string = handleSubtraction(rightSide) || "0";
       return (parseFloat(leftCalc) - parseFloat(rightCalc) || 1).toString();
     }
   }
@@ -411,7 +637,7 @@ export default function CalculationOutput({
       >
         {"\n"}
 
-        {answer || "Answer goes here"}
+        {typeof answer === "string" ? answer : displayMatrix(answer)}
         {/* 
         {stringAsArray.toString()} */}
       </section>

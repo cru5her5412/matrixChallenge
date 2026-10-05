@@ -106,7 +106,7 @@ const inputArray018: number[][] = [
 export function matrixMultiplication(
   [...A]: number[][],
   [...B]: number[][],
-  decimalPlaces: number
+  decimalPlaces: number,
 ) {
   //added clarification here
   const output: number[][] = []; //added clarification here
@@ -241,7 +241,7 @@ export function matrixInverse([...A]: number[][], decimalPlaces: number) {
         let temp = num * (1 / detA);
         temp = Math.round(temp * 10 ** decimalPlaces) / 10 ** decimalPlaces;
         return temp;
-      })
+      }),
     );
     //moved inversion of signs to after mapping to inverseMatrix
     if (A[0][1] !== 0) {
@@ -288,7 +288,7 @@ export function matrixInverse([...A]: number[][], decimalPlaces: number) {
           A,
           -1,
           1,
-          decimalPlaces
+          decimalPlaces,
         );
       } else {
         if (row % 2 == 0 || row == 0) {
@@ -302,7 +302,7 @@ export function matrixInverse([...A]: number[][], decimalPlaces: number) {
             A,
             -1,
             1,
-            decimalPlaces
+            decimalPlaces,
           );
         } else {
           defaultInversionLogic(
@@ -314,7 +314,7 @@ export function matrixInverse([...A]: number[][], decimalPlaces: number) {
             A,
             1,
             -1,
-            decimalPlaces
+            decimalPlaces,
           );
         }
       }
@@ -369,14 +369,14 @@ export function defaultInversionLogic(
   A: number[][],
   a: number,
   b: number,
-  decimalPlaces: number
+  decimalPlaces: number,
 ) {
   if (s % 2 != 0 && s != 0) {
     //if odd position in array, value is -ve (when going through row by row, column by column, every other value should be -ve)
     inverseMatrix[column][row] =
       Math.round(
         (matrixDeterminant(tempArray) / matrixDeterminant(A)) *
-          10 ** decimalPlaces
+          10 ** decimalPlaces,
       ) /
         10 ** decimalPlaces ===
       0
@@ -384,7 +384,7 @@ export function defaultInversionLogic(
         : (a *
             Math.round(
               (matrixDeterminant(tempArray) / matrixDeterminant(A)) *
-                10 ** decimalPlaces
+                10 ** decimalPlaces,
             )) /
           10 ** decimalPlaces;
   } else if (s % 2 == 0 || s == 0) {
@@ -392,7 +392,7 @@ export function defaultInversionLogic(
     inverseMatrix[column][row] =
       Math.round(
         (matrixDeterminant(tempArray) / matrixDeterminant(A)) *
-          10 ** decimalPlaces
+          10 ** decimalPlaces,
       ) /
         10 ** decimalPlaces ===
       0
@@ -400,7 +400,7 @@ export function defaultInversionLogic(
         : (b *
             Math.round(
               (matrixDeterminant(tempArray) / matrixDeterminant(A)) *
-                10 ** decimalPlaces
+                10 ** decimalPlaces,
             )) /
           10 ** decimalPlaces;
   }
@@ -412,7 +412,10 @@ export function matrixTrace(A: number[][]) {
   }
   return trace;
 }
-export function createRotationMatrix(angle: number, angleMode: "DEGREE" | "RADIAN") {
+export function createRotationMatrix(
+  angle: number,
+  angleMode: "DEGREE" | "RADIAN",
+) {
   let newAngle: number; //new angle to use
   if (angleMode == "DEGREE") {
     //if angleMode is set to degrees, convert angles to radians(Math export functions use them by default)
@@ -432,7 +435,11 @@ export function createRotationMatrix(angle: number, angleMode: "DEGREE" | "RADIA
   ]; //create rotation matrix based on formula from wikipedia, rounded to 6 decimal places
   return rotateMatrix;
 }
-export function rotateMatrix(angle: number, matrixToRotate: number[][], angleMode: "DEGREE" | "RADIAN") {
+export function rotateMatrix(
+  angle: number,
+  matrixToRotate: number[][],
+  angleMode: "DEGREE" | "RADIAN",
+) {
   if (matrixToRotate.length > 2 || matrixToRotate[0].length > 2) {
     throw "error, matrix is too large to rotate with a rotation matrix (2x1 or 2x2)";
   }
@@ -471,6 +478,18 @@ export function subtractMatrix([...A]: number[][], [...B]: number[][]) {
     }
     return subtractedMatrix;
   }
+}
+export function multiplicationNumberMatrix([...A]: number[][], a: number) {
+  const multipliedMatrix: number[][] = [];
+  A.forEach(() => {
+    multipliedMatrix.push([]);
+  });
+  for (let i = 0; i < A.length; i++) {
+    for (let j = 0; j < A[0].length; j++) {
+      multipliedMatrix[i][j] = A[i][j] * a;
+    }
+  }
+  return multipliedMatrix;
 }
 
 // console.log(matrixDeterminant(inputArray07)); //find determinant of 2x2
