@@ -75,14 +75,39 @@ export default function CalculationOutput({
     if (currDivisionCount === 0) {
       return inputStr;
     } else if (currDivisionCount === 1) {
-      // for (let i = 0; i < matrixNames.length; i++) {}
-      leftSide = inputStr.slice(0, inputStr.indexOf("/"));
-      rightSide = inputStr.slice(inputStr.indexOf("/") + 1);
-      const leftCalc = parseFloat(leftSide);
-      let rightCalc = parseFloat(rightSide);
-      if (rightCalc === 0) {
-        rightCalc = 1;
+      let startOfNum = inputStr.indexOf("/") - 1;
+      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStr[x]) {
+            startOfNum--;
+            positionChanged = true;
+          }
+        }
+        if (positionChanged === false) {
+          x = -1;
+        }
       }
+
+      let endOfNum = inputStr.indexOf("/") + 1;
+      for (let x = inputStr.indexOf("/") + 1; x < inputStr.length; x++) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[x]) {
+            endOfNum++;
+            positionChanged = true;
+            x++;
+          }
+        }
+        if (positionChanged === false) {
+          x = inputStr.length;
+        }
+      }
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
+      rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
+      const leftCalc = parseFloat(leftSide);
+      const rightCalc = parseFloat(rightSide);
       const outputString: string = (leftCalc / rightCalc).toString();
       if (outputString === "NaN") {
         return leftCalc.toString();
@@ -220,8 +245,37 @@ export default function CalculationOutput({
       return inputStr;
     } else if (currAdditionCount === 1) {
       // for (let i = 0; i < matrixNames.length; i++) {}
-      leftSide = inputStr.slice(0, inputStr.indexOf("+"));
-      rightSide = inputStr.slice(inputStr.indexOf("+") + 1);
+      let startOfNum = inputStr.indexOf("+") - 1;
+      for (let x = inputStr.indexOf("+") - 1; x > 0; x--) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStr[x]) {
+            startOfNum--;
+            positionChanged = true;
+          }
+        }
+        if (positionChanged === false) {
+          x = -1;
+        }
+      }
+
+      let endOfNum = inputStr.indexOf("+") + 1;
+      for (let x = inputStr.indexOf("+") + 1; x < inputStr.length; x++) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[x]) {
+            endOfNum++;
+            positionChanged = true;
+            x++;
+          }
+        }
+        if (positionChanged === false) {
+          x = inputStr.length;
+        }
+      }
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("+"));
+      rightSide = inputStr.slice(inputStr.indexOf("+") + 1, endOfNum + 1);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       const outputString: string = (leftCalc + rightCalc).toString();
@@ -274,9 +328,37 @@ export default function CalculationOutput({
     if (currSubtractionCount === 0) {
       return inputStr;
     } else if (currSubtractionCount === 1) {
+      let startOfNum = inputStr.indexOf("-") - 1;
+      for (let x = inputStr.indexOf("-") - 1; x > 0; x--) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStr[x]) {
+            startOfNum--;
+            positionChanged = true;
+          }
+        }
+        if (positionChanged === false) {
+          x = -1;
+        }
+      }
+
+      let endOfNum = inputStr.indexOf("-") + 1;
+      for (let x = inputStr.indexOf("-") + 1; x < inputStr.length; x++) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[x]) {
+            endOfNum++;
+            positionChanged = true;
+            x++;
+          }
+        }
+        if (positionChanged === false) {
+          x = inputStr.length;
+        }
+      }
       // for (let i = 0; i < matrixNames.length; i++) {}
-      leftSide = inputStr.slice(0, inputStr.indexOf("-"));
-      rightSide = inputStr.slice(inputStr.indexOf("-") + 1);
+      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("-"));
+      rightSide = inputStr.slice(inputStr.indexOf("-") + 1, endOfNum + 1);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       const outputString: string = (leftCalc - rightCalc).toString();
