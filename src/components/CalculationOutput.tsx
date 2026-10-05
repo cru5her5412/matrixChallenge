@@ -273,7 +273,18 @@ export default function CalculationOutput({
           x = inputStr.length;
         }
       }
-      // for (let i = 0; i < matrixNames.length; i++) {}
+      /*
+      let presentMatrix = []
+      let matrixPresent=false
+      for (let j = 0;j<inputStr.length;j++){ 
+      for (let i = 0; i < matrixNames.length; i++) {
+      if(inputStr[j]===matrixNames[i]){
+      matrixPresent = true
+      presentMatrix.push(inputstr[j])
+      j++;
+      }
+      }
+      }*/
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("+"));
       rightSide = inputStr.slice(inputStr.indexOf("+") + 1, endOfNum + 1);
       const leftCalc = parseFloat(leftSide);
