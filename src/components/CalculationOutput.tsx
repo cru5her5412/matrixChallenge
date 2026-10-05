@@ -137,13 +137,12 @@ export default function CalculationOutput({
       return inputStr;
     } else if (currMultiplyCount === 1) {
       let startOfNum = inputStr.indexOf("x") - 1;
-      for (let x = inputStr.indexOf("x"); x >= 0; x--) {
+      for (let x = inputStr.indexOf("x") - 1; x > 0; x--) {
         let positionChanged = false;
         for (let j = 0; j < validNumbers.length; j++) {
-          if (validNumbers[j] === inputStrArr[x]) {
+          if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
-            j++;
           }
         }
         if (positionChanged === false) {
@@ -158,6 +157,7 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
+            x++;
           }
         }
         if (positionChanged === false) {
