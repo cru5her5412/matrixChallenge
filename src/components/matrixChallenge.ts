@@ -481,14 +481,16 @@ export function subtractMatrix([...A]: number[][], [...B]: number[][]) {
 }
 export function multiplicationNumberMatrix([...A]: number[][], a: number) {
   const multipliedMatrix: number[][] = [];
-  A.forEach(() => {
+  for (let i = 0; i < A.length; i++) {
     multipliedMatrix.push([]);
-  });
+  }
   for (let i = 0; i < A.length; i++) {
     for (let j = 0; j < A[0].length; j++) {
       multipliedMatrix[i][j] = A[i][j] * a;
     }
   }
+  console.log(multipliedMatrix);
+  console.log("multMatr");
   return multipliedMatrix;
 }
 

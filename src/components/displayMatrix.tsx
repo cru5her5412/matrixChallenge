@@ -5,6 +5,7 @@ export default function displayMatrix(matrix: string[][]) {
     <div className="matrixDisplay">
       <div className="openBr"></div>
       <span className={matrixDisplayStyles.matrixPart}>
+        {}
         {matrix.map((row, indexR) => (
           <section key={indexR} className={`row${indexR}`}>
             {row.map((col, indexC) => {

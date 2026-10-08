@@ -2,7 +2,6 @@ import type { Dispatch, SetStateAction } from "react";
 import displayStyles from "./CalculatorDisplay.module.css";
 import { matrixCalculator } from "./matrixCalculator";
 import displayMatrix from "./displayMatrix";
-import { matrixMultiplication } from "./matrixChallenge";
 export default function CalculationOutput({
   className,
   textAreaContent,
@@ -31,7 +30,7 @@ export default function CalculationOutput({
   matrixF: string[][];
 }) {
   let answer: string | string[][] = "";
-  let stringAsArray = [];
+  const stringAsArray = [];
   let operatorCount = 0;
   let additionCount = 0;
   let subtractionCount = 0;
@@ -85,6 +84,14 @@ export default function CalculationOutput({
       if (subtractionCount > 0) {
         answer = handleSubtraction(textAreaContent[calculationID]) || "";
       }
+    }
+    if (
+      divisionCount === 0 &&
+      multiplyCount === 0 &&
+      additionCount === 0 &&
+      subtractionCount === 0
+    ) {
+      answer = textAreaContent[calculationID];
     }
   }
   function handleDivision(
@@ -199,8 +206,8 @@ export default function CalculationOutput({
         currMultiplyCount++;
       }
     }
-    let leftSide = "";
-    let rightSide = "";
+    let leftSide: string = "";
+    let rightSide: string = "";
     if (currMultiplyCount === 0) {
       return inputStr;
     } else if (currMultiplyCount === 1 && !matrixPresent) {
@@ -261,7 +268,9 @@ export default function CalculationOutput({
         }
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
-
+      if (typeof leftSide != "string" || typeof rightSide != "string") {
+        return inputStr;
+      }
       const leftCalc: string = handleMultiplication(leftSide) || "1";
       const rightCalc: string = handleMultiplication(rightSide) || "1";
       return (parseFloat(leftCalc) * parseFloat(rightCalc) || 1).toString();
@@ -310,13 +319,13 @@ export default function CalculationOutput({
       }
       let currentMatrixR: string = "";
       let rightMatrix = false;
-      for (let i = 0; i < leftSide.length; i++) {
+      for (let i = 0; i < rightSide.length; i++) {
         for (let j = 0; j < matrixNames.length; j++) {
-          if (leftSide.includes(matrixNames[j])) {
+          if (rightSide.includes(matrixNames[j])) {
             currentMatrixR = matrixNames[j];
             rightMatrix = true;
 
-            i = leftSide.length;
+            i = rightSide.length;
           }
         }
       }
@@ -326,7 +335,11 @@ export default function CalculationOutput({
 
       } else*/ if (leftMatrix === false && rightMatrix === true) {
         const matrixNo = matrixNames.indexOf(currentMatrixR) + 1;
-        let rightCalc: string[][] = [];
+        let rightCalc: string[][] = [
+          ["0", "0"],
+          ["0", "0"],
+        ];
+        let rightCalcUnchanged = false;
         switch (matrixNo) {
           case 1:
             rightCalc = matrixA;
@@ -347,19 +360,30 @@ export default function CalculationOutput({
             rightCalc = matrixF;
             break;
           default:
-            rightCalc = matrixA;
+            rightCalcUnchanged = true;
             break;
         }
-        return matrixCalculator(
-          rightCalc,
-          [[""], [""]],
-          parseFloat(leftSide),
-          "DEGREE",
-          "matrixNumberMultiplication",
-        );
+        if (rightCalcUnchanged) {
+          return inputStr;
+        } else {
+          return matrixCalculator(
+            rightCalc,
+            [
+              ["1", "0"],
+              ["0", "1"],
+            ],
+            parseFloat(leftSide),
+            "DEGREE",
+            "multiplicationNumberMatrix",
+          );
+        }
       } else if (leftMatrix === true && rightMatrix === false) {
         const matrixNo = matrixNames.indexOf(currentMatrixL) + 1;
-        let leftCalc: string[][];
+        let leftCalc: string[][] = [
+          ["0", "0"],
+          ["0", "0"],
+        ];
+        let leftCalcUnchanged = false;
         switch (matrixNo) {
           case 1:
             leftCalc = matrixA;
@@ -380,20 +404,34 @@ export default function CalculationOutput({
             leftCalc = matrixF;
             break;
           default:
-            leftCalc = matrixA;
+            leftCalcUnchanged = true;
             break;
+        }
+        if (leftCalcUnchanged) {
+          return inputStr;
         }
         return matrixCalculator(
           leftCalc,
-          [[""], [""]],
+          [
+            ["1", "0"],
+            ["0", "1"],
+          ],
           parseFloat(rightSide),
           "DEGREE",
-          "matrixNumberMultiplication",
+          "multiplicationNumberMatrix",
         );
       } else if (leftMatrix === true && rightMatrix === true) {
         const matrixNo = matrixNames.indexOf(currentMatrixR) + 1;
-        let leftCalc: string[][];
-        let rightCalc: string[][];
+        let leftCalc: string[][] = [
+          ["0", "0"],
+          ["0", "0"],
+        ];
+        let rightCalc: string[][] = [
+          ["0", "0"],
+          ["0", "0"],
+        ];
+        let leftSideUnchanged = false;
+        let rightSideUnchanged = false;
         switch (matrixNo) {
           case 1:
             leftCalc = matrixA;
@@ -414,7 +452,7 @@ export default function CalculationOutput({
             leftCalc = matrixF;
             break;
           default:
-            leftCalc = matrixA;
+            leftSideUnchanged = true;
             break;
         }
         switch (matrixNo) {
@@ -437,8 +475,11 @@ export default function CalculationOutput({
             rightCalc = matrixF;
             break;
           default:
-            rightCalc = matrixA;
+            rightSideUnchanged = true;
             break;
+        }
+        if (leftSideUnchanged || rightSideUnchanged) {
+          return inputStr;
         }
         return matrixCalculator(
           leftCalc,
@@ -637,7 +678,9 @@ export default function CalculationOutput({
       >
         {"\n"}
 
-        {typeof answer === "string" ? answer : displayMatrix(answer)}
+        {typeof answer === "string" || answer[0][0] === undefined
+          ? answer
+          : displayMatrix(answer)}
         {/* 
         {stringAsArray.toString()} */}
       </section>

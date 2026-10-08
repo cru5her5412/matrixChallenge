@@ -16,7 +16,7 @@ export function matrixCalculator(
   angleMode: "DEGREE" | "RADIAN",
   operation:
     | "matrixMultiplication"
-    | "matrixNumberMultiplication"
+    | "multiplicationNumberMatrix"
     | "matrixDeterminant"
     | "matrixInverse"
     | "matrixTrace"
@@ -32,7 +32,7 @@ export function matrixCalculator(
     endValue = matrixMultiplication(calcMatrix1, calcMatrix2, 2).map((row) =>
       row.map((value) => value.toString()),
     );
-  } else if (operation === "matrixNumberMultiplication") {
+  } else if (operation === "multiplicationNumberMatrix") {
     endValue = multiplicationNumberMatrix(calcMatrix1, num1).map((row) =>
       row.map((value) => value.toString()),
     );
