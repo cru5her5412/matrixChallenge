@@ -11,7 +11,9 @@ import {
 } from "./matrixChallenge.ts";
 export function matrixCalculator(
   Matrix1: string[][],
+  matrix1Name: string,
   Matrix2: string[][],
+  matrix2Name: string,
   num1: number,
   angleMode: "DEGREE" | "RADIAN",
   operation:
@@ -36,6 +38,13 @@ export function matrixCalculator(
     endValue = multiplicationNumberMatrix(calcMatrix1, num1).map((row) =>
       row.map((value) => value.toString()),
     );
+    for (let i = 0; i < endValue.length; i++) {
+      for (let j = 0; j < endValue[0].length; j++) {
+        if (endValue[i][j] === "NaN") {
+          return matrix1Name;
+        }
+      }
+    }
   } else if (operation === "matrixDeterminant") {
     endValue = matrixDeterminant(calcMatrix1);
   } else if (operation === "matrixInverse") {

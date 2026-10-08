@@ -369,10 +369,12 @@ export default function CalculationOutput({
         } else {
           return matrixCalculator(
             rightCalc,
+            currentMatrixR,
             [
               ["1", "0"],
               ["0", "1"],
             ],
+            "",
             parseFloat(leftSide),
             "DEGREE",
             "multiplicationNumberMatrix",
@@ -413,10 +415,12 @@ export default function CalculationOutput({
         }
         return matrixCalculator(
           leftCalc,
+          currentMatrixL,
           [
             ["1", "0"],
             ["0", "1"],
           ],
+          "",
           parseFloat(rightSide),
           "DEGREE",
           "multiplicationNumberMatrix",
@@ -486,7 +490,9 @@ export default function CalculationOutput({
         }
         return matrixCalculator(
           leftCalc,
+          currentMatrixL,
           rightCalc,
+          currentMatrixR,
           0,
           "DEGREE",
           "matrixMultiplication",
