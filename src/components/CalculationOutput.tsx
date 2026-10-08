@@ -282,6 +282,7 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
+            x--;
           }
         }
         if (positionChanged === false) {
@@ -421,7 +422,9 @@ export default function CalculationOutput({
           "multiplicationNumberMatrix",
         );
       } else if (leftMatrix === true && rightMatrix === true) {
-        const matrixNo = matrixNames.indexOf(currentMatrixR) + 1;
+        const matrixNoR = matrixNames.indexOf(currentMatrixR) + 1;
+        const matrixNoL = matrixNames.indexOf(currentMatrixL) + 1;
+
         let leftCalc: string[][] = [
           ["0", "0"],
           ["0", "0"],
@@ -432,7 +435,7 @@ export default function CalculationOutput({
         ];
         let leftSideUnchanged = false;
         let rightSideUnchanged = false;
-        switch (matrixNo) {
+        switch (matrixNoL) {
           case 1:
             leftCalc = matrixA;
             break;
@@ -455,7 +458,7 @@ export default function CalculationOutput({
             leftSideUnchanged = true;
             break;
         }
-        switch (matrixNo) {
+        switch (matrixNoR) {
           case 1:
             rightCalc = matrixA;
             break;
