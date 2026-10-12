@@ -102,18 +102,40 @@ export default function CalculationOutput({
     // subtractionCount: number,
   ) {
     let currDivisionCount = 0;
+    let currMultiplicationCount = 0;
+    let currAdditionCount = 0;
+    let currSubtractionCount = 0;
     const inputStrArr: string[] = [];
     for (let i = 0; i < inputStr.length; i++) {
       inputStrArr.push(inputStr[i]);
       if (inputStr[i] === "/") {
         currDivisionCount++;
       }
+      if (inputStr[i] === "x") {
+        currMultiplicationCount++;
+      }
+      if (inputStr[i] === "+") {
+        currAdditionCount++;
+      }
+      if (inputStr[i] === "-") {
+        currSubtractionCount++;
+      }
     }
     let leftSide = "";
     let rightSide = "";
-    if (currDivisionCount === 0) {
+    if (
+      currDivisionCount === 0 &&
+      currMultiplicationCount === 0 &&
+      currAdditionCount === 0 &&
+      currSubtractionCount === 0
+    ) {
       return inputStr;
-    } else if (currDivisionCount === 1) {
+    } else if (
+      currDivisionCount === 1 &&
+      currMultiplicationCount === 0 &&
+      currAdditionCount === 0 &&
+      currSubtractionCount === 0
+    ) {
       let startOfNum = inputStr.indexOf("/") - 1;
       for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
         let positionChanged = false;
@@ -145,6 +167,59 @@ export default function CalculationOutput({
       // for (let i = 0; i < matrixNames.length; i++) {}
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
+      const leftCalc = parseFloat(leftSide);
+      const rightCalc = parseFloat(rightSide);
+      const outputString: string = (leftCalc / rightCalc).toString();
+      if (outputString === "NaN") {
+        return leftCalc.toString();
+      } else {
+        return outputString;
+      }
+    } else if (
+      currDivisionCount === 1 &&
+      currMultiplicationCount === 1 &&
+      currAdditionCount === 0 &&
+      currSubtractionCount === 0
+    ) {
+      let startOfNum = inputStr.indexOf("/") - 1;
+      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStr[x]) {
+            startOfNum--;
+            positionChanged = true;
+          }
+        }
+        if (positionChanged === false) {
+          x = -1;
+        }
+      }
+      const validForCurrent = [...validNumbers];
+      validForCurrent.push("x");
+      console.log(validForCurrent);
+      let endOfNum = inputStr.indexOf("/") + 1;
+      for (let x = inputStr.indexOf("/") + 1; x < inputStr.length; x++) {
+        let positionChanged = false;
+        for (let j = 0; j < validForCurrent.length; j++) {
+          if (validForCurrent[j] === inputStrArr[x]) {
+            endOfNum++;
+            positionChanged = true;
+            x++;
+          }
+        }
+        if (positionChanged === false) {
+          x = inputStr.length;
+        }
+      }
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
+      rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
+      if (leftSide.includes("x")) {
+        leftSide = handleMultiplication(leftSide);
+      }
+      if (rightSide.includes("x")) {
+        rightSide = handleMultiplication(rightSide);
+      }
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       const outputString: string = (leftCalc / rightCalc).toString();
@@ -271,9 +346,18 @@ export default function CalculationOutput({
       if (typeof leftSide != "string" || typeof rightSide != "string") {
         return inputStr;
       }
-      const leftCalc: string = handleMultiplication(leftSide) || "1";
-      const rightCalc: string = handleMultiplication(rightSide) || "1";
-      return (parseFloat(leftCalc) * parseFloat(rightCalc) || 1).toString();
+      const leftCalc: string | number | string[][] =
+        handleMultiplication(leftSide) || "1";
+      const rightCalc: string | number | string[][] =
+        handleMultiplication(rightSide) || "1";
+      if (typeof leftCalc != "string" && typeof rightCalc != "string") {
+        return leftCalc;
+      } else if (
+        typeof leftCalc === "string" &&
+        typeof rightCalc === "string"
+      ) {
+        return (parseFloat(leftCalc) * parseFloat(rightCalc) || 1).toString();
+      }
     } else if (currMultiplyCount === 1 && matrixPresent) {
       let startOfNum = inputStr.indexOf("x") - 1;
       for (let x = inputStr.indexOf("x") - 1; x > 0; x--) {
