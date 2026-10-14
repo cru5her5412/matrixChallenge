@@ -74,14 +74,19 @@ export default function CalculationOutput({
       if (divisionCount > 0) {
         answer = handleDivision(textAreaContent[calculationID]) || "";
       }
-      if (multiplyCount > 0) {
+      if (multiplyCount > 0 && divisionCount <= 0) {
         answer = handleMultiplication(textAreaContent[calculationID]) || "";
       }
 
-      if (additionCount > 0) {
+      if (additionCount > 0 && divisionCount <= 0 && multiplyCount <= 0) {
         answer = handleAddition(textAreaContent[calculationID]) || "";
       }
-      if (subtractionCount > 0) {
+      if (
+        subtractionCount > 0 &&
+        divisionCount <= 0 &&
+        multiplyCount <= 0 &&
+        additionCount <= 0
+      ) {
         answer = handleSubtraction(textAreaContent[calculationID]) || "";
       }
     }
@@ -123,6 +128,7 @@ export default function CalculationOutput({
     }
     let leftSide = "";
     let rightSide = "";
+
     if (
       currDivisionCount === 0 &&
       currMultiplicationCount === 0 &&
@@ -181,11 +187,13 @@ export default function CalculationOutput({
       currAdditionCount === 0 &&
       currSubtractionCount === 0
     ) {
+      const validForCurrent = [...validNumbers];
+      validForCurrent.push("x");
       let startOfNum = inputStr.indexOf("/") - 1;
       for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
         let positionChanged = false;
-        for (let j = 0; j < validNumbers.length; j++) {
-          if (validNumbers[j] === inputStr[x]) {
+        for (let j = 0; j < validForCurrent.length; j++) {
+          if (validForCurrent[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
           }
@@ -194,9 +202,7 @@ export default function CalculationOutput({
           x = -1;
         }
       }
-      const validForCurrent = [...validNumbers];
-      validForCurrent.push("x");
-      console.log(validForCurrent);
+
       let endOfNum = inputStr.indexOf("/") + 1;
       for (let x = inputStr.indexOf("/") + 1; x < inputStr.length; x++) {
         let positionChanged = false;
@@ -215,11 +221,16 @@ export default function CalculationOutput({
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
       if (leftSide.includes("x")) {
+        console.log(leftSide);
         leftSide = handleMultiplication(leftSide);
+        console.log("mult");
       }
+
       if (rightSide.includes("x")) {
         rightSide = handleMultiplication(rightSide);
+        console.log("mult");
       }
+      console.log(leftSide, rightSide);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       const outputString: string = (leftCalc / rightCalc).toString();
@@ -582,6 +593,8 @@ export default function CalculationOutput({
           "matrixMultiplication",
         );
       }
+    } else {
+      return inputStr;
     }
   }
   function handleAddition(
