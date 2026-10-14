@@ -149,6 +149,7 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
+            x--;
           }
         }
         if (positionChanged === false) {
@@ -187,27 +188,27 @@ export default function CalculationOutput({
       currAdditionCount === 0 &&
       currSubtractionCount === 0
     ) {
-      const validForCurrent = [...validNumbers];
-      validForCurrent.push("x");
       let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
+      for (let x = inputStr.indexOf("/") - 2; x >= 0; x--) {
         let positionChanged = false;
-        for (let j = 0; j < validForCurrent.length; j++) {
-          if (validForCurrent[j] === inputStr[x]) {
+        for (let j = 0; j < validNumbers.length; j++) {
+          positionChanged = false;
+          if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
+            j = 0;
+            x--;
           }
         }
         if (positionChanged === false) {
           x = -1;
         }
       }
-
       let endOfNum = inputStr.indexOf("/") + 1;
-      for (let x = inputStr.indexOf("/") + 1; x < inputStr.length; x++) {
+      for (let x = inputStr.indexOf("/"); x < inputStr.length; x++) {
         let positionChanged = false;
-        for (let j = 0; j < validForCurrent.length; j++) {
-          if (validForCurrent[j] === inputStrArr[x]) {
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
             x++;
@@ -218,25 +219,25 @@ export default function CalculationOutput({
         }
       }
       // for (let i = 0; i < matrixNames.length; i++) {}
+      const leftLeftover = inputStr.slice(0, startOfNum);
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
-      if (leftSide.includes("x")) {
-        console.log(leftSide);
-        leftSide = handleMultiplication(leftSide);
-        console.log("mult");
-      }
-
-      if (rightSide.includes("x")) {
-        rightSide = handleMultiplication(rightSide);
-        console.log("mult");
-      }
+      const rightLeftover = inputStr.slice(endOfNum + 1);
+      console.log(leftLeftover, rightLeftover);
       console.log(leftSide, rightSide);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
-      const outputString: string = (leftCalc / rightCalc).toString();
+      console.log(leftCalc, ", ", rightCalc);
+      let outputString: string = (leftCalc / rightCalc).toString();
       if (outputString === "NaN") {
         return leftCalc.toString();
       } else {
+        if (leftLeftover.includes("x")) {
+          outputString = handleMultiplication(leftLeftover + outputString);
+        }
+        if (rightLeftover.includes("x")) {
+          outputString = handleMultiplication(outputString + rightLeftover);
+        }
         return outputString;
       }
     } else if (currDivisionCount > 1) {
