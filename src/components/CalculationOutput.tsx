@@ -72,14 +72,14 @@ export default function CalculationOutput({
     }
     if (operatorCount > 0) {
       if (divisionCount > 0) {
-        answer = handleDivision(textAreaContent[calculationID]) || "";
+        answer = handleDivision(textAreaContent[calculationID]);
       }
       if (multiplyCount > 0 && divisionCount <= 0) {
-        answer = handleMultiplication(textAreaContent[calculationID]) || "";
+        answer = handleMultiplication(textAreaContent[calculationID]);
       }
 
       if (additionCount > 0 && divisionCount <= 0 && multiplyCount <= 0) {
-        answer = handleAddition(textAreaContent[calculationID]) || "";
+        answer = handleAddition(textAreaContent[calculationID]);
       }
       if (
         subtractionCount > 0 &&
@@ -128,7 +128,7 @@ export default function CalculationOutput({
     }
     let leftSide = "";
     let rightSide = "";
-
+    console.log(currAdditionCount);
     if (
       currDivisionCount === 0 &&
       currMultiplicationCount === 0 &&
@@ -241,10 +241,10 @@ export default function CalculationOutput({
         return outputString;
       }
     } else if (
-      divisionCount === 1 &&
-      additionCount === 1 &&
-      multiplyCount === 0 &&
-      subtractionCount === 0
+      currDivisionCount === 1 &&
+      currAdditionCount === 1 &&
+      currMultiplicationCount === 0 &&
+      currSubtractionCount === 0
     ) {
       let startOfNum = inputStr.indexOf("/") - 1;
       for (let x = inputStr.indexOf("/") - 2; x >= 0; x--) {
@@ -291,12 +291,10 @@ export default function CalculationOutput({
         return leftCalc.toString();
       } else {
         if (leftLeftover.includes("+")) {
-          outputString =
-            handleAddition(leftLeftover + outputString) || outputString;
+          outputString = handleAddition(leftLeftover + outputString);
         }
         if (rightLeftover.includes("+")) {
-          outputString =
-            handleAddition(outputString + rightLeftover) || outputString;
+          outputString = handleAddition(outputString + rightLeftover);
         }
         return outputString;
       }
@@ -751,6 +749,8 @@ export default function CalculationOutput({
       const leftCalc: string = handleAddition(leftSide) || "0";
       const rightCalc: string = handleAddition(rightSide) || "0";
       return (parseFloat(leftCalc) + parseFloat(rightCalc) || 0).toString();
+    } else {
+      return inputStr;
     }
   }
   function handleSubtraction(
