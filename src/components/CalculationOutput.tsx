@@ -240,6 +240,66 @@ export default function CalculationOutput({
         }
         return outputString;
       }
+    } else if (
+      divisionCount === 1 &&
+      additionCount === 1 &&
+      multiplyCount === 0 &&
+      subtractionCount === 0
+    ) {
+      let startOfNum = inputStr.indexOf("/") - 1;
+      for (let x = inputStr.indexOf("/") - 2; x >= 0; x--) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          positionChanged = false;
+          if (validNumbers[j] === inputStr[x]) {
+            startOfNum--;
+            positionChanged = true;
+            j = 0;
+            x--;
+          }
+        }
+        if (positionChanged === false) {
+          x = -1;
+        }
+      }
+      let endOfNum = inputStr.indexOf("/") + 1;
+      for (let x = inputStr.indexOf("/"); x < inputStr.length; x++) {
+        let positionChanged = false;
+        for (let j = 0; j < validNumbers.length; j++) {
+          if (validNumbers[j] === inputStrArr[x]) {
+            endOfNum++;
+            positionChanged = true;
+            x++;
+          }
+        }
+        if (positionChanged === false) {
+          x = inputStr.length;
+        }
+      }
+      // for (let i = 0; i < matrixNames.length; i++) {}
+      const leftLeftover = inputStr.slice(0, startOfNum);
+      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
+      rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
+      const rightLeftover = inputStr.slice(endOfNum + 1);
+      console.log(leftLeftover, rightLeftover);
+      console.log(leftSide, rightSide);
+      const leftCalc = parseFloat(leftSide);
+      const rightCalc = parseFloat(rightSide);
+      console.log(leftCalc, ", ", rightCalc);
+      let outputString: string = (leftCalc / rightCalc).toString();
+      if (outputString === "NaN") {
+        return leftCalc.toString();
+      } else {
+        if (leftLeftover.includes("+")) {
+          outputString =
+            handleAddition(leftLeftover + outputString) || outputString;
+        }
+        if (rightLeftover.includes("+")) {
+          outputString =
+            handleAddition(outputString + rightLeftover) || outputString;
+        }
+        return outputString;
+      }
     } else if (currDivisionCount > 1) {
       const halfDivisionCount = Math.ceil(currDivisionCount / 2);
       let leftEndIndex = 0;
@@ -359,9 +419,9 @@ export default function CalculationOutput({
         return inputStr;
       }
       const leftCalc: string | number | string[][] =
-        handleMultiplication(leftSide) || "1";
+        handleMultiplication(leftSide);
       const rightCalc: string | number | string[][] =
-        handleMultiplication(rightSide) || "1";
+        handleMultiplication(rightSide);
       if (typeof leftCalc != "string" && typeof rightCalc != "string") {
         return leftCalc;
       } else if (
@@ -690,7 +750,7 @@ export default function CalculationOutput({
 
       const leftCalc: string = handleAddition(leftSide) || "0";
       const rightCalc: string = handleAddition(rightSide) || "0";
-      return (parseFloat(leftCalc) + parseFloat(rightCalc) || 1).toString();
+      return (parseFloat(leftCalc) + parseFloat(rightCalc) || 0).toString();
     }
   }
   function handleSubtraction(
