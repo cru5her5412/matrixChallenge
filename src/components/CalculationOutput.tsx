@@ -219,11 +219,8 @@ export default function CalculationOutput({
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
       const rightLeftover = inputStr.slice(endOfNum + 1);
-      console.log(leftLeftover, rightLeftover);
-      console.log(leftSide, rightSide);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
-      console.log(leftCalc, ", ", rightCalc);
       let outputString: string = (leftCalc / rightCalc).toString();
       if (outputString === "NaN") {
         return leftCalc.toString();
@@ -273,11 +270,8 @@ export default function CalculationOutput({
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
       const rightLeftover = inputStr.slice(endOfNum + 1);
-      console.log(leftLeftover, rightLeftover);
-      console.log(leftSide, rightSide);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
-      console.log(leftCalc, ", ", rightCalc);
       let outputString: string = (leftCalc / rightCalc).toString();
       if (outputString === "NaN") {
         return leftCalc.toString();
@@ -297,14 +291,12 @@ export default function CalculationOutput({
       currSubtractionCount === 1
     ) {
       let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 2; x >= 0; x--) {
+      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
         let positionChanged = false;
         for (let j = 0; j < validNumbers.length; j++) {
-          positionChanged = false;
           if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
-            j = 0;
           }
         }
         if (positionChanged === false) {
@@ -329,11 +321,8 @@ export default function CalculationOutput({
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
       const rightLeftover = inputStr.slice(endOfNum + 1);
-      console.log(leftLeftover, rightLeftover);
-      console.log(leftSide, rightSide);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
-      console.log(leftCalc, ", ", rightCalc);
       let outputString: string = (leftCalc / rightCalc).toString();
       if (outputString === "NaN") {
         return leftCalc.toString();
