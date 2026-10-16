@@ -128,7 +128,6 @@ export default function CalculationOutput({
     }
     let leftSide = "";
     let rightSide = "";
-    console.log(currAdditionCount);
     if (
       currDivisionCount === 0 &&
       currMultiplicationCount === 0 &&
@@ -191,7 +190,6 @@ export default function CalculationOutput({
       for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
         let positionChanged = false;
         for (let j = 0; j < validNumbers.length; j++) {
-          positionChanged = false;
           if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
