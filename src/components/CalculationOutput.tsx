@@ -29,6 +29,8 @@ export default function CalculationOutput({
   matrixE: string[][];
   matrixF: string[][];
 }) {
+  //Todo: Add singular function to handle all multistep operations
+  //Todo: Add function to handle indices
   let answer: string | string[][] = "";
   const stringAsArray = [];
   let operatorCount = 0;
