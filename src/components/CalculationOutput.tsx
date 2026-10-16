@@ -149,9 +149,9 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
-            x--;
           }
         }
+
         if (positionChanged === false) {
           x = -1;
         }
@@ -164,7 +164,6 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
-            x++;
           }
         }
         if (positionChanged === false) {
@@ -189,15 +188,13 @@ export default function CalculationOutput({
       currSubtractionCount === 0
     ) {
       let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 2; x >= 0; x--) {
+      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
         let positionChanged = false;
         for (let j = 0; j < validNumbers.length; j++) {
           positionChanged = false;
           if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
-            j = 0;
-            x--;
           }
         }
         if (positionChanged === false) {
@@ -205,13 +202,12 @@ export default function CalculationOutput({
         }
       }
       let endOfNum = inputStr.indexOf("/") + 1;
-      for (let x = inputStr.indexOf("/"); x < inputStr.length; x++) {
+      for (let x = inputStr.indexOf("/") + 1; x < inputStr.length; x++) {
         let positionChanged = false;
         for (let j = 0; j < validNumbers.length; j++) {
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
-            x++;
           }
         }
         if (positionChanged === false) {
@@ -247,15 +243,12 @@ export default function CalculationOutput({
       currSubtractionCount === 0
     ) {
       let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 2; x >= 0; x--) {
+      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
         let positionChanged = false;
         for (let j = 0; j < validNumbers.length; j++) {
-          positionChanged = false;
-          if (validNumbers[j] === inputStr[x]) {
+          if (validNumbers[j] === inputStr[x] || inputStr[x] === "0") {
             startOfNum--;
             positionChanged = true;
-            j = 0;
-            x--;
           }
         }
         if (positionChanged === false) {
@@ -269,7 +262,6 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
-            x++;
           }
         }
         if (positionChanged === false) {
@@ -313,7 +305,6 @@ export default function CalculationOutput({
             startOfNum--;
             positionChanged = true;
             j = 0;
-            x--;
           }
         }
         if (positionChanged === false) {
@@ -327,7 +318,6 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
-            x++;
           }
         }
         if (positionChanged === false) {
@@ -494,7 +484,6 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStr[x]) {
             startOfNum--;
             positionChanged = true;
-            x--;
           }
         }
         if (positionChanged === false) {
@@ -509,7 +498,6 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
-            x++;
           }
         }
         if (positionChanged === false) {
@@ -525,7 +513,6 @@ export default function CalculationOutput({
           if (leftSide.includes(matrixNames[j])) {
             currentMatrixL = matrixNames[j];
             leftMatrix = true;
-
             i = leftSide.length;
           }
         }
@@ -537,7 +524,6 @@ export default function CalculationOutput({
           if (rightSide.includes(matrixNames[j])) {
             currentMatrixR = matrixNames[j];
             rightMatrix = true;
-
             i = rightSide.length;
           }
         }
@@ -756,7 +742,6 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
-            x++;
           }
         }
         if (positionChanged === false) {
@@ -852,7 +837,6 @@ export default function CalculationOutput({
           if (validNumbers[j] === inputStrArr[x]) {
             endOfNum++;
             positionChanged = true;
-            x++;
           }
         }
         if (positionChanged === false) {
