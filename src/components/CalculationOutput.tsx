@@ -215,13 +215,13 @@ export default function CalculationOutput({
         }
       }
       // for (let i = 0; i < matrixNames.length; i++) {}
-      const leftLeftover = inputStr.slice(0, startOfNum);
-      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
+      const leftLeftover = inputStr.slice(0, startOfNum + 1);
+      leftSide = inputStr.slice(startOfNum + 1, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
-      const rightLeftover = inputStr.slice(endOfNum + 1);
+      const rightLeftover = inputStr.slice(endOfNum);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
-      let outputString: string = (leftCalc / rightCalc).toString();
+      let outputString: string | string[][] = (leftCalc / rightCalc).toString();
       if (outputString === "NaN") {
         return leftCalc.toString();
       } else {
@@ -266,10 +266,12 @@ export default function CalculationOutput({
         }
       }
       // for (let i = 0; i < matrixNames.length; i++) {}
-      const leftLeftover = inputStr.slice(0, startOfNum);
+      const leftLeftover = inputStr.slice(0, startOfNum + 1);
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
-      const rightLeftover = inputStr.slice(endOfNum + 1);
+      const rightLeftover = inputStr.slice(endOfNum);
+      console.log(leftLeftover + " s " + rightLeftover);
+
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       let outputString: string = (leftCalc / rightCalc).toString();
@@ -317,10 +319,10 @@ export default function CalculationOutput({
         }
       }
       // for (let i = 0; i < matrixNames.length; i++) {}
-      const leftLeftover = inputStr.slice(0, startOfNum);
-      leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
+      const leftLeftover = inputStr.slice(0, startOfNum + 1);
+      leftSide = inputStr.slice(startOfNum + 1, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
-      const rightLeftover = inputStr.slice(endOfNum + 1);
+      const rightLeftover = inputStr.slice(endOfNum);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       let outputString: string = (leftCalc / rightCalc).toString();
@@ -354,12 +356,16 @@ export default function CalculationOutput({
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
 
-      const leftCalc: string = handleDivision(leftSide) || "1";
-      let rightCalc: string = handleDivision(rightSide) || "1";
+      const leftCalc: string | string[][] = handleDivision(leftSide) || "1";
+      let rightCalc: string | string[][] = handleDivision(rightSide) || "1";
       if (rightCalc === "0") {
         rightCalc = "1";
       }
-      return (parseFloat(leftCalc) / parseFloat(rightCalc)).toString();
+      if (typeof leftCalc === "string" && typeof rightCalc === "string") {
+        return (parseFloat(leftCalc) / parseFloat(rightCalc)).toString();
+      } else {
+        return inputStr;
+      }
     }
   }
   function handleMultiplication(
