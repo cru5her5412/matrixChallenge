@@ -143,8 +143,8 @@ export default function CalculationOutput({
       currAdditionCount === 0 &&
       currSubtractionCount === 0
     ) {
-      let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
+      let startOfNum = inputStr.indexOf("/");
+      for (let x = inputStr.indexOf("/") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -213,8 +213,6 @@ export default function CalculationOutput({
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum);
       const rightLeftover = inputStr.slice(endOfNum);
-      console.log(leftLeftover, "   ", rightLeftover, " mult");
-      console.log(leftSide, "   ", rightSide);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       let outputString: string | string[][] = (leftCalc / rightCalc).toString();
@@ -236,8 +234,8 @@ export default function CalculationOutput({
       currAdditionCount === 0 &&
       currSubtractionCount === 0
     ) {
-      let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/"); x > 0; x--) {
+      let startOfNum = inputStr.indexOf("/");
+      for (let x = inputStr.indexOf("/") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -262,7 +260,6 @@ export default function CalculationOutput({
       const leftLeftover = inputStr.slice(0, startOfNum);
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
       rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
-      console.log(leftSide, "   ", rightSide);
       const rightLeftover = inputStr.slice(endOfNum);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
@@ -271,11 +268,9 @@ export default function CalculationOutput({
         return leftCalc.toString();
       } else {
         if (leftLeftover.includes("x")) {
-          console.log(outputString, "    ", leftLeftover);
           outputString = handleMultiplication(leftLeftover + outputString);
         }
         if (rightLeftover.includes("x")) {
-          console.log(outputString, "    ", rightLeftover);
           outputString = handleMultiplication(outputString + rightLeftover);
         }
         return outputString;
@@ -286,8 +281,8 @@ export default function CalculationOutput({
       currMultiplicationCount === 0 &&
       currSubtractionCount === 0
     ) {
-      let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
+      let startOfNum = inputStr.indexOf("/");
+      for (let x = inputStr.indexOf("/") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -336,8 +331,8 @@ export default function CalculationOutput({
       currAdditionCount === 0 &&
       currSubtractionCount === 1
     ) {
-      let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
+      let startOfNum = inputStr.indexOf("/");
+      for (let x = inputStr.indexOf("/") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -438,7 +433,6 @@ export default function CalculationOutput({
       if (rightSide === undefined || leftSide === undefined) {
         return inputStr;
       }
-      console.log(leftSide, "    ", rightSide, "   Full");
 
       const leftCalc: string | string[][] = handleDivision(leftSide);
       let rightCalc: string | string[][] = handleDivision(rightSide);
@@ -485,8 +479,8 @@ export default function CalculationOutput({
     if (currMultiplyCount === 0) {
       return inputStr;
     } else if (currMultiplyCount === 1 && !matrixPresent) {
-      let startOfNum = inputStr.indexOf("x") - 1;
-      for (let x = inputStr.indexOf("x") - 1; x > 0; x--) {
+      let startOfNum = inputStr.indexOf("x");
+      for (let x = inputStr.indexOf("x") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -543,7 +537,6 @@ export default function CalculationOutput({
         }
       }
       rightSide = inputStr.slice(leftEndIndex + 1);
-      console.log("mult", leftSide, "   ", rightSide);
       if (rightSide === undefined || leftSide === undefined) {
         return inputStr;
       }
@@ -560,8 +553,8 @@ export default function CalculationOutput({
         return (parseFloat(leftCalc) * parseFloat(rightCalc) || 1).toString();
       }
     } else if (currMultiplyCount === 1 && matrixPresent) {
-      let startOfNum = inputStr.indexOf("x") - 1;
-      for (let x = inputStr.indexOf("x") - 1; x > 0; x--) {
+      let startOfNum = inputStr.indexOf("x");
+      for (let x = inputStr.indexOf("x") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -798,8 +791,8 @@ export default function CalculationOutput({
       return inputStr;
     } else if (currAdditionCount === 1) {
       // for (let i = 0; i < matrixNames.length; i++) {}
-      let startOfNum = inputStr.indexOf("+") - 1;
-      for (let x = inputStr.indexOf("+") - 2; x >= 0; x--) {
+      let startOfNum = inputStr.indexOf("+");
+      for (let x = inputStr.indexOf("+") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -891,8 +884,8 @@ export default function CalculationOutput({
     if (currSubtractionCount === 0) {
       return inputStr;
     } else if (currSubtractionCount === 1) {
-      let startOfNum = inputStr.indexOf("-") - 1;
-      for (let x = inputStr.indexOf("-") - 2; x >= 0; x--) {
+      let startOfNum = inputStr.indexOf("-");
+      for (let x = inputStr.indexOf("-") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
