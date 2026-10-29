@@ -186,8 +186,8 @@ export default function CalculationOutput({
       currAdditionCount === 0 &&
       currSubtractionCount === 0
     ) {
-      let startOfNum = inputStr.indexOf("/") - 1;
-      for (let x = inputStr.indexOf("/") - 1; x > 0; x--) {
+      let startOfNum = inputStr.indexOf("/");
+      for (let x = inputStr.indexOf("/") - 1; x >= 0; x--) {
         let positionChanged = false;
         if (validNumbers.includes(inputStr[x])) {
           startOfNum--;
@@ -200,22 +200,21 @@ export default function CalculationOutput({
       let endOfNum = inputStr.indexOf("/") + 1;
       for (let x = inputStr.indexOf("/") + 1; x < inputStr.length; x++) {
         let positionChanged = false;
-        for (let j = 0; j < validNumbers.length; j++) {
-          if (validNumbers[j] === inputStrArr[x]) {
-            endOfNum++;
-            positionChanged = true;
-          }
+        if (validNumbers.includes(inputStr[x])) {
+          endOfNum++;
+          positionChanged = true;
         }
         if (positionChanged === false) {
           x = inputStr.length;
         }
       }
       // for (let i = 0; i < matrixNames.length; i++) {}
-      const leftLeftover = inputStr.slice(0, startOfNum + 1);
+      const leftLeftover = inputStr.slice(0, startOfNum);
       leftSide = inputStr.slice(startOfNum, inputStr.indexOf("/"));
-      rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum + 1);
+      rightSide = inputStr.slice(inputStr.indexOf("/") + 1, endOfNum);
       const rightLeftover = inputStr.slice(endOfNum);
       console.log(leftLeftover, "   ", rightLeftover, " mult");
+      console.log(leftSide, "   ", rightSide);
       const leftCalc = parseFloat(leftSide);
       const rightCalc = parseFloat(rightSide);
       let outputString: string | string[][] = (leftCalc / rightCalc).toString();
